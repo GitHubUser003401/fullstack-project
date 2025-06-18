@@ -69,6 +69,23 @@
 .animated-gradient {
     background: 
         linear-gradient(90deg,  #b71b1b, #ff0000, #ff8446, #ff1744 ,#ff5252,#ff8a65,#ffb300,#ff6f00, #b71b1b,#ff7043, #ff0000, #ff8446, #ff1744 ,#ff5252,#ff8a65,#ffb300,#ff6f00,#ff7043 );
-        background-size: 600% 600%;
-    animation: gradient-move 35s ease infinite;
+        background-size: 700% 700%;
+    animation: gradient-move 20s ease-in-out infinite;
+}
+@keyframes pulse_animation {
+    0% {
+        
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+.animated-pulse:hover {
+    background: linear-gradient(90deg, #bdbdbd, #757575,#020bff, #eaff08 , #ff3838, #ff8a65);
+    background-size: 400% 400%;
+    animation: pulse_animation 2s ease-in-out; 
 }
