@@ -26,6 +26,7 @@ function RegisterBox({ className }) {
         
        try { 
         const response = await registerUser(dataToSend);
+        localStorage.setItem('token', response.user.token);
         navigate('/Confirmation', {state: { message : response.message,
         user: response.user
          }})

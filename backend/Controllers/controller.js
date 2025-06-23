@@ -88,6 +88,7 @@ export const loginCode = async (req, res) => {
             expiresIn: "2h"
         })
         user.token = token;
+        res.status(200).json({ message: "Login successful", user })
     } catch (error) {
         console.log(error);
         res.status(500).send("Internal Server Error");

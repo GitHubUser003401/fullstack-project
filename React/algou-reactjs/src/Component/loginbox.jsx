@@ -12,7 +12,8 @@ function LoginBox({ className }) {
   })
   const handleLogin = async () => {
     try {
-      await LoginUser(loginData);
+      const response = await LoginUser(loginData);
+      localStorage.setItem('token', response.user.token);
       navigate('/Home');
     } catch (errorMessage) {
       setError(
