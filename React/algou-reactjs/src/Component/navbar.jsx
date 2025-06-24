@@ -12,7 +12,7 @@ function Navbar({className}) {
                 </h1>
                 <a href = "/profile">
                     <img src = "/pexels-alex-montes-892479-1820563.jpg"
-                    className = "w-12 h-12 rounded-full animated-entry transition delay-100 duration-500 hover:scale-125 mt-[10px] mr-[10px]"
+                    className = "shadow-2xl shadow-orange-600 w-12 h-12 rounded-full animated-entry transition delay-100 duration-500 hover:scale-125 mt-[10px] mr-[10px]"
                     alt = "Profile"
                     />
                 </a>

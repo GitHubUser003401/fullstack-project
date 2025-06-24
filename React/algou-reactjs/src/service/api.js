@@ -21,3 +21,32 @@ export const LoginUser = async (userdata) => {
         throw message;
     }
 }
+export const getAnything = async () => {
+    try {
+        const token = localStorage.getItem('token');
+        const response = await axios.get(`${API_URL}/anything`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        return response.data;
+    } catch (error) {
+        let message, errorName;
+        if(error.response){
+            if (typeof error.response.data === 'object' && error.response.data !==null){
+                message = error.response.data.message || JSON.stringify(error.response.data);
+                errorName = error.response.data.error;
+            }
+             else {
+                message = error.response.data;
+            }
+        } else {
+            message = 'Network Error';
+        }
+        if (errorName === 'TokenExpiredError' || message === 'Invalid token') {
+            localStorage.removeItem('token');
+            throw errorName || message;
+        }
+        throw message;
+    }
+}

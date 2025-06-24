@@ -7,6 +7,7 @@ import RegisterBox from './Component/registerbox';
 import ConfirmBox from './Component/Confirmbox';
 import ProtectedRoute from './Component/Protected';
 import Navbar from './Component/navbar';
+import Footer from './Component/Footer';
 function App() {
   return (
     <BrowserRouter>
@@ -47,7 +48,7 @@ function App() {
                   <Navbar className = "relative z-10"/>
                   <div className="relative z-10 w-full min-h-screen">
                     <video
-                      className="absolute -z-10 object-cover w-full h-full"
+                      className="absolute -z-10 shadow-xl shadow-cyan-400 object-cover w-full h-full"
                       src="/3129671-uhd_3840_2160_30fps.mp4"
                       autoPlay
                       loop
@@ -56,8 +57,12 @@ function App() {
                       disablePictureInPicture
                       disableRemotePlayback
                     />
-                    <Home classname="relative z-10" />
+                    <Home className="relative z-10" />
                   </div>
+                  <div className="h-24 relative z-10">
+                    Coming Soon...
+                  </div>
+                  <Footer className="relative z-10" />
                 </ProtectedRoute>
               </div>
           } />

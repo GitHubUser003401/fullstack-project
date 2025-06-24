@@ -128,3 +128,6 @@
 body {
     overflow-x: hidden;
 }
+.bordering{
+    border-radius: 50px;
+}

@@ -33,13 +33,15 @@ try {
             Age,
             Role,
         });
-        const token = jwt.sign({ id: user._id, email: user.email }, process.env.SECRET_KEY, {
+        const token = jwt.sign({ id: user._id, email: user.email, username: user.username }, process.env.SECRET_KEY, {
             expiresIn: "2h"
         });
-        user.token = token;
-        user.password = undefined;
+        const userObj = user.toObject();
+        delete userObj.password;
+        userObj.token = token;
+        
 
-        res.status(200).json({ message: "User registered successfully", user });
+        res.status(200).json({ message: "User registered successfully", user: userObj });
 
     
 } catch (err) {
@@ -84,11 +86,13 @@ export const loginCode = async (req, res) => {
         if (!isPasswordValid) {
             return res.status(400).send("Invalid Password. Please try again.");
         }
-        const token = jwt.sign({ id: user._id, email: user.email }, process.env.SECRET_KEY, {
+        const token = jwt.sign({ id: user._id, email: user.email, username: user.username }, process.env.SECRET_KEY, {
             expiresIn: "2h"
         })
-        user.token = token;
-        res.status(200).json({ message: "Login successful", user })
+        const userObj = user.toObject();
+        delete userObj.password; 
+        userObj.token = token;
+        res.status(200).json({ message: "Login successful", user: userObj });
     } catch (error) {
         console.log(error);
         res.status(500).send("Internal Server Error");
@@ -96,3 +100,8 @@ export const loginCode = async (req, res) => {
     }
     
 };
+export const anythingCode = (req, res) => {
+    res.status(200).json({ message :"This is a protected route, you have access to it because you are logged in."
+        , user: req.user
+    });
+}

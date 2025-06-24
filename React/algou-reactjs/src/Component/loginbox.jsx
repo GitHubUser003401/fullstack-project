@@ -1,11 +1,12 @@
 import react from 'react';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { LoginUser } from '../service/api';
 
 function LoginBox({ className }) {
   const navigate = useNavigate();
-  const [Error, setError] = useState("");
+  const location = useLocation();
+  const [Error, setError] = useState(location.state?.message || "");
   const [loginData, setloginData] = useState({
     email: "",
     password: "",
@@ -40,7 +41,7 @@ function LoginBox({ className }) {
             Login
           </button>
           {Error && (
-            <h2 className="text-red-600 font-semibold row-start-7 animated-entry">
+            <h2 className="text-red-600 font-extrabold row-start-7 animated-entry">
             {typeof Error === "string" ? Error : Error?.message || "An error occurred"}
           </h2>)}
         </div>
