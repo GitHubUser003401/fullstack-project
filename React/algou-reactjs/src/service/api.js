@@ -50,3 +50,10 @@ export const getAnything = async () => {
         throw message;
     }
 }
+export const getProblems = async () => {
+    try {
+
+    } catch (error) {
+        
+    }
+}

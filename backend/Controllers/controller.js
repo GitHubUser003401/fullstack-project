@@ -1,6 +1,7 @@
 import bcrypt from 'bcryptjs';
 import User from '../Models/User.js';
 import jwt from 'jsonwebtoken';
+
 export const registerCode = async (req, res) => {
     try {
         const { firstname, lastname, email, password, Phone_Number, Age, Role} = req.body;
@@ -104,4 +105,9 @@ export const anythingCode = (req, res) => {
     res.status(200).json({ message :"This is a protected route, you have access to it because you are logged in."
         , user: req.user
     });
+}
+
+
+export const ProblemlistCode = async (req, res) => {
+    
 }

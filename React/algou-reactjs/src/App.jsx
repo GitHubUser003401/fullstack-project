@@ -8,45 +8,50 @@ import ConfirmBox from './Component/Confirmbox';
 import ProtectedRoute from './Component/Protected';
 import Navbar from './Component/navbar';
 import Footer from './Component/Footer';
+import RouteReload from './Component/routereload';
+import ProblemSet from './Component/ProblemSet';
+
+
 function App() {
   return (
     <BrowserRouter>
+      <RouteReload>
 
-      <Routes>
-        <Route path="/" element={
-          <div className="relative w-full h-screen overflow-hidden">
-            <video className="absolute -z-10 object-cover w-full h-full" src="/3130182-uhd_3840_2160_30fps.mp4" autoPlay loop muted playsInline />
-            <StartBox className="relative z-10" />
-          </div>
-        }
-        />
-        <Route path="/login" element={
-          <div className="relative w-full h-screen overflow-hidden">
-            <video className="absolute -z-10 object-cover w-full h-full" src="/3130182-uhd_3840_2160_30fps.mp4" autoPlay loop muted playsInline disablePictureInPicture disableRemotePlayback />
-            <LoginBox className="relative z-10" />
-          </div>}
-        />
-        <Route path="/register" element={
-          <div className="relative w-full h-screen overflow-hidden">
-            <video className="absolute -z-10 object-cover w-full h-full" src="/3130182-uhd_3840_2160_30fps.mp4" autoPlay loop muted playsInline disablePictureInPicture disableRemotePlayback />
-            <RegisterBox className="relative z-10" />
-          </div>}
-        />
-        <Route path="/Confirmation" element={
-          <div className="relative w-full h-screen overflow-hidden">
-            <video className="absolute -z-10 object-cover w-full h-full" src="/3130182-uhd_3840_2160_30fps.mp4" autoPlay loop muted playsInline disablePictureInPicture disableRemotePlayback />
-            <ConfirmBox className="relative z-10" />
-          </div>} />
-      </Routes>
+        <Routes>
+          <Route path="/" element={
+            <div className="relative w-full h-screen overflow-hidden">
+              <video className="absolute -z-10 object-cover w-full h-full" src="/3130182-uhd_3840_2160_30fps.mp4" autoPlay loop muted playsInline />
+              <StartBox className="relative z-10" />
+            </div>
+          }
+          />
+          <Route path="/login" element={
+            <div className="relative w-full h-screen overflow-hidden">
+              <video className="absolute -z-10 object-cover w-full h-full" src="/3130182-uhd_3840_2160_30fps.mp4" autoPlay loop muted playsInline disablePictureInPicture disableRemotePlayback />
+              <LoginBox className="relative z-10" />
+            </div>}
+          />
+          <Route path="/register" element={
+            <div className="relative w-full h-screen overflow-hidden">
+              <video className="absolute -z-10 object-cover w-full h-full" src="/3130182-uhd_3840_2160_30fps.mp4" autoPlay loop muted playsInline disablePictureInPicture disableRemotePlayback />
+              <RegisterBox className="relative z-10" />
+            </div>}
+          />
+          <Route path="/Confirmation" element={
+            <div className="relative w-full h-screen overflow-hidden">
+              <video className="absolute -z-10 object-cover w-full h-full" src="/3130182-uhd_3840_2160_30fps.mp4" autoPlay loop muted playsInline disablePictureInPicture disableRemotePlayback />
+              <ConfirmBox className="relative z-10" />
+            </div>} />
+        </Routes>
 
-      <Routes>
-        <Route path="/Home"
-          element={
-            <div className="relative w-full min-h-screen overflow-hidden shiny-bg bg-gradient-to-bl from-[#e0e0e0] via-[#bdbdbd] to-[#757575] ">
-              
+        <Routes>
+          <Route path="/Home"
+            element={
+              <div className="relative w-full flex flex-col min-h-screen overflow-hidden shiny-bg bg-gradient-to-bl from-[#e0e0e0] via-[#bdbdbd] to-[#757575] ">
+
                 <ProtectedRoute>
-                  <Navbar className = "relative z-10"/>
-                  <div className="relative z-10 w-full min-h-screen">
+                  <Navbar className="relative z-10" />
+                  <div className="relative z-10 w-full h-screen">
                     <video
                       className="absolute -z-10 shadow-xl shadow-cyan-400 object-cover w-full h-full"
                       src="/3129671-uhd_3840_2160_30fps.mp4"
@@ -62,13 +67,32 @@ function App() {
                   <div className="h-24 relative z-10">
                     Coming Soon...
                   </div>
-                  <Footer className="relative z-10" />
+                  <Footer className="relative z-10 mt-auto" />
                 </ProtectedRoute>
               </div>
-          } />
-      </Routes>
+            } />
 
+          <Route path="/problems"
+            element={
+              <div className="relative w-full flex flex-col min-h-screen overflow-hidden shiny-bg bg-gradient-to-bl from-[#e0e0e0] via-[#bdbdbd] to-[#757575] ">
+                <ProtectedRoute>
+                  <Navbar className="relative z-10" />
+                  <div className="relative z-10 flex items-center w-full h-screen">
+                    <img src = "/pexels-goumbik-574070.jpg" className = "absolute -z-10 object-cover w-full h-full"/>
+                    <h1 className = "text-5xl font-semibold font-[Times New Roman] ml-[20px] animated-entry">
+                      Problem Lists
+                    </h1>
+                  </div>
+                  <ProblemSet className="relative z-10" />
+                  <Footer className="relative z-10 mt-auto" />
+                </ProtectedRoute>
+              </div>
 
+            }
+          />
+        </Routes>
+
+      </RouteReload>
     </BrowserRouter>
   )
 }

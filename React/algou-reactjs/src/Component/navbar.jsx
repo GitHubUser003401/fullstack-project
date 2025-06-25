@@ -18,7 +18,7 @@ function Navbar({className}) {
                 </a>
 
                 </div>
-                <div className = "border-t-2 border-t-slate-100 w-full mt-[10px]">
+                <div className = "border-t-2 border-t-slate-100 w-full flex mt-[10px]">
                     <button className="w-44 font-serif h-9 bg-slate-400 border-sky-800 border-r-4 hover:text-xl ">
                         Home
                     </button>
