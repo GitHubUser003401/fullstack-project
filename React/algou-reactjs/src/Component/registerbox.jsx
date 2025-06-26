@@ -42,8 +42,8 @@ function RegisterBox({ className }) {
         <div className={className}>
             <div className="flex justify-end opacity-90">
                 <div className="w-1/3 h-screen mr-[100px] shadow-xl shadow-orange-600 animated-gradient grid grid-rows-12 place-items-center text-wrap overflow-hidden">
-                    <h1 className="mt-[40px] row-start-1 font-extrabold italic text-3xl text-amber-800 transition delay-50 duration-1000 hover:scale-110 animated-entry">Register to <span className="bg-gradient-to-r from-[#e0e0e0] via-[#bdbdbd] to-[#757575] bg-clip-text text-transparent ">#######</span></h1>
-                    <h2 className="row-start-3 italic text-lg text-amber-800 drop-shadow-lg tracking tracking-wider uppercase animated-entry">Enter your details</h2>
+                    <h1 className="mt-[40px] row-start-1 font-imperialscript text-6xl text-purple-950 transition delay-50 duration-1000 hover:scale-110 animated-entry">Register to <span className="bg-gradient-to-r from-[#050505] via-[#af0000] to-[#5f5f5f] bg-clip-text text-transparent">Codelite</span></h1>
+                    <h2 className="row-start-3 italic text-lg text-amber-800 drop-shadow-lg font-tomorrow uppercase animated-entry">Enter your details</h2>
                     <input type="text" placeholder='Enter Your Username' className={`row-start-4 ${box}`} value={formData.username} onChange={e => setFormData({ ...formData, username: e.target.value })} required />
                     <input type="password" placeholder='Password' className={`row-start-5 ${box}`} value={formData.password} onChange={e => setFormData({ ...formData, password: e.target.value })} required />
                     <input type="email" placeholder='Email Address' className={`row-start-6 ${box}`} value={formData.email} onChange={e => setFormData({ ...formData, email: e.target.value })} required />

@@ -70,7 +70,7 @@
     background: 
         linear-gradient(90deg,  #b71b1b, #ff0000, #ff8446, #ff1744 ,#ff5252,#ff8a65,#ffb300,#ff6f00, #b71b1b,#ff7043, #ff0000, #ff8446, #ff1744 ,#ff5252,#ff8a65,#ffb300,#ff6f00,#ff7043 );
         background-size: 800% 800%;
-    animation: gradient-move 25s ease-in-out infinite;
+    animation: gradient-move 95s linear infinite;
 }
 @keyframes pulse_animation {
     0% {
@@ -114,16 +114,16 @@
 }
 .shiny-bg::before {
     content : "";
-    position: absolute ;
+    position: absolute;
     top: 0; left: 0; right: 0; bottom: 0;
     background: linear-gradient(120deg,
-    rgba(255, 255, 255, 0.6) 0%,
-    rgba(255, 255, 255, 0.3) 60%,
-    rgba(255, 255, 255, 0.6) 100%          
+    rgba(255, 255, 255, 0.3) 0%,
+    rgba(255, 255, 255, 0.1) 60%,
+    rgba(255, 255, 255, 0.3) 100%          
     );
     mix-blend-mode: lighten;
     pointer-events: none;
-    animation: shine-move 3s linear infinite;
+    animation: shine-move 2.5s linear infinite;
 }
 body {
     overflow-x: hidden;

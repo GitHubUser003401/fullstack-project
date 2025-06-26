@@ -1,5 +1,5 @@
-import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import Home from './Component/Home';
 import StartBox from './Component/StartBox';
 import LoginBox from './Component/loginbox';
@@ -10,11 +10,25 @@ import Navbar from './Component/navbar';
 import Footer from './Component/Footer';
 import RouteReload from './Component/routereload';
 import ProblemSet from './Component/ProblemSet';
+import AdminController from './Component/AdminController';
+import ProblemForm from './Component/ProblemForm';
+import AdminRouting from './Component/AdminRouting';
 
+function ScrollToTop() {
+  const location = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+} , [location.pathname]);
+  return null;
+}
 
 function App() {
+
   return (
+
+
     <BrowserRouter>
+      <ScrollToTop />
       <RouteReload>
 
         <Routes>
@@ -64,8 +78,8 @@ function App() {
                     />
                     <Home className="relative z-10" />
                   </div>
-                  <div className="h-24 relative z-10">
-                    Coming Soon...
+                  <div className="relative z-10 w-full h-64">
+                    <AdminController className="relative z-10"/>
                   </div>
                   <Footer className="relative z-10 mt-auto" />
                 </ProtectedRoute>
@@ -79,8 +93,8 @@ function App() {
                   <Navbar className="relative z-10" />
                   <div className="relative z-10 flex items-center w-full h-screen">
                     <img src = "/pexels-goumbik-574070.jpg" className = "absolute -z-10 object-cover w-full h-full"/>
-                    <h1 className = "text-5xl font-semibold font-[Times New Roman] ml-[20px] animated-entry">
-                      Problem Lists
+                    <h1 className = "text-7xl font-gruppo ml-[30px] animated-entry">
+                      Problem Sets
                     </h1>
                   </div>
                   <ProblemSet className="relative z-10" />
@@ -88,6 +102,19 @@ function App() {
                 </ProtectedRoute>
               </div>
 
+            }
+          />
+          <Route path="/createproblemset"
+            element={
+              <div className="relative w-full flex flex-col min-h-screen overflow-hidden shiny-bg bg-gradient-to-bl from-[#e0e0e0] via-[#bdbdbd] to-[#757575] ">
+                <ProtectedRoute>
+                  <AdminRouting>
+                  <Navbar className="relative z-10" />
+                  <ProblemForm className="relative z-10" />
+                  <Footer className="relative z-10 mt-auto" />
+                  </AdminRouting>
+                </ProtectedRoute>
+              </div>
             }
           />
         </Routes>
