@@ -31,26 +31,26 @@ function ProblemSet({ className }) {
                 <span className = "bg-gradient-to-r from-[#b438ee] via-[#d21396] to-[#d5d4d4] w-2/3 font-light font-newsreader ">Here is the Problem Sets Section</span>
             </h1>
             <div className = "overflow-x-auto mt-6">
-                <table className = "min-w-full bg-black ">
+                <table className = "min-w-full border-collapse border border-gray-500 bg-black table-fixed">
                     <thead className = "bg-gray-600 text-white font-newsreader">
                         <tr>
-                            <th className = "py-2 px-10">Title</th>
-                            <th className = "py-2 px-10 ">Difficulty</th>
-                            <th className = "py-2 px-10 ">Tag</th>
-                            <th className = "py-2 px-10 ">Created By</th>
-                            <th className = "py-2 px-10 ">Created At</th>
+                            <th className = "border border-gray-500 py-2 px-6 w-1/5">Title</th>
+                            <th className = "border border-gray-500 py-2 px-6 w-1/5">Difficulty</th>
+                            <th className = "border border-gray-500 py-2 px-6 w-1/5">Tag</th>
+                            <th className = "border border-gray-500 py-2 px-6 w-1/5">Created By</th>
+                            <th className = "border border-gray-500 py-2 px-6 w-1/5">Created At</th>
                         </tr>
                     </thead>
-                    <tbody className = "divide-y divide-gray-500">
+                    <tbody className = "">
                         {problems.map((problem, idx) => (
-                            <tr key={problem._id || idx} className="hover:bg-gray-600 transition duration-300">
-                                <td className="py-2 px-10 text-orange-600">{problem.title}</td>
-                                <td className="py-2 px-10 text-orange-600">{problem.difficulty}</td>
-                                <td className="py-2 px-10 text-orange-600">
+                            <tr key={problem._id || idx} className="hover:bg-cyan-800 transition duration-300">
+                                <td className=" border border-gray-500 py-2 px-6 text-orange-600 text-center">{problem.title}</td>
+                                <td className=" border border-gray-500 py-2 px-6 text-orange-600 text-center">{problem.difficulty}</td>
+                                <td className=" border border-gray-500 py-2 px-6 text-orange-600 text-center">
                                     {problem.tags && problem.tags.join(', ')}
                                 </td>
-                                <td className="py-2 px-10 text-orange-600">{problem.createdBy}</td>
-                                <td className="py-2 px-10 text-orange-600">
+                                <td className=" border border-gray-500 py-2 px-6 text-orange-600 text-center">{problem.createdBy}</td>
+                                <td className=" border border-gray-500 py-2 px-6 text-orange-600 text-center">
                                     {problem.createdAt && new Date(problem.createdAt).toLocaleDateString()}
                                 </td>
                             </tr>

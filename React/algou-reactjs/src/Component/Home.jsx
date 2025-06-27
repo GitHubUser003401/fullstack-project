@@ -17,7 +17,7 @@ function Home({className}) {
                     navigate('/login', { state: { message: 'Session expired, please log in again.' }});
                 } else if (error === 'Invalid token') {
                     navigate('/login', { state: { message: 'Invalid token, please log in again.' }});
-                } else{
+                } else {
                     navigate('/login', { state: { message: error }});
                 }
             }

@@ -13,12 +13,14 @@ import ProblemSet from './Component/ProblemSet';
 import AdminController from './Component/AdminController';
 import ProblemForm from './Component/ProblemForm';
 import AdminRouting from './Component/AdminRouting';
+import ConfirmProblemBox from './Component/ConfirmProblem';
+import AdminProblems from './Component/AdminProblems';
 
 function ScrollToTop() {
   const location = useLocation();
   useEffect(() => {
     window.scrollTo(0, 0);
-} , [location.pathname]);
+  }, [location.pathname]);
   return null;
 }
 
@@ -61,7 +63,7 @@ function App() {
         <Routes>
           <Route path="/Home"
             element={
-              <div className="relative w-full flex flex-col min-h-screen overflow-hidden shiny-bg bg-gradient-to-bl from-[#e0e0e0] via-[#bdbdbd] to-[#757575] ">
+              <div className="relative w-full flex flex-col min-h-screen overflow-hidden shiny-bg bg-gradient-to-bl from-[#222426] via-[#777676] to-[#1a1a1a]  ">
 
                 <ProtectedRoute>
                   <Navbar className="relative z-10" />
@@ -78,8 +80,8 @@ function App() {
                     />
                     <Home className="relative z-10" />
                   </div>
-                  <div className="relative z-10 w-full h-64">
-                    <AdminController className="relative z-10"/>
+                  <div className="relative z-10 w-full min-h-full">
+                    <AdminController className="relative z-10" />
                   </div>
                   <Footer className="relative z-10 mt-auto" />
                 </ProtectedRoute>
@@ -88,12 +90,12 @@ function App() {
 
           <Route path="/problems"
             element={
-              <div className="relative w-full flex flex-col min-h-screen overflow-hidden shiny-bg bg-gradient-to-bl from-[#e0e0e0] via-[#bdbdbd] to-[#757575] ">
+              <div className="relative w-full flex flex-col min-h-screen overflow-hidden shiny-bg bg-gradient-to-bl from-[#222426] via-[#777676] to-[#1a1a1a]  ">
                 <ProtectedRoute>
                   <Navbar className="relative z-10" />
                   <div className="relative z-10 flex items-center w-full h-screen">
-                    <img src = "/pexels-goumbik-574070.jpg" className = "absolute -z-10 object-cover w-full h-full"/>
-                    <h1 className = "text-7xl font-gruppo ml-[30px] animated-entry">
+                    <img src="/pexels-goumbik-574070.jpg" className="absolute -z-10 object-cover w-full h-full" />
+                    <h1 className="text-7xl font-gruppo ml-[30px] animated-entry">
                       Problem Sets
                     </h1>
                   </div>
@@ -106,16 +108,60 @@ function App() {
           />
           <Route path="/createproblemset"
             element={
-              <div className="relative w-full flex flex-col min-h-screen overflow-hidden shiny-bg bg-gradient-to-bl from-[#e0e0e0] via-[#bdbdbd] to-[#757575] ">
+              <div className="relative w-full flex flex-col min-h-screen overflow-hidden shiny-bg bg-gradient-to-bl from-[#222426] via-[#777676] to-[#1a1a1a] ">
                 <ProtectedRoute>
                   <AdminRouting>
-                  <Navbar className="relative z-10" />
-                  <ProblemForm className="relative z-10" />
-                  <Footer className="relative z-10 mt-auto" />
+                    <Navbar className="relative z-10" />
+                    <ProblemForm className="relative z-10" />
+                    <Footer className="relative z-10 mt-auto" />
                   </AdminRouting>
                 </ProtectedRoute>
               </div>
             }
+          />
+          <Route path="/ProblemConfirmation"
+            element={
+              <div className="relative w-full flex flex-col min-h-screen overflow-hidden shiny-bg bg-gradient-to-bl from-[#222426] via-[#777676] to-[#1a1a1a]">
+                <ProtectedRoute>
+                  <AdminRouting>
+                    <ConfirmProblemBox className="relative z-10" />
+                  </AdminRouting>
+                </ProtectedRoute>
+              </div>
+            }
+
+          />
+          <Route path="/adminProblemSet"
+            element={
+              <div className="relative w-full flex flex-col min-h-screen overflow-hidden shiny-bg bg-gradient-to-bl from-[#222426] via-[#777676] to-[#1a1a1a]">
+                <ProtectedRoute>
+                  <AdminRouting>
+                    <Navbar className="relative z-10" />
+                    <div className="relative z-10 flex items-center w-full h-screen">
+                      <img src="/pexels-thisisengineering-3861958.jpg" className="absolute -z-10 object-cover w-full h-full" />
+                      <h1 className="text-7xl font-gruppo w-full text-center text-red-800 font-extrabold animated-entry">
+                        Admin Problem Sets
+                      </h1>
+                    </div>
+                    <AdminProblems className = "relative z-10"/>
+                    <Footer className="relative z-10 mt-auto" />
+                  </AdminRouting>
+                </ProtectedRoute>
+              </div>
+            }
+          />
+          <Route path="/edit-problem/:id"
+          element={
+            <div className="relative w-full flex flex-col min-h-screen overflow-hidden shiny-bg bg-gradient-to-bl from-[#222426] via-[#777676] to-[#1a1a1a]">
+              <ProtectedRoute>
+                <AdminRouting>
+                  <Navbar className="relative z-10" />
+                  <ProblemForm className="relative z-10" />
+                  <Footer className="relative z-10 mt-auto" />
+                </AdminRouting>
+              </ProtectedRoute>
+            </div>
+          }
           />
         </Routes>
 

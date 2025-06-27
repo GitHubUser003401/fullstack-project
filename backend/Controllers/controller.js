@@ -92,9 +92,11 @@ export const loginCode = async (req, res) => {
         const token = jwt.sign({ id: user._id, email: user.email, username: user.username, role:user.Role }, process.env.SECRET_KEY, {
             expiresIn: "2h"
         })
+        
         const userObj = user.toObject();
         delete userObj.password;
         userObj.token = token;
+
         res.status(200).json({ message: "Login successful", user: userObj });
     } catch (error) {
         console.log(error);
@@ -137,7 +139,7 @@ export const createProblemCode = async (req, res) => {
                 constraints,
                 tags,
                 difficulty,
-                createdBy: req.user.username,
+                createdBy: `${req.user.id}|${req.user.username}`,
                 createdAt: new Date()
             });
             res.status(201).json({ message: "Problem created successfully", problem: newProblem });
@@ -147,6 +149,84 @@ export const createProblemCode = async (req, res) => {
         }
     } catch (error) {
         console.log(error);
+        res.status(500).send("Internal Server Error");
+    }
+}
+
+export const AdminProblemsCode = async (req, res) => {
+    try {
+        const _id = req.user.id;
+        const Name = req.user.username;
+        const adminProblems = await ProblemStruct.find({ createdBy: `${_id}|${Name}` })
+        return res.status(200).json({ adminProblems });
+    } catch (error) {
+        console.log(error);
+        return res.status(500).send("Internal Server Error");
+    }
+}
+
+export const getProblemById = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const problem = await ProblemStruct.findById(id);
+        if (!problem) {
+            return res.status(404).send("Problem not found");
+        }
+        res.status(200).json(problem);
+    } catch (error) {
+        console.error("Error fetching problem by ID:", error);
+        if (error.name === 'CastError') {
+            return res.status(400).send("Invalid problem ID format");
+        }
+        res.status(500).send("Internal Server Error");
+    }
+}
+
+export const updateProblemCode = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { title, description, SampleInput, SampleOutput, constraints, tags, difficulty } = req.body;
+
+        if (!(title && description && SampleInput && SampleOutput && constraints && tags && difficulty)) {
+            return res.status(400).send("Please provide all required fields.");
+        }
+
+        const updatedProblem = await ProblemStruct.findByIdAndUpdate(id, {
+            title,
+            description,
+            SampleInput,
+            SampleOutput,
+            constraints,
+            tags,
+            difficulty
+        }, { new: true });
+
+        if (!updatedProblem) {
+            return res.status(404).send("Problem not found");
+        }
+        res.status(200).json({ message: "Problem updated successfully", problem: updatedProblem });
+    } catch (error) {
+        console.error("Error updating problem:", error);
+        if (error.name === 'CastError') {
+            return res.status(400).send("Invalid problem ID format");
+        }
+        res.status(500).send("Internal Server Error");
+    }
+}
+
+export const deleteProblemCode = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const deletedProblem = await ProblemStruct.findByIdAndDelete(id);
+        if (!deletedProblem) {
+            return res.status(404).send("Problem not found");
+        }
+        res.status(200).json({ message: "Problem deleted successfully", problem: deletedProblem });
+    } catch (error) {
+        console.error("Error deleting problem:", error);
+        if (error.name === 'CastError') {
+            return res.status(400).send("Invalid problem ID format");
+        }
         res.status(500).send("Internal Server Error");
     }
 }

@@ -10,15 +10,15 @@ const problemSchema = new mongoose.Schema({
         required: true,
     },
     SampleInput: {
-        type: String,
+        type: [String],
         required: true,
     },
     SampleOutput: {
-        type: String,
+        type: [String],
         required: true,
     },
     constraints: {
-        type: String,
+        type: [String],
         required: true,
     },
     tags : {
