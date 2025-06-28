@@ -145,7 +145,7 @@ function ProblemForm({ className }) {
     }
 
     return (
-        <div className={className + "w-full min-h-screen flex justify-center"}>
+        <div className={className + "w-full animated-entry min-h-screen flex justify-center"}>
             <form onSubmit={handleSubmit} className="mt-[100px] w-2/3 mb-[50px] min-h-screen bg-gradient-to-br space-y-9 from-[#e6b93e] via-[#bebcb0] to-[#e6b93e] bordering flex flex-col items-center">
                 <h1 className="text-4xl font-newsreader font-light text-purple-800 shadow-xl mt-4">
                     Create a Problem Set.

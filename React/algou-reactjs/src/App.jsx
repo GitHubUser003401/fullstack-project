@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+
 import Home from './Component/Home';
 import StartBox from './Component/StartBox';
 import LoginBox from './Component/loginbox';

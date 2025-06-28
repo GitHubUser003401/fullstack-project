@@ -131,3 +131,6 @@ body {
 .bordering{
     border-radius: 50px;
 }
+.custom-shadow {
+    box-shadow: 0 6px 15px 7px rgba(58, 84, 254, 0.5);
+}

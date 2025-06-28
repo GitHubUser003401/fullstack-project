@@ -4,7 +4,7 @@ function Footer({ className }) {
     return (
         <footer className={className}>
             <div className = "w-full h-24 bg-black divide-y-[2px] divide-white divide-opacity-50">
-            <div className = "w-full h-12 bg-gradient-to-r grid from-slate-900 via-slate-800 to-slate-600">
+            <div className = "w-full h-12 bg-gradient-to-br grid from-slate-900 via-slate-600 to-slate-800">
             </div>
             <div className = "w-full h-12 flex justify-center items-center">
                 <p className = "text-white font-[Times New Roman] font-bodoni text-sm">
