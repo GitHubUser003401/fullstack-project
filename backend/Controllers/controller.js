@@ -161,7 +161,7 @@ export const AdminProblemsCode = async (req, res) => {
         return res.status(200).json({ adminProblems });
     } catch (error) {
         console.log(error);
-        return res.status(500).send("Internal Server Error");
+        res.status(500).send("Internal Server Error");
     }
 }
 
@@ -172,7 +172,7 @@ export const getProblemById = async (req, res) => {
         if (!problem) {
             return res.status(404).send("Problem not found");
         }
-        res.status(200).json(problem);
+        res.status(200).json( problem );
     } catch (error) {
         console.error("Error fetching problem by ID:", error);
         if (error.name === 'CastError') {

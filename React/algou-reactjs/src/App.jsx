@@ -16,6 +16,9 @@ import ProblemForm from './Component/ProblemForm';
 import AdminRouting from './Component/AdminRouting';
 import ConfirmProblemBox from './Component/ConfirmProblem';
 import AdminProblems from './Component/AdminProblems';
+import ProblemBox from './Component/ProblemBox';
+
+import EditorBox from './Component/EditorBox';
 
 function ScrollToTop() {
   const location = useLocation();
@@ -164,6 +167,18 @@ function App() {
             </div>
           }
           />
+          <Route path="/problemDescription/:id" 
+          element={
+            <div className="relative w-full flex flex-col h-screen overflow-hidden shiny-bg bg-gradient-to-bl from-[#222426] via-[#777676] to-[#1a1a1a]">
+              <ProtectedRoute>
+                <div className = "flex justify-between">
+                <ProblemBox className="relative z-10"/>
+                <EditorBox className="relative z-10"/>
+                </div>
+              </ProtectedRoute>
+            </div>
+
+          }/>
         </Routes>
 
       </RouteReload>

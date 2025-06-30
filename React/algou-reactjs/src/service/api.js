@@ -1,5 +1,6 @@
 import axios from 'axios';
 const API_URL = import.meta.env.VITE_REACT_APP_URL_BACKEND;
+const COMPILER_URL = import.meta.env.VITE_REACT_APP_URL_COMPILER;
 
 export const registerUser = async (userData) => {
     try {
@@ -205,6 +206,66 @@ export const deleteProblem = async (id) => {
     try {
         const token = localStorage.getItem('token');
         const response = await axios.delete(`${API_URL}/deleteProblem/${id}`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        return response.data;
+    } catch (error) {
+        let message, errorName;
+        if(error.response){
+            if (typeof error.response.data === 'object' && error.response.data !==null){
+                message = error.response.data.message || JSON.stringify(error.response.data);
+                errorName = error.response.data.error;
+            }
+             else {
+                message = error.response.data;
+            }
+        } else {
+            message = 'Network Error';
+        }
+        if (errorName === 'TokenExpiredError' || message === 'Invalid token') {
+            localStorage.removeItem('token');
+            throw errorName || message;
+        }
+        throw message;
+    }
+}
+
+export const UserProblemById = async (id) => {
+    try {
+        const token = localStorage.getItem('token');
+        const response = await axios.get(`${API_URL}/ProblemID/${id}`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        return response.data;
+    } catch (error) {
+        let message, errorName;
+        if(error.response){
+            if (typeof error.response.data === 'object' && error.response.data !==null){
+                message = error.response.data.message || JSON.stringify(error.response.data);
+                errorName = error.response.data.error;
+            }
+             else {
+                message = error.response.data;
+            }
+        } else {
+            message = 'Network Error';
+        }
+        if (errorName === 'TokenExpiredError' || message === 'Invalid token') {
+            localStorage.removeItem('token');
+            throw errorName || message;
+        }
+        throw message;
+    }
+}
+
+export const compileCode = async (codeData) => {
+    try {
+        const token = localStorage.getItem('token');
+        const response = await axios.post(`${COMPILER_URL}/compile`, codeData, {
             headers: {
                 Authorization: `Bearer ${token}`
             }

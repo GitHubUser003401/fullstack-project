@@ -43,7 +43,8 @@ function ProblemSet({ className }) {
                     </thead>
                     <tbody className = "">
                         {problems.map((problem, idx) => (
-                            <tr key={problem._id || idx} className="hover:bg-cyan-800 transition duration-300">
+                            <tr key={problem._id || idx} className="hover:bg-cyan-800 transition duration-300"
+                            onClick={() => navigate(`/problemDescription/${problem._id}`)}>
                                 <td className=" border border-gray-500 py-2 px-6 text-orange-600 text-center">{problem.title}</td>
                                 <td className=" border border-gray-500 py-2 px-6 text-orange-600 text-center">{problem.difficulty}</td>
                                 <td className=" border border-gray-500 py-2 px-6 text-orange-600 text-center">

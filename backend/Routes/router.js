@@ -16,6 +16,7 @@ router.get('/adminProblems', tokenMiddleware, isAdminMiddleware, AdminProblemsCo
 router.get('/adminProblems/:id', tokenMiddleware, isAdminMiddleware, getProblemById);
 router.put('/updateProblem/:id', tokenMiddleware, isAdminMiddleware, updateProblemCode);
 router.delete('/deleteProblem/:id', tokenMiddleware, isAdminMiddleware, deleteProblemCode);
+router.get('/ProblemID/:id', tokenMiddleware, getProblemById)
 
 
 export default router;
