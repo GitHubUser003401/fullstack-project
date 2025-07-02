@@ -1,0 +1,136 @@
+@keyframes gradient-move {
+    0% {
+        background-position: 0% 50%;
+    }
+    1%{
+        background-position: 0% 50%;
+    }
+    9% {
+        background-position: 20% 50%;
+    }
+    11% {
+        background-position: 20% 50%;
+    }
+    19% {
+        background-position: 40% 50%;
+    }
+    21% {
+        background-position: 40% 50%;
+    }
+    29% {
+        background-position: 60% 50%;
+    }
+    31% {
+        background-position: 60% 50%;
+    }
+
+    39% {
+        background-position: 80% 50%;
+    }
+
+    41% {
+        background-position: 80% 50%;
+    }
+    49% {
+        background-position: 100% 50%;
+    }
+    59% {
+        background-position: 80% 50%;
+    }
+
+    61% {
+        background-position: 80% 50%;
+    }
+    69% {
+        background-position: 60% 50%;
+    }
+    71% {
+        background-position: 60% 50%;
+    }
+    79% {
+        background-position: 40% 50%;
+    }
+    81% {
+        background-position: 40% 50%;
+    }
+    89% {
+        background-position: 20% 50%;
+    }
+    91% {
+        background-position: 20% 50%;
+    }
+    99% {
+        background-position: 0% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+.animated-gradient {
+    background: 
+        linear-gradient(90deg,  #b71b1b, #ff0000, #ff8446, #ff1744 ,#ff5252,#ff8a65,#ffb300,#ff6f00, #b71b1b,#ff7043, #ff0000, #ff8446, #ff1744 ,#ff5252,#ff8a65,#ffb300,#ff6f00,#ff7043 );
+        background-size: 800% 800%;
+    animation: gradient-move 95s linear infinite;
+}
+@keyframes pulse_animation {
+    0% {
+        
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+.animated-pulse:hover {
+    background: linear-gradient(90deg, #bdbdbd, #757575,#020bff, #eaff08 , #ff3838, #ff8a65);
+    background-size: 400% 400%;
+    animation: pulse_animation 2s ease-in-out; 
+}
+@keyframes entry_animation {
+    from {
+        opacity : 0;
+        transform : translateX(-50px);
+
+    }
+    to {
+        opacity : 1;
+        transform : translateX(0px);
+    }
+}
+.animated-entry {
+    animation : entry_animation 1s ease-in-out;
+}
+@keyframes shine-move {
+    0% {opacity: 0.7; }
+    50% {opacity: 1;}
+    100% {opacity: 0.7;}
+}
+.shiny-bg {
+    position: relative;
+    overflow: hidden;
+}
+.shiny-bg::before {
+    content : "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(60deg,
+    rgba(255, 255, 255, 0.3) 0%,
+    rgba(255, 255, 255, 0.1) 60%,
+    rgba(255, 255, 255, 0.3) 100%          
+    );
+    mix-blend-mode: lighten;
+    pointer-events: none;
+    animation: shine-move 2.5s linear infinite;
+}
+body {
+    overflow-x: hidden;
+}
+.bordering{
+    border-radius: 50px;
+}
+.custom-shadow {
+    box-shadow: 0 6px 15px 7px rgba(58, 84, 254, 0.5);
+}

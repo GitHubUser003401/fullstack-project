@@ -1,0 +1,11 @@
+@import "tailwindcss";
+
+@theme {
+    --font-bodoni: 'Bodoni Moda', serif;
+    --font-meaculpa: 'Mea Culpa', cursive;
+    --font-imperialscript: 'Imperial Script', cursive;
+    --font-newsreader: 'Newsreader', serif;
+    --font-tomorrow: 'Tomorrow', sans-serif;
+    --font-gruppo: 'Gruppo', cursive;
+    --font-unna: 'Unna', serif;
+}
