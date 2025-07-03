@@ -6,7 +6,10 @@ import StartBox from './Components/StartBox';
 import LoginBox from './Components/LoginBox';
 import Homelayout from './Layout/StartLayout';
 import ConfirmBox from './Components/ConfirmationBox';
-import RouteReload from './Layout/Reload';
+import RouteReload from './RoutesHandling/Reload';
+import PublicRoute from './RoutesHandling/PublicRoute';
+import ProtectedRoute from './RoutesHandling/ProtectedRoute';
+import Dashboard from './Layout/Dashboard';
 
 
 function ScrollToTop() {
@@ -26,11 +29,32 @@ function App() {
       <Routes>
         <Route path="/" element={<Homelayout className = "relative" />}>
           <Route index element={<StartBox className = "animated-entry relative z-10"/>}/> 
-          <Route path="login" element={<LoginBox className = "relative z-10"/>}/>
-          <Route path="register" element={<RegisterBox className = "animated-entry relative z-10 "/>}/>
-          <Route path="confirmation" element={<ConfirmBox className = "animated-entry relative z-10" />}/>
+          <Route path="login" element={
+            <PublicRoute>
+            <LoginBox className = "relative z-10"/>
+            </PublicRoute>
+            }/>
+          <Route path="register" element={
+            <PublicRoute>
+            <RegisterBox className = "animated-entry relative z-10 "/>
+            </PublicRoute>
+            }/>
+          <Route path="confirmation" element={
+            <PublicRoute>
+            <ConfirmBox className = "animated-entry relative z-10" />
+            </PublicRoute>
+            }/>
         </Route>
+        <Route path="/dashboard" element={
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        }>
+          </Route>
+        
+        {/* Add other protected routes here */}
       </Routes>
+
       </RouteReload>
     </BrowserRouter>
   )

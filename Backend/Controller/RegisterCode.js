@@ -35,12 +35,8 @@ export const registerCode = async (req, res) => {
                 Age,
                 Role,
             });
-            const token = jwt.sign({ id: user._id, email: user.email, username: user.username, role:user.Role }, process.env.SECRET_KEY, {
-                expiresIn: "2h"
-            });
             const userObj = user.toObject();
             delete userObj.password;
-            userObj.token = token;
 
             res.status(200).json({ message: "User registered successfully", user: userObj });
 

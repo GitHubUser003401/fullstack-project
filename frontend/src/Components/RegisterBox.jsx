@@ -14,8 +14,6 @@ function RegisterBox({ className }) {
         Age:  "",
         Role: "",
     });
-
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         
@@ -48,8 +46,6 @@ function RegisterBox({ className }) {
         }
         
     }
-        
-
     const box = " focus:outline-none focus:ring-2 placeholder-black bg-gray-300 rounded-full truncate w-52 h-8 transition delay-50 duration-500 hover:scale-105 hover:translate-y-1"
 
     return (
@@ -63,17 +59,17 @@ function RegisterBox({ className }) {
                 <div className = "w-3/5 h-full bordering pb-12 pt-12 shadow-2xl shadow-orange-600 animated-gradient place-items-center text-wrap overflow-hidden">
                 <form onSubmit={handleSubmit} className='flex flex-col justify-between items-center'>
                     <div className = "grid grid-cols-2 grid-rows-6 items-center gap-3.5">
-                    <label className = "row-start-1 font-newsreader text-xl">UserName:</label>   
+                    <label className = "row-start-1 font-newsreader text-xl bg-gradient-to-r from-[#050505] via-[#af0000] to-[#5f5f5f] bg-clip-text text-transparent">UserName:</label>   
                     <input type="text" placeholder='Enter Your Username' className={`${box}`} value={formData.username} onChange={e => setFormData({ ...formData, username: e.target.value })} required />
-                    <label className='row-start-2 font-newsreader text-xl'>Password:</label>
+                    <label className='row-start-2 font-newsreader text-xl bg-gradient-to-r from-[#050505] via-[#af0000] to-[#5f5f5f] bg-clip-text text-transparent'>Password:</label>
                     <input type="password" placeholder='Password' className={`${box}`} value={formData.password} onChange={e => setFormData({ ...formData, password: e.target.value })} required />
-                    <label className = 'row-start-3 font-newsreader text-xl'>Email:</label>
+                    <label className = 'row-start-3 font-newsreader text-xl bg-gradient-to-r from-[#050505] via-[#af0000] to-[#5f5f5f] bg-clip-text text-transparent'>Email:</label>
                     <input type="email" placeholder='Email Address' className={`${box}`} value={formData.email} onChange={e => setFormData({ ...formData, email: e.target.value })} required />
-                    <label className='row-start-4 font-newsreader text-xl'>Contact Number:</label>
+                    <label className='row-start-4 font-newsreader text-xl bg-gradient-to-r from-[#050505] via-[#af0000] to-[#5f5f5f] bg-clip-text text-transparent'>Contact Number:</label>
                     <input type="number" placeholder='Contact_Number' className={`${box}`} value={formData.Phone_Number} onChange={e => setFormData({ ...formData, Phone_Number: e.target.value })} required />
-                    <label className='row-start-5 font-newsreader text-xl'>Age:</label>
+                    <label className='row-start-5 font-newsreader text-xl bg-gradient-to-r from-[#050505] via-[#af0000] to-[#5f5f5f] bg-clip-text text-transparent'>Age:</label>
                     <input type="number" placeholder='Age' className={`${box}`} value={formData.Age} onChange={e => setFormData({ ...formData, Age: e.target.value })} required />
-                    <label className='row-start-6 font-newsreader text-xl'>Role:</label>
+                    <label className='row-start-6 font-newsreader text-xl bg-gradient-to-r from-[#050505] via-[#af0000] to-[#5f5f5f] bg-clip-text text-transparent'>Role:</label>
                     <select className={`${box}`} value={formData.Role} onChange={e => setFormData({ ...formData, Role: e.target.value })} required>
                         <option value= "" disabled >Select Role</option>
                         <option value="Admin">Admin</option>

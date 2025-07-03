@@ -18,13 +18,18 @@ export const loginCode = async (req, res) => {
         if (!isPasswordValid) {
             return res.status(400).send("Invalid Password. Please try again.");
         }
-        const token = jwt.sign({ id: user._id, email: user.email, username: user.username, role:user.Role }, process.env.SECRET_KEY, {
-            expiresIn: "2h"
-        })
+        const token = jwt.sign({ id: user._id, email: user.email }, process.env.SECRET_KEY, {
+            expiresIn: "24h"
+        });
+        res.cookie('authToken', token, {
+            httpOnly: true,        // Cannot be accessed via JavaScript (XSS protection)
+            secure: process.env.NODE_ENV === 'production', // HTTPS only in production
+            sameSite: 'strict',    // CSRF protection
+            maxAge: 24 * 60 * 60 * 1000 // 24 hours
+        });
         
         const userObj = user.toObject();
         delete userObj.password;
-        userObj.token = token;
 
         res.status(200).json({ message: "Login successful", user: userObj });
     } catch (error) {
@@ -32,5 +37,4 @@ export const loginCode = async (req, res) => {
         res.status(500).send("Internal Server Error");
 
     }
-
 };
