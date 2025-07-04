@@ -10,6 +10,9 @@ import RouteReload from './RoutesHandling/Reload';
 import PublicRoute from './RoutesHandling/PublicRoute';
 import ProtectedRoute from './RoutesHandling/ProtectedRoute';
 import Dashboard from './Layout/Dashboard';
+import AuthChecker from './RoutesHandling/AuthChecker';
+import { useDispatch } from 'react-redux';
+import ProblempageLayout from './Layout/ProblempageLayout';
 
 
 function ScrollToTop() {
@@ -24,6 +27,7 @@ function App() {
   return (
     <BrowserRouter>
     <ScrollToTop />
+    <AuthChecker />
     <RouteReload>
 
       <Routes>
@@ -45,16 +49,23 @@ function App() {
             </PublicRoute>
             }/>
         </Route>
-        <Route path="/dashboard" element={
-          <ProtectedRoute>
-            <Dashboard />
-          </ProtectedRoute>
-        }>
+
+        <Route path="/dashboard" >
+          <Route index element={
+            <ProtectedRoute>
+              <Dashboard className = "animated-entry relative z-10"/>
+            </ProtectedRoute>
+            } />
+            <Route path="problems" element={
+              <ProtectedRoute>
+                <ProblempageLayout />
+              </ProtectedRoute>
+            } />
+          
           </Route>
         
         {/* Add other protected routes here */}
       </Routes>
-
       </RouteReload>
     </BrowserRouter>
   )

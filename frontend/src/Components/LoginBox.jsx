@@ -1,4 +1,4 @@
-import react from 'react';
+import react, { useEffect } from 'react';
 import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -14,6 +14,9 @@ function LoginBox({className}) {
     email: "",
     password: "",
   })
+  useEffect(() => {
+    dispatch({ type: 'auth/clearError' });
+  }, [dispatch]);
 
 const handleSubmit = async (e) => {
     e.preventDefault();
@@ -24,7 +27,7 @@ const handleSubmit = async (e) => {
     try {
       const response = await loginUser(loginData);
       if (response) {
-        dispatch({ type: 'auth/loginSuccess', payload: {user: response.user, token: response.token} });
+        dispatch({ type: 'auth/loginSuccess', payload: {user: response.user } });
         navigate('/dashboard');
       }
     } catch (err) {
@@ -54,11 +57,13 @@ const handleSubmit = async (e) => {
             disabled={loading}>
             {loading ? 'Logging in...' : 'Login'}
           </button>
+          <div className = "w-2/3 text-center">
           {error && (
             <h2 className="text-red-600 font-bold animated-entry">
             {typeof error === "string" ? error : error?.message || "An error occurred"}
           </h2>)
           }
+          </div>
         </form>
         </div>
       </div>

@@ -1,10 +1,11 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { registerUser } from '../Service/RegisterApi';
 function RegisterBox({ className }) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const location = useLocation();
     const loading = useSelector((state) => state.auth.loading);
     const [formData, setFormData] = useState({
         username: "",
@@ -14,6 +15,10 @@ function RegisterBox({ className }) {
         Age:  "",
         Role: "",
     });
+    useEffect(() => {
+        dispatch({ type: 'auth/clearError' });
+    }, [dispatch]);
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         

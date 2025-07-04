@@ -19,7 +19,7 @@ function HomeBox({ className }) {
                 Head to Problem Section to get started with the problems.
             </p>
             <button className = "w-44 h-12 bg-gradient-to-r mb-[20px] from-[#e0e0e0] via-[#bdbdbd] to-[#757575] rounded-lg truncate animated-pulse hover:font-bold hover:text-indigo-900 transition delay-50 duration-700 ease-in-out hover:scale-110 hover:shadow-2xl hover:-translate-y-1 active:scale-100"
-            onClick={() => navigate('/problems')}>
+            onClick={() => navigate('/dashboard/problems')}>
                 Go to Problems
             </button>
 
