@@ -1,6 +1,6 @@
 import ProblemStruct from "../Models/Problem.js";
 
-export const ProblemlistCode = async (req, res) => {
+export const fetchproblemCode = async (req, res) => {
     try {
         const problemlist = await ProblemStruct.find({});
         res.status(200).json({ problemlist });
@@ -8,4 +8,4 @@ export const ProblemlistCode = async (req, res) => {
         console.log(error);
         res.status(500).send("Internal Server Error");
     }
-}
+};

@@ -1,37 +1,17 @@
-import {createSlice} from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 const problemSlice = createSlice({
-    name: "problem",
+    name: "problems",
     initialState: {
         problems: [],
-        loading: false,
-        error: null,
-        currentProblem: null,
-
     },
     reducers: {
-        fetchProblemStart: (state) => {
-            state.loading = true;
-            state.error = null;
-        },
-        fetchProblemSuccess: (state, action) => {
-            state.loading = false;
+        setProblems(state, action) {
             state.problems = action.payload;
-            state.error = null;
         },
-        fetchProblemFailure: (state, action) => {
-            state.loading = false;
-            state.error = action.payload;
+        clearProblems(state) {
+            state.problems = [];
         },
-        setCurrentProblem: (state, action) => {
-            state.currentProblem = action.payload;
-        },
-        clearCurrentProblem: (state) => {
-            state.currentProblem = null;
-        },
-        clearError: (state) => {
-            state.error = null;
-        }
     }
 })
 

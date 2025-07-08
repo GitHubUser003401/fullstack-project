@@ -21,6 +21,7 @@ export const loginCode = async (req, res) => {
         const token = jwt.sign({ id: user._id, email: user.email }, process.env.SECRET_KEY, {
             expiresIn: "24h"
         });
+        
         res.cookie('authToken', token, {
             httpOnly: true,        // Cannot be accessed via JavaScript (XSS protection)
             secure: process.env.NODE_ENV === 'production', // HTTPS only in production

@@ -1,43 +1,41 @@
 import { useNavigate } from "react-router-dom";
-import { fetchProblems } from "../Service/ProblemfetchApi";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { getproblems } from "../Service/ProblemfetchApi";
 
 function ProblemSet({ className }) {
-    const navigate = useNavigate();
-    const loading = useSelector((state) => state.problems.loading);
     const dispatch = useDispatch();
-    const problems = useSelector((state) => state.problems.problems);
-    const error = useSelector((state) => state.problems.error);
+    const navigate = useNavigate();
+    const problems = useSelector((state) => state.problem.problems);
+    const [Page, setPage] = useState(1);
+    const perPage = 10; // Number of problems per page
 
     useEffect(() => {
-        dispatch({ type: 'problem/clearError' });
-        dispatch({ type: 'auth/clearError' });
-    }, [dispatch]);
-
-    useEffect(() => {
-
-        if (loading) return;
-        dispatch({ type: 'problem/fetchProblemStart' });
-        const fetchData = async () => {
-            try {
-                const ProblemList = await fetchProblems();
-                dispatch({ type: 'problem/fetchProblemSuccess', payload: ProblemList.problemlist });
-            } catch (error) {
-                dispatch({ type: 'problem/fetchProblemFailure', payload: error });
-                console.error("Error fetching problems:", error);
-            }
-        }
+            const fetchData = async () => {
+                try {
+                    const response = getproblems();
+                    dispatch({ type: 'problems/setProblems', payload: response});
+                } catch (error) {
+                    console.error("Error fetching problems:", error);
+                    // Optionally, you can handle the error state here
+                }
+        };
         fetchData();
-    }, [dispatch, loading]);
+    }, [navigate]);
+
+    const startIndex = (Page - 1) * perPage;
+    const endIndex = startIndex + perPage;
+    const currentProblems = problems.slice(startIndex, endIndex);
+    const totalPages = Math.ceil(problems.length / perPage);
+
 
     return (
         <div className = {className + " animated-entry min-h-screen"}>
             <h1 className = "text-2xl h-16 flex items-end font-semibold">
-                <span className = "bg-gradient-to-r from-[#b438ee] via-[#d21396] to-[#d5d4d4] w-2/3 font-light font-newsreader ">Here is the Problem Sets Section</span>
+                <span className = "bg-gradient-to-r from-[#b438ee] via-[#d21396] to-[#d5d4d4] w-1/3 font-light font-newsreader ">Here is the Problem Section</span>
             </h1>
-            <div className = "overflow-x-auto mt-6">
-                <table className = "min-w-full border-collapse border border-gray-500 bg-black table-fixed">
+            <div className = "overflow-x-auto">
+                <table className = "min-w-full mb-[20px] border-collapse border border-gray-500 bg-black table-fixed">
                     <thead className = "bg-gray-600 text-white font-newsreader">
                         <tr>
                             <th className = "border border-gray-500 py-2 px-6 w-1/5">Title</th>
@@ -48,16 +46,16 @@ function ProblemSet({ className }) {
                         </tr>
                     </thead>
                     <tbody className = "">
-                        {problems.map((problem, idx) => (
+                        {currentProblems.map((problem, idx) => (
                             <tr key={problem._id || idx} className="hover:bg-cyan-800 transition duration-300"
                             onClick={() => navigate(`/problemDescription/${problem._id}`)}>
-                                <td className=" border border-gray-500 py-2 px-6 text-orange-600 text-center">{problem.title}</td>
-                                <td className=" border border-gray-500 py-2 px-6 text-orange-600 text-center">{problem.difficulty}</td>
-                                <td className=" border border-gray-500 py-2 px-6 text-orange-600 text-center">
+                                <td className=" border border-gray-500 py-2 px-6 h-20 text-orange-600 text-center">{problem.title}</td>
+                                <td className=" border border-gray-500 py-2 px-6 h-20 text-orange-600 text-center">{problem.difficulty}</td>
+                                <td className=" border border-gray-500 py-2 px-6 h-20 text-orange-600 text-center">
                                     {problem.tags && problem.tags.join(', ')}
                                 </td>
-                                <td className=" border border-gray-500 py-2 px-6 text-orange-600 text-center">{problem.createdBy}</td>
-                                <td className=" border border-gray-500 py-2 px-6 text-orange-600 text-center">
+                                <td className=" border border-gray-500 py-2 px-6 h-20 text-orange-600 text-center">{problem.createdBy}</td>
+                                <td className=" border border-gray-500 py-2 px-6 h-20 text-orange-600 text-center">
                                     {problem.createdAt && new Date(problem.createdAt).toLocaleDateString()}
                                 </td>
                             </tr>
@@ -69,22 +67,27 @@ function ProblemSet({ className }) {
                                 </td>
                             </tr>
                         )}
-                        {error && (
-                            <tr>
-                                <td colSpan={5} className = "py-4 font-gruppo text-3xl text-center text-red-500">
-                                    {typeof error === "string" ? error : error?.message || "An error occurred while fetching problems."}
-                                </td>
-                                </tr>)}
-                        {loading && (
-                            <tr>
-                                <td colSpan={5} className = "py-4 font-gruppo text-3xl text-center text-blue-500">
-                                    Loading problems...
-                                </td>
-                            </tr>)}
                     </tbody>
                 </table>
             </div>
+            <div className = "flex justify-center mt-2 gap-2 mb-16">
+                <button
+                    className = "px-4 py-2 bg-gray-700 text-white rounded disabled:opacity-50"
+                    onClick={() => setPage(Page - 1)}
+                    disabled={Page === 1} >
+                    Previous
+                </button>
+                <span className= "px-4 py-2">{Page}/ {totalPages}</span>
+                <button
+                    className = "px-4 py-2 bg-gray-700 text-white rounded disabled:opacity-50"
+                    onClick={() => setPage(Page + 1)}
+                    disabled={Page === totalPages} >
+                    Next
+                </button>
+            </div>
+
         </div>
     )
 }
 export default ProblemSet;
+ 

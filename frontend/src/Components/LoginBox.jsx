@@ -7,33 +7,32 @@ import { loginUser } from '../Service/LoginApi';
 function LoginBox({className}) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const location = useLocation();
-  const loading = useSelector((state) => state.auth.loading);
-  const error = useSelector((state) => state.auth.error);
+  const [error, setError] = useState(null);
+
   const [loginData, setloginData] = useState({
     email: "",
     password: "",
   })
-  useEffect(() => {
-    dispatch({ type: 'auth/clearError' });
-  }, [dispatch]);
+
 
 const handleSubmit = async (e) => {
     e.preventDefault();
-    if (loading) return; // Prevent multiple submissions while loading
 
-    dispatch({ type: 'auth/loginStart' });
-    
     try {
       const response = await loginUser(loginData);
-      if (response) {
-        dispatch({ type: 'auth/loginSuccess', payload: {user: response.user } });
-        navigate('/dashboard');
-      }
-    } catch (err) {
-      dispatch({ type: 'auth/loginFailure', payload: err });
+      dispatch({ type: 'auth/login', payload: response.user })
+      navigate('/dashboard');
+    } catch (errorMessage) {
+      setError(
+        typeof errorMessage === "string" ? errorMessage : errorMessage?.message
+      );
+      setloginData({
+        email: "",
+        password: "",
+      })
     }
-};
+  }
+
   return (
     <div className={className + " animated-entry"}>
       <div className="flex flex-col h-screen items-center justify-between opacity-90">
@@ -53,9 +52,8 @@ const handleSubmit = async (e) => {
           </div>
 
           <button className="antialiased font-normal italic text-indigo-700 font-serif text-lg w-36 h-12 bg-gradient-to-r from-[#e0e0e0] via-[#bdbdbd] to-[#757575] shadow-lg rounded-lg truncate animated-pulse hover:font-bold hover:text-indigo-900 transition delay-50 duration-700 ease-in-out hover:scale-110 hover:shadow-2xl hover:-translate-y-1 active:scale-100"
-            type = "submit"
-            disabled={loading}>
-            {loading ? 'Logging in...' : 'Login'}
+            type = "submit">
+              Login
           </button>
           <div className = "w-2/3 text-center">
           {error && (
@@ -68,7 +66,8 @@ const handleSubmit = async (e) => {
         </div>
       </div>
     </div>
-  );
-}
+  )
+};
+
 
 export default LoginBox;

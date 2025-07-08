@@ -2,6 +2,7 @@ import { Outlet } from "react-router-dom";
 import Navbar from "./Navbar";
 import HomeBox from "../Components/Homebox";
 import Footer from "./Footer";
+import { useSelector } from "react-redux";
 
 function Dashboard() {
 
@@ -10,9 +11,7 @@ function Dashboard() {
 
 
       <Navbar className="relative z-10" />
-      <h1 className="text-2xl relative font-bold font-gruppo bg-black tracking-widest text-center">
-        <span className='bg-gradient-to-r from-[#444444] via-[#af0000] to-[#5f5f5f] bg-clip-text text-transparent animated-entry'>Welcome to the Dashboard</span>
-      </h1>
+      
 
       <div className="relative z-10 w-full h-screen">
         <video

@@ -7,12 +7,12 @@ import problemReducer from './problemSlice'; // Assuming you have a problemSlice
 const persistConfig = {
     key: 'auth',
     storage,
-    whitelist: ['user', 'isAuthenticated', 'error']
+    whitelist: ['user', 'isAuthenticated']
 }
 const problemPersistConfig = {
     key: 'problems',
     storage,
-    whitelist: ['problems', 'currentProblem', 'error']
+    whitelist: ['problems']
 }
 
 const persistedAuthReducer = persistReducer(persistConfig, authReducer);
@@ -21,13 +21,11 @@ const persistedProblemReducer = persistReducer(problemPersistConfig, problemRedu
 export const store = configureStore({
     reducer: {
         auth: persistedAuthReducer,
-        problems: persistedProblemReducer // This will manage authentication state
+        problem: persistedProblemReducer, // add this line
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
-            serializableCheck: {
-                ignoredActions: ['persist/PERSIST', 'persist/REHYDRATE'],
-            },
+            serializableCheck: false,
         }),
 })
 export const persistor = persistStore(store);
