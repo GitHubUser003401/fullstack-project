@@ -1,8 +1,21 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { createProblem } from "../Service/ProblemCreateApi";
+import { updateProblem } from "../Service/ProblemUpdate";
+import Spinner from "./Spinner";
 
 function ProblemForm({ className }) {
+    const { id } = useParams();
+    const location = useLocation();
+    const updateproblem = location.state?.problem;
+    // If id is present, it means we are editing an existing problem
+    const loading = useSelector((state) => state.auth.loading);
+
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const update = useSelector((state) => state.problem.currentProblem);
+    const user = useSelector((state) => state.auth.user);
     const [Problems, setProblems] = useState({
         title: "",
         description: "",
@@ -11,7 +24,31 @@ function ProblemForm({ className }) {
         constraints: [],
         tags: [],
         difficulty: "",
+        createdBy: `${user._id}|${user.username}`,
     });
+
+    useEffect(() => {
+        if (id) {
+            const editData = updateproblem || update;
+            if (editData) {
+                if (updateproblem) {
+                    dispatch({ type: 'problem/setCurrentProblem', payload: updateproblem });
+                    // If we are editing a problem, set the form fields with the existing problem data
+                }
+                setProblems({
+                    title: editData.title,
+                    description: editData.description,
+                    SampleInput: editData.SampleInput || [],
+                    SampleOutput: editData.SampleOutput || [],
+                    constraints: editData.constraints || [],
+                    tags: editData.tags || [],
+                    difficulty: editData.difficulty,
+                    createdBy: `${user._id}|${user.username}`,
+                });
+            }
+        }
+    }, [id])
+
     const [Error, setError] = useState("");
 
     const [tagInput, setTagInput] = useState("");
@@ -90,14 +127,36 @@ function ProblemForm({ className }) {
     };
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (loading) return;
+        dispatch({ type: 'auth/setloading' });
         try {
-
+            if (id) {
+                const response = await updateProblem(id, Problems);
+                dispatch({ type: 'problem/clearCurrentProblem' });
+                navigate('/dashboard/adminspace/Adminproblems/problemconfirmation', { state: { message: response.message, problem: response.problem } });
+            } else {
+            const response = await createProblem(Problems);
+            navigate('/dashboard/adminspace/createproblemset/problemconfirmation', { state: { message: response.message, problem: response.problem } });
+            }
         } catch (error) {
-            setError(error)
+            if (error.response) {
+                if (error.response.status === 401 || error.response.status === 403) {
+                    // Handle unauthorized access
+                    dispatch({ type: 'auth/logout' });
+                    console.error("Unauthorized access:", error.response.data);
+                    navigate('/login', { state: { message: error.response.data.message } });
+                } else {
+                    setError(error.response.data)
+                }
+            } else {
+                setError(error);
+            } 
+        } finally {
+                dispatch({ type: 'auth/clearLoading' });
         }
     }
     return (
-        <div className={className + "w-full animated-entry min-h-screen flex justify-center opacity-80"}>
+        <div className={className + "w-full min-h-screen flex justify-center "}>
             <form onSubmit={handleSubmit} className="mt-[50px] w-3/4 mb-[50px] min-h-screen bg-gradient-to-br space-y-9 from-[#e6b93e] from-[0%] via-[#d3d1c6] via-[65%] to-[#e6b93e] to-[100%] bordering flex flex-col items-center">
                 <h1 className="text-4xl font-newsreader font-light text-purple-800 shadow-xl mt-4">
                     Create a Problem Set.
@@ -178,10 +237,12 @@ function ProblemForm({ className }) {
                     <option value="Medium">Medium</option>
                     <option value="Hard">Hard</option>
                 </select>
-                <button type="submit" className="antialiased font-normal italic text-indigo-700 font-serif text-lg w-1/3 h-12 bg-gradient-to-r from-[#e0e0e0] via-[#bdbdbd] to-[#757575] shadow-lg row-start-6 rounded-lg truncate animated-pulse hover:font-bold hover:text-indigo-900 transition delay-50 duration-700 ease-in-out hover:scale-110 hover:shadow-2xl hover:-translate-y-1 active:scale-100">
-                    Submit Problem
+                <button type="submit" className="antialiased font-normal italic text-indigo-700 font-serif text-lg w-1/3 h-12 bg-gradient-to-r from-[#e0e0e0] via-[#bdbdbd] to-[#757575] shadow-lg  rounded-lg truncate animated-pulse hover:font-bold hover:text-indigo-900 transition delay-50 duration-700 ease-in-out hover:scale-110 hover:shadow-2xl hover:-translate-y-1 active:scale-100"
+                    disabled={loading}>
+                    {loading ? "Submitting ..." : "Submit Problem"}
                 </button>
-                {Error && <p className="text-red-500 text-center font-gruppo font-bold mt-[50px]">{typeof Error === "string" ? Error : Error?.message || "An Error Occured"}</p>}
+                {Error && <p className="text-red-500 text-center font-gruppo font-bold">{typeof Error === "string" ? Error : Error?.message || "An Error Occured"}</p>}
+                {loading && <Spinner />}
             </form>
         </div>
     )

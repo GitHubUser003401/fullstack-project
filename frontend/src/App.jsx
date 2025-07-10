@@ -14,6 +14,8 @@ import Adminpagelayout from './Layout/adminpagelayout';
 import CreateSpaceLayout from './Layout/CreateProblemlayout';
 import ProtectedRoute from './RoutesHandling/ProtectedRoute';
 import AdminRoute from './RoutesHandling/AdminRoute';
+import ConfirmBoxLayout from './Layout/ConfirmProblemLayout';
+import AdminProblemLayout from './Layout/adminProblemslayout';
 
 
 function ScrollToTop() {
@@ -36,7 +38,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Homelayout className="relative" />}>
             <Route index element={<StartBox className="animated-entry relative z-10" />} />
-            <Route path="login" element={ <LoginBox className="relative z-10" /> } />
+            <Route path="login" element={<LoginBox className="relative z-10" />} />
             <Route path="register" element={<RegisterBox className="animated-entry relative z-10 " />} />
             <Route path="confirmation" element={<ConfirmBox className="animated-entry relative z-10" />} />
           </Route>
@@ -44,8 +46,17 @@ function App() {
             <Route index element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
             <Route path="problems" element={<ProtectedRoute>< ProblempageLayout /></ProtectedRoute>} />
             <Route path="adminspace" >
-              <Route index element={ <ProtectedRoute><AdminRoute><Adminpagelayout /></AdminRoute></ProtectedRoute>} />
-              <Route path="createproblemset" element={<ProtectedRoute><AdminRoute><CreateSpaceLayout /></AdminRoute></ProtectedRoute> } />
+              <Route index element={<ProtectedRoute><AdminRoute><Adminpagelayout /></AdminRoute></ProtectedRoute>} />
+              <Route path="createproblemset">
+                <Route index element={<ProtectedRoute><AdminRoute><CreateSpaceLayout /></AdminRoute></ProtectedRoute>} />
+                <Route path="problemconfirmation" element={<ProtectedRoute><AdminRoute><ConfirmBoxLayout /></AdminRoute></ProtectedRoute>} />
+              </Route>
+              <Route path="Adminproblems" >
+                <Route index element={<ProtectedRoute><AdminRoute><AdminProblemLayout /></AdminRoute></ProtectedRoute>} />
+                <Route path="editproblem/:id" element={<ProtectedRoute><AdminRoute><CreateSpaceLayout /></AdminRoute></ProtectedRoute>} />
+                <Route path="problemconfirmation" element={<ProtectedRoute><AdminRoute><ConfirmBoxLayout /></AdminRoute></ProtectedRoute>} />
+              </Route>
+
             </Route>
 
           </Route>

@@ -3,11 +3,15 @@ import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from '../Service/LoginApi';
+import Spinner from './Spinner';
 
 function LoginBox({className}) {
   const navigate = useNavigate();
+  const location = useLocation();
+  const message = location.state?.message || null;
   const dispatch = useDispatch();
   const [error, setError] = useState(null);
+  const loading = useSelector((state) => state.auth.loading);
 
   const [loginData, setloginData] = useState({
     email: "",
@@ -17,6 +21,8 @@ function LoginBox({className}) {
 
 const handleSubmit = async (e) => {
     e.preventDefault();
+    if (loading) return;
+    dispatch({ type: 'auth/setloading' });
 
     try {
       const response = await loginUser(loginData);
@@ -30,6 +36,8 @@ const handleSubmit = async (e) => {
         email: "",
         password: "",
       })
+    } finally {
+      dispatch({ type: 'auth/clearLoading' });
     }
   }
 
@@ -52,13 +60,20 @@ const handleSubmit = async (e) => {
           </div>
 
           <button className="antialiased font-normal italic text-indigo-700 font-serif text-lg w-36 h-12 bg-gradient-to-r from-[#e0e0e0] via-[#bdbdbd] to-[#757575] shadow-lg rounded-lg truncate animated-pulse hover:font-bold hover:text-indigo-900 transition delay-50 duration-700 ease-in-out hover:scale-110 hover:shadow-2xl hover:-translate-y-1 active:scale-100"
-            type = "submit">
-              Login
+            type = "submit"
+            disabled={loading}>
+              {loading ? "Logging In ..." : "Login"}
           </button>
           <div className = "w-2/3 text-center">
           {error && (
             <h2 className="text-red-600 font-bold animated-entry">
             {typeof error === "string" ? error : error?.message || "An error occurred"}
+          </h2>)
+          }
+          {loading && <Spinner />}
+          {message && (
+            <h2 className="text-red-600 font-bold animated-entry">
+            {typeof message === "string" ? message : message?.message || "An error occurred"}
           </h2>)
           }
           </div>

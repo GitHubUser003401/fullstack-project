@@ -10,9 +10,9 @@ const persistConfig = {
     whitelist: ['user', 'isAuthenticated']
 }
 const problemPersistConfig = {
-    key: 'problems',
+    key: 'problem',
     storage,
-    whitelist: ['problems']
+    whitelist: ['currentProblem']
 }
 
 const persistedAuthReducer = persistReducer(persistConfig, authReducer);

@@ -1,9 +1,12 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { registerUser } from '../Service/RegisterApi';
+import Spinner from './Spinner';
 function RegisterBox({ className }) {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const loading = useSelector((state) => state.auth.loading)
     const [formData, setFormData] = useState({
         username: "",
         password: "",
@@ -16,6 +19,10 @@ function RegisterBox({ className }) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        if (loading) return;
+        dispatch({ type: 'auth/setloading' });
+
         const name = formData.username.trim();
         const word = name.split(" ");
         const firstname = word[0] || "";
@@ -34,7 +41,9 @@ function RegisterBox({ className }) {
          }})
        } catch (errorMessage) {
         navigate('/Confirmation', {state: { message : errorMessage }})
-       }
+       } finally {
+            dispatch({ type: 'auth/clearLoading' });
+        }
         
     }
 
@@ -73,10 +82,16 @@ function RegisterBox({ className }) {
                     </div>
                     <div className = "w-full h-24 flex items-center justify-center mt-4 ">
                     <button className="justify-center-safe antialiased font-normal italic text-indigo-700 font-serif text-lg w-1/3 h-12 bg-gradient-to-r from-[#e0e0e0] via-[#bdbdbd] to-[#757575] shadow-lg rounded-lg truncate animated-pulse hover:font-bold hover:text-indigo-900 transition delay-50 duration-700 ease-in-out hover:scale-110 hover:shadow-2xl hover:-translate-y-1 active:scale-100"
-                        type = "submit">
-                        Register
+                        type = "submit"
+                        disabled={loading}
+                        >
+                        {loading ? "Registering.." : "Register"}
                     </button>
                     </div>
+                    <div className = "w-2/3 text-center">
+                    {loading && <Spinner />}
+                    </div>
+
                 </form>
                 </div>
                 </div>

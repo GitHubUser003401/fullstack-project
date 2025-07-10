@@ -21,10 +21,10 @@ function Adminbox({ className }) {
                 </div>
                 <div className="flex items-center mt-[20px] justify-between w-4/5 h-24 bg-gradient-to-br from-[#4671ff] via-[#11eff7] to-[#ffffff] bordering shadow-lg shadow-cyan-400">
                     <h1 className="text-4xl font-unna">
-                        See your Own Problem Lists 
+                        See your Own Created Problem Lists 
                     </h1>
                     <button className="w-44 h-12 mr-16 bg-gradient-to-r from-[#e0e0e0] via-[#bdbdbd] to-[#757575] rounded-lg truncate animated-pulse hover:font-bold hover:text-indigo-900 transition delay-50 duration-700 ease-in-out hover:scale-110 hover:shadow-2xl hover:-translate-y-1 active:scale-100"
-                        onClick={() => navigate('/adminProblemSet')} >
+                        onClick={() => navigate('/dashboard/adminspace/Adminproblems')} >
                         See Problem Lists
                     </button>
                 </div>

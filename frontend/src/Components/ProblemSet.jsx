@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { getproblems } from "../Service/ProblemfetchApi";
+import { fetchProblem } from "../Service/ProblemfetchApi";
 
 function ProblemSet({ className }) {
     const dispatch = useDispatch();
@@ -13,12 +13,23 @@ function ProblemSet({ className }) {
     useEffect(() => {
             const fetchData = async () => {
                 try {
-                    const response = getproblems();
-                    dispatch({ type: 'problems/setProblems', payload: response});
+                    const response = await fetchProblem();
+                    dispatch({ type: 'problem/setProblems', payload: response.problemlist }); 
                 } catch (error) {
-                    console.error("Error fetching problems:", error);
+                    if (error.response) {
+                        if (error.response.status === 401 || error.response.status === 403) {
+                            // Handle unauthorized access
+                            dispatch({ type: 'auth/logout' });
+                            console.error("Unauthorized access:", error.response.data);
+                            navigate('/login', { state: { message: error.response.data.message } });   
+                        } else { 
+                            navigate('/login', { state: { message: error.response.data.message } });
+                        }
+                    } else {
+                    navigate('/login', { state: { message: error.message || "Network error." } });
                     // Optionally, you can handle the error state here
                 }
+            }
         };
         fetchData();
     }, [navigate]);
@@ -26,7 +37,7 @@ function ProblemSet({ className }) {
     const startIndex = (Page - 1) * perPage;
     const endIndex = startIndex + perPage;
     const currentProblems = problems.slice(startIndex, endIndex);
-    const totalPages = Math.ceil(problems.length / perPage);
+    const totalPages = Math.ceil((problems.length / perPage) || 1);
 
 
     return (
@@ -77,7 +88,7 @@ function ProblemSet({ className }) {
                     disabled={Page === 1} >
                     Previous
                 </button>
-                <span className= "px-4 py-2">{Page}/ {totalPages}</span>
+                <span className= "px-4 py-2">{Page} / {totalPages}</span>
                 <button
                     className = "px-4 py-2 bg-gray-700 text-white rounded disabled:opacity-50"
                     onClick={() => setPage(Page + 1)}

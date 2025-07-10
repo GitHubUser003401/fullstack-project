@@ -1,9 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const problemSlice = createSlice({
-    name: "problems",
+    name: "problem",
     initialState: {
         problems: [],
+        currentProblem: null,
     },
     reducers: {
         setProblems(state, action) {
@@ -11,6 +12,12 @@ const problemSlice = createSlice({
         },
         clearProblems(state) {
             state.problems = [];
+        },
+        setCurrentProblem(state, action) {
+            state.currentProblem = action.payload;
+        },
+        clearCurrentProblem(state) {
+            state.currentProblem = null;
         },
     }
 })

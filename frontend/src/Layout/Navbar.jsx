@@ -30,22 +30,22 @@ function Navbar({ className }) {
                                 Codelite
                             </h1>
                         </div>
-                        <div className="flex items-center gap-12">
-                            <button className="w-25  font-serif h-9 animated-entry hover:underline"
+                        <div className="flex items-center gap-8">
+                            <button className="w-28 text-xl font-bold font-gruppo h-9 animated-entry hover:underline"
                                 onClick={() => navigate('/dashboard')}>
                                 Dashboard
                             </button>
-                            <button className="w-16 font-serif h-9 animated-entry hover:underline"
+                            <button className="w-28 text-xl font-bold font-gruppo h-9 animated-entry hover:underline"
                                 onClick = {handleLogout}>
                                 Log-Out
                             </button>
-                            <button className="w-25 font-serif h-9 animated-entry hover:underline"
+                            <button className="w-32 text-xl font-bold font-gruppo h-9 animated-entry hover:underline"
                                 onClick={() => navigate('/dashboard/adminspace')}>
                                 Admin Space
                             </button>
                         </div>
-                        <div className="flex items-center gap-10 ml-auto animated-entry mr-[10px]">
-                            <h1 className="font-newsreader hover:underline">
+                        <div className="flex items-center gap-6 ml-auto animated-entry mr-[10px]">
+                            <h1 className="text-xl font-bold font-gruppo hover:underline">
                                 Signed in as: {user.username}
                             </h1>
                             <a href="/dashboard/profile">
