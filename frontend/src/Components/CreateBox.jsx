@@ -135,13 +135,14 @@ function ProblemForm({ className }) {
                 dispatch({ type: 'problem/clearCurrentProblem' });
                 navigate('/dashboard/adminspace/Adminproblems/problemconfirmation', { state: { message: response.message, problem: response.problem } });
             } else {
-            const response = await createProblem(Problems);
-            navigate('/dashboard/adminspace/createproblemset/problemconfirmation', { state: { message: response.message, problem: response.problem } });
+                const response = await createProblem(Problems);
+                navigate('/dashboard/adminspace/createproblemset/problemconfirmation', { state: { message: response.message, problem: response.problem } });
             }
         } catch (error) {
             if (error.response) {
                 if (error.response.status === 401 || error.response.status === 403) {
                     // Handle unauthorized access
+                    location.state = { message: error.response.data.message }
                     dispatch({ type: 'auth/logout' });
                     console.error("Unauthorized access:", error.response.data);
                     navigate('/login', { state: { message: error.response.data.message } });
@@ -149,10 +150,10 @@ function ProblemForm({ className }) {
                     setError(error.response.data)
                 }
             } else {
-                setError(error);
-            } 
+                setError(error.message || "Network error.");
+            }
         } finally {
-                dispatch({ type: 'auth/clearLoading' });
+            dispatch({ type: 'auth/clearLoading' });
         }
     }
     return (

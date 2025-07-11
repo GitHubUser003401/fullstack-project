@@ -2,12 +2,16 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import router from "./Routes/C_router.js";
+import cookieParser from "cookie-parser";
 dotenv.config();
 
 const app = express();
 
-
-app.use(cors());
+app.use(cors({
+    origin: process.env.CLIENT_URL,
+    credentials: true,
+}));
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/", router)

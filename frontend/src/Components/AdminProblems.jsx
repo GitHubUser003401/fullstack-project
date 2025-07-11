@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { fetchProblem } from "../Service/ProblemfetchApi";
@@ -12,6 +12,7 @@ function AdminProblems({className}) {
     let problems = useSelector((state) => state.problem.problems);
     const user = useSelector((state) => state.auth.user);
     const loading = useSelector((state) => state.auth.loading);
+    const [deletingId, setDeletingId] = useState(null);
 
     const userId = user._id;
     const username = user.username;
@@ -75,14 +76,15 @@ function AdminProblems({className}) {
                                         Edit
                                     </button>
                                     <button className="antialiased font-normal italic text-indigo-700 font-serif text-lg w-1/3 h-12 bg-gradient-to-r from-[#e0e0e0] via-[#bdbdbd] to-[#757575] shadow-lg row-start-6 rounded-lg truncate animated-pulse hover:font-bold hover:text-indigo-900 transition delay-50 duration-700 ease-in-out hover:scale-110 hover:shadow-2xl hover:-translate-y-1 active:scale-100"
-                                    >
+                                        onClick={() => navigate(`/dashboard/adminspace/Adminproblems/problemconfirmation`, { state: { message: "Your Current Problem" , problem: problem } })}>
                                         View
                                     </button>
                                     <button className="antialiased font-normal italic text-indigo-700 font-serif text-lg w-1/3 h-12 bg-gradient-to-r from-[#e0e0e0] via-[#bdbdbd] to-[#757575] shadow-lg row-start-6 rounded-lg truncate animated-pulse hover:font-bold hover:text-indigo-900 transition delay-50 duration-700 ease-in-out hover:scale-110 hover:shadow-2xl hover:-translate-y-1 active:scale-100"
-                                        onClick = { async () => {
+                                        onClick = {async () => {
                                             if (loading) return;
                                             const confirmed = window.confirm("Are you sure you want to delete this problem?");
                                             if (confirmed) {
+                                                setDeletingId(problem._id);
                                                 dispatch({ type: 'auth/setloading' });
                                                 try {
                                                     const response = await deleteProblem(problem._id);
@@ -104,8 +106,9 @@ function AdminProblems({className}) {
                                                     dispatch({ type: 'auth/clearLoading' });
                                                 }
                                         }}}
-                                        disabled={loading}>
-                                        {loading ? <><Spinner /> Deleting...</> : "Delete"}
+                                        disabled={loading}
+                                        >
+                                        {(loading && deletingId === problem._id) ? <><Spinner /> Deleting...</> : "Delete"}
                                     </button>
                                 </td>
                                 

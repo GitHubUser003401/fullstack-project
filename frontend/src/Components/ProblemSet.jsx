@@ -19,9 +19,10 @@ function ProblemSet({ className }) {
                     if (error.response) {
                         if (error.response.status === 401 || error.response.status === 403) {
                             // Handle unauthorized access
+                            
                             dispatch({ type: 'auth/logout' });
                             console.error("Unauthorized access:", error.response.data);
-                            navigate('/login', { state: { message: error.response.data.message } });   
+                            navigate('/login', { state: { message: error.response.data.message } });
                         } else { 
                             navigate('/login', { state: { message: error.response.data.message } });
                         }
@@ -59,7 +60,7 @@ function ProblemSet({ className }) {
                     <tbody className = "">
                         {currentProblems.map((problem, idx) => (
                             <tr key={problem._id || idx} className="hover:bg-cyan-800 transition duration-300"
-                            onClick={() => navigate(`/problemDescription/${problem._id}`)}>
+                            onClick={() => navigate(`/dashboard/problems/Problemdescription/${problem._id}`, { state: { problem: problem } })}>
                                 <td className=" border border-gray-500 py-2 px-6 h-20 text-orange-600 text-center">{problem.title}</td>
                                 <td className=" border border-gray-500 py-2 px-6 h-20 text-orange-600 text-center">{problem.difficulty}</td>
                                 <td className=" border border-gray-500 py-2 px-6 h-20 text-orange-600 text-center">

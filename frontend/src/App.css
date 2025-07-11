@@ -149,3 +149,11 @@ body {
 .animate-spin {
     animation: spin 1s ease-in-out infinite;
 }
+
+.flow-shadow {
+    box-shadow: 15px 20px 25px 0px rgba(0,0,0,0.45);
+}
+.cm-scroller {
+  font-family: 'Newsreader', serif !important;
+  font-size: 12px !important; /* or your preferred size */
+}

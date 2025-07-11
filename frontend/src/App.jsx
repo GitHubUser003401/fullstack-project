@@ -8,7 +8,6 @@ import Homelayout from './Layout/StartLayout';
 import ConfirmBox from './Components/ConfirmationBox';
 import RouteReload from './RoutesHandling/Reload';
 import Dashboard from './Layout/Dashboard';
-import { useSelector } from 'react-redux';
 import ProblempageLayout from './Layout/ProblempageLayout';
 import Adminpagelayout from './Layout/adminpagelayout';
 import CreateSpaceLayout from './Layout/CreateProblemlayout';
@@ -16,20 +15,24 @@ import ProtectedRoute from './RoutesHandling/ProtectedRoute';
 import AdminRoute from './RoutesHandling/AdminRoute';
 import ConfirmBoxLayout from './Layout/ConfirmProblemLayout';
 import AdminProblemLayout from './Layout/adminProblemslayout';
+import ProblemSpaceLayout from './Layout/ProblemSpace';
 
 
-function ScrollToTop() {
-  const location = useLocation();
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [location.pathname]);
-  return null;
-}
+
+
+
 
 function App() {
+  function ScrollToTop() {
+    const location = useLocation();
+    useEffect(() => {
+      window.scrollTo(0, 0);
+      console.log('ScrollToTop triggered')
+    }, [location.key]);
+    return null;
+  }
 
-  const isAuthenticated = useSelector((state => state.auth.isAuthenticated));
-  const role = useSelector((state => state.auth.user?.Role));
+
   return (
     <BrowserRouter>
       <ScrollToTop />
@@ -44,7 +47,14 @@ function App() {
           </Route>
           <Route path='/dashboard' >
             <Route index element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-            <Route path="problems" element={<ProtectedRoute>< ProblempageLayout /></ProtectedRoute>} />
+            <Route path="problems" >
+              <Route index element={<ProtectedRoute><ProblempageLayout /></ProtectedRoute>} />
+
+              <Route path="Problemdescription/:id" element={<ProtectedRoute><ProblemSpaceLayout /></ProtectedRoute>} />
+
+            </Route>
+
+
             <Route path="adminspace" >
               <Route index element={<ProtectedRoute><AdminRoute><Adminpagelayout /></AdminRoute></ProtectedRoute>} />
               <Route path="createproblemset">
@@ -56,7 +66,6 @@ function App() {
                 <Route path="editproblem/:id" element={<ProtectedRoute><AdminRoute><CreateSpaceLayout /></AdminRoute></ProtectedRoute>} />
                 <Route path="problemconfirmation" element={<ProtectedRoute><AdminRoute><ConfirmBoxLayout /></AdminRoute></ProtectedRoute>} />
               </Route>
-
             </Route>
 
           </Route>

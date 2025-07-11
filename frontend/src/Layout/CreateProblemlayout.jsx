@@ -8,7 +8,7 @@ function CreateSpaceLayout() {
 
 
         <Navbar className="relative z-10"/>
-        <ProblemForm className="relative z-10 animated-entry" />
+        <ProblemForm className="relative z-10 animated-entry " />
 
         <Footer className="relative z-10 mt-auto" />
         </div>

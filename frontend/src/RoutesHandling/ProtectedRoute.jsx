@@ -8,6 +8,7 @@ const ProtectedRoute = ({ children }) => {
   if (!isAuthenticated) {
     // Only set a default message if none exists
     const state = location.state || { message: "Please login to continue." };
+    console.log(state)
     return <Navigate to="/login" state={state} />;
   }
   return children;
