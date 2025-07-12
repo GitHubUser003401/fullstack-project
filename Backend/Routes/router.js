@@ -7,6 +7,10 @@ import { protectRoute } from '../Utils/AuthController.js';
 import { createProblemCode } from '../Controller/ProblemCreation.js';
 import { updateProblemCode } from '../Controller/ProblemUpdate.js';
 import { deleteProblemCode } from '../Controller/ProblemDelete.js';
+import { TestCaseCreationCode } from '../Controller/TestCasesCode.js';
+import { TestCaseUpdateCode } from '../Controller/TestCaseUpdate.js';
+import { fetchTestCasesByProblemId } from '../Controller/Fetchtestcases.js';
+import { DeleteTestCaseCode } from '../Controller/Deletetestcase.js';
 
 const router = express.Router();
 
@@ -16,10 +20,17 @@ router.post('/login', loginCode)
 router.get('/logout', logout)
 
 router.get('/fetchproblem', protectRoute, fetchproblemCode);
+router.get('/testcases/:problemId', protectRoute, fetchTestCasesByProblemId); // Assuming this is for fetching test cases by problem ID
+
 router.post('/createproblem', protectRoute, createProblemCode);
+router.post('/createtestcases', protectRoute, TestCaseCreationCode);
 
 router.put('/updateproblem/:id', protectRoute, updateProblemCode);
+router.put('/updatetestcases', protectRoute, TestCaseUpdateCode); // Assuming this is for updating test cases
+
 router.delete('/deleteproblem/:id', protectRoute, deleteProblemCode);
+router.delete('/deletetestcases/:id', protectRoute, DeleteTestCaseCode);
+
 
 
 export default router;

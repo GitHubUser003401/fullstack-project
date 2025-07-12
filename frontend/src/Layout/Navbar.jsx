@@ -11,6 +11,7 @@ function Navbar({ className }) {
     const handleLogout = async () => {
         try {
             const response = await logoutUser()
+            dispatch({ type: 'problem/clearCurrentProblem' });
             dispatch({type: 'auth/logout'});
         } catch (error) {
             const message = error.response ? error.response.data : 'Network Error';

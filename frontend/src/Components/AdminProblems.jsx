@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { fetchProblem } from "../Service/ProblemfetchApi";
 import { deleteProblem } from "../Service/ProblemDeleteApi";
 import Spinner from "./Spinner";
+import { deleteTestCases } from "../Service/TestCaseDelete";
 
 
 function AdminProblems({className}) {
@@ -87,10 +88,13 @@ function AdminProblems({className}) {
                                                 setDeletingId(problem._id);
                                                 dispatch({ type: 'auth/setloading' });
                                                 try {
-                                                    const response = await deleteProblem(problem._id);
+                                                    await Promise.all([
+                                                        deleteProblem(problem._id),
+                                                        deleteTestCases(problem._id)
+                                                    ])
                                                     problems = problems.filter(p => p._id !== problem._id);
                                                     dispatch({ type: 'problem/setProblems', payload: problems });
-                                                    navigate('/dashboard/adminspace/Adminproblems/problemconfirmation', { state: { message: response.message, problem: response.problem } });
+                                                    navigate('/dashboard/adminspace/Adminproblems/problemconfirmation', { state: { message: "Problem and its test cases deleted", problem: problem } });
                                                 } catch (error) {
                                                     if (error.response) {
                                                         if (error.response.status === 401 || error.response.status === 403) {

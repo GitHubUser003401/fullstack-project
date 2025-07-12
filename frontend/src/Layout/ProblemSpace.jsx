@@ -1,4 +1,5 @@
 import ProblemBox from "../Components/ProblemBox";
+import Navbar from "./Navbar";
 
 function ProblemSpaceLayout() {
     return (
