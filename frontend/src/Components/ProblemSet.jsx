@@ -44,7 +44,7 @@ function ProblemSet({ className }) {
     return (
         <div className = {className + " animated-entry min-h-screen"}>
             <h1 className = "text-2xl h-16 flex items-end font-semibold">
-                <span className = "bg-gradient-to-r from-[#b438ee] via-[#d21396] to-[#d5d4d4] w-1/3 font-light font-newsreader ">Here is the Problem Section</span>
+                <span className = "bg-gradient-to-r from-[#b438ee] via-[#d21396] to-[#d5d4d4] w-1/3 font-light font-newsreader rounded-br-xl rounded-tr-4xl ">Here is the Problem Section</span>
             </h1>
             <div className = "overflow-x-auto">
                 <table className = "min-w-full mb-[20px] border-collapse border border-gray-500 bg-black table-fixed">

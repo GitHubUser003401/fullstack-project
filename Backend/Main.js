@@ -7,7 +7,10 @@ import cookieParser from 'cookie-parser';
 
 
 app.use(cors({
-    origin: process.env.CLIENT_URL,
+    origin: [
+        process.env.CLIENT_URL,
+        process.env.COMPILER_URL // Compiler URL
+    ],
     credentials: true,
 }));
 

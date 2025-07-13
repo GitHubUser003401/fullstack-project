@@ -1,4 +1,4 @@
-import ProblemStruct from "../Models/Problem.js";
+import ProblemStruct from "../Models/problem.js";
 
 // Create Problem
 export const createProblemCode = async (req, res) => {

@@ -1,4 +1,4 @@
-import ProblemStruct from "../Models/Problem.js";
+import ProblemStruct from "../Models/problem.js";
 
 export const updateProblemCode = async (req, res) => {
     try {

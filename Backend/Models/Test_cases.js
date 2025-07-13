@@ -14,6 +14,10 @@ const testCaseSchema = new mongoose.Schema({
         type: [String],
         required: true,
     },
+    timeout: {
+        type: Number,
+        default: 2000, // in milliseconds, default 2s
+    },
     visible: {
         type: Boolean,
         default: false,

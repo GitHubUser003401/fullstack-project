@@ -3,14 +3,13 @@ const API_URL = import.meta.env.VITE_REACT_APP_URL_BACKEND;
 
 axios.defaults.withCredentials = true; // Enable sending cookies with requests
 
-export const fetchProblem = async () => {
+export const fetchSubmissions = async (problemId) => {
     try {
-        const response = await axios.get(`${API_URL}/fetchproblem`, {
+        const response = await axios.get(`${API_URL}/submissions/${problemId}`, {
             withCredentials: true // Ensure cookies are sent with the request
-    });
+        });
         return response.data;
     } catch (error) {
-        throw error
+        throw error;
     }
 }
-

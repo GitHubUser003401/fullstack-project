@@ -34,6 +34,7 @@ function ProblemForm({ className }) {
         problemId: "",
         test_case_input: [],
         test_case_output: [],
+        timeout: null, // default timeout
     });
 
     useEffect(() => {
@@ -62,6 +63,7 @@ function ProblemForm({ className }) {
                             problemId: editData._id,
                             test_case_input: testCasesResponse.test_case_input || [],
                             test_case_output: testCasesResponse.test_case_output || [],
+                            timeout: testCasesResponse.timeout || 2000, // default to 2 seconds if not provided
                         });
                     } catch (error) {
                         if (error.response) {
@@ -92,26 +94,28 @@ function ProblemForm({ className }) {
     const [testcaseinput, setTestCaseInput] = useState("");
     const [testcaseoutput, setTestCaseOutput] = useState("");
 
+        
+
 
     const handletestCaseInputKeyDown = (e) => {
-        if (e.key === 'Enter' && testcaseinput.trim() && !e.shiftKey) {
+        if (e.key === 'Enter' && testcaseinput && !e.shiftKey) {
             e.preventDefault();
-            if (!testCases.test_case_input.includes(testcaseinput.trim())) {
+            if (!testCases.test_case_input.includes(testcaseinput)) {
                 setTestCases(prev => ({
                     ...prev,
-                    test_case_input: [...prev.test_case_input, testcaseinput.trim()],
+                    test_case_input: [...prev.test_case_input, testcaseinput],
                 }));
                 setTestCaseInput("");
             }
         }
     };
     const handletestCaseOutputKeyDown = (e) => {
-        if (e.key === 'Enter' && testcaseoutput.trim() && !e.shiftKey) {
+        if (e.key === 'Enter' && testcaseoutput && !e.shiftKey) {
             e.preventDefault();
-            if (!testCases.test_case_output.includes(testcaseoutput.trim())) {
+            if (!testCases.test_case_output.includes(testcaseoutput)) {
                 setTestCases(prev => ({
                     ...prev,
-                    test_case_output: [...prev.test_case_output, testcaseoutput.trim()],
+                    test_case_output: [...prev.test_case_output, testcaseoutput],
                 }));
                 setTestCaseOutput("");
             }
@@ -119,23 +123,23 @@ function ProblemForm({ className }) {
     };
 
     const handleSampleInputKeyDown = (e) => {
-        if (e.key === 'Enter' && newsampleInput.trim() && !e.shiftKey) {
+        if (e.key === 'Enter' && newsampleInput && !e.shiftKey) {
             e.preventDefault();
-            if (!Problems.SampleInput.includes(newsampleInput.trim()))
+            if (!Problems.SampleInput.includes(newsampleInput))
                 setProblems(prev => ({
                     ...prev,
-                    SampleInput: [...prev.SampleInput, newsampleInput.trim()]
+                    SampleInput: [...prev.SampleInput, newsampleInput]
                 }))
             setNewSampleInput("");
         }
     };
     const handleSampleOutputKeyDown = (e) => {
-        if (e.key === 'Enter' && newsampleOutput.trim() && !e.shiftKey) {
+        if (e.key === 'Enter' && newsampleOutput && !e.shiftKey) {
             e.preventDefault();
-            if (!Problems.SampleOutput.includes(newsampleOutput.trim()))
+            if (!Problems.SampleOutput.includes(newsampleOutput))
                 setProblems(prev => ({
                     ...prev,
-                    SampleOutput: [...prev.SampleOutput, newsampleOutput.trim()]
+                    SampleOutput: [...prev.SampleOutput, newsampleOutput]
                 }))
             setNewSampleOutput("");
         }
@@ -205,6 +209,9 @@ function ProblemForm({ className }) {
         if (loading) return;
         dispatch({ type: 'auth/setloading' });
         try {
+            if (testCases.test_case_input.length === 0 || testCases.test_case_output.length === 0) {
+                return setError("Please provide at least one test case input and output.");
+            } else {
             if (id) {
                 const response = await updateProblem(id, Problems);
                 dispatch({ type: 'problem/clearCurrentProblem' });
@@ -213,6 +220,7 @@ function ProblemForm({ className }) {
                 const response = await createProblem(Problems);
                 navigate('/dashboard/adminspace/createproblemset/problemconfirmation', { state: { message: response.message, problem: response.problem, testCases: testCases } });
             }
+        }
         } catch (error) {
             if (error.response) {
                 if (error.response.status === 401 || error.response.status === 403) {
@@ -284,7 +292,7 @@ function ProblemForm({ className }) {
                 </textarea>
                 <div className="flex gap-2 flex-wrap">
                     {Problems.constraints.map(constraint => (
-                        <h1 key={constraint} className="bg-gradient-to-br from-[#4671ff] via-[#11eff7] to-[#ffffff] break-words whitespace-normal font-newsreader min-w-24 max-w-3xl text-center animated-entry text-black rounded-full">
+                        <h1 key={constraint} className="p-2 bg-gradient-to-br from-[#4671ff] via-[#11eff7] to-[#ffffff] break-words whitespace-normal font-newsreader min-w-24 max-w-3xl text-center animated-entry text-black rounded-full">
                             {constraint}
                             <button onClick={() => handleConstraintsRemove(constraint)} className=" ml-2 mr-2 mt-1 mb-1 text-red-500 hover:text-red-700 hover:bg-red-400 focus:outline-none" aria-label={`Remove ${constraint} constraint`}>
                                 X
@@ -300,7 +308,7 @@ function ProblemForm({ className }) {
                 />
                 <div className="flex gap-2 flex-wrap">
                     {Problems.tags.map(tag => (
-                        <span key={tag} className="bg-gradient-to-br from-[#4671ff] via-[#11eff7] to-[#ffffff] break-words whitespace-normal font-newsreader min-w-24 max-w-3xl text-center animated-entry text-black rounded-full">
+                        <span key={tag} className="p-2 bg-gradient-to-br from-[#4671ff] via-[#11eff7] to-[#ffffff] break-words whitespace-normal font-newsreader min-w-24 max-w-3xl text-center animated-entry text-black rounded-full">
                             {tag}
                             <button onClick={() => handleTagRemove(tag)} className=" ml-2 mr-2 mt-1 mb-1 text-red-500 hover:text-red-700 hover:bg-red-400 focus:outline-none" aria-label={`Remove ${tag} tag`}>
                                 X
@@ -351,6 +359,15 @@ function ProblemForm({ className }) {
                         </span>
                     ))}
                 </div>
+
+                <input type="number" placeholder="Timeout in milliseconds (default 2000ms)" value={testCases.timeout === null ? "" : testCases.timeout}
+                 onChange={e => {const val = e.target.value;
+                    setTestCases(prev => ({
+                        ...prev,
+                        timeout: val.trim() === "" ? null : Number(val)
+                    }))}} 
+                 className="focus:outline-none focus:ring-2 placeholder-black bg-gray-300 rounded-full truncate w-2/3 h-8 transition delay-50 duration-500 hover:scale-105 hover:translate-y-1"/>
+
 
 
                 <button type="submit" className="antialiased font-normal italic text-indigo-700 font-serif text-lg w-1/3 h-12 bg-gradient-to-r from-[#e0e0e0] via-[#bdbdbd] to-[#757575] shadow-lg  rounded-lg truncate animated-pulse hover:font-bold hover:text-indigo-900 transition delay-50 duration-700 ease-in-out hover:scale-110 hover:shadow-2xl hover:-translate-y-1 active:scale-100"

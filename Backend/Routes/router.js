@@ -11,6 +11,8 @@ import { TestCaseCreationCode } from '../Controller/TestCasesCode.js';
 import { TestCaseUpdateCode } from '../Controller/TestCaseUpdate.js';
 import { fetchTestCasesByProblemId } from '../Controller/Fetchtestcases.js';
 import { DeleteTestCaseCode } from '../Controller/Deletetestcase.js';
+import { submitCode } from '../Controller/Submission.js';
+import { fetchSubmissionCode } from '../Controller/FetchSubmissions.js';
 
 const router = express.Router();
 
@@ -30,6 +32,9 @@ router.put('/updatetestcases', protectRoute, TestCaseUpdateCode); // Assuming th
 
 router.delete('/deleteproblem/:id', protectRoute, deleteProblemCode);
 router.delete('/deletetestcases/:id', protectRoute, DeleteTestCaseCode);
+
+router.post('/submission', protectRoute, submitCode);
+router.get('/submissions/:problemId', protectRoute, fetchSubmissionCode); 
 
 
 

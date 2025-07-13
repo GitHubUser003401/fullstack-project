@@ -139,7 +139,14 @@ body {
   to { opacity: 1; }
 }
 .animate-fade-in {
-  animation: fade-in 0.7s;
+  animation: fade-in 3s;
+}
+@keyframes fade-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+.animate-fade-out {
+  animation: fade-out 3s;
 }
 
 @keyframes spin {
@@ -156,4 +163,8 @@ body {
 .cm-scroller {
   font-family: 'Newsreader', serif !important;
   font-size: 12px !important; /* or your preferred size */
+}
+.cm-scroller {
+  min-width: 0 !important;
+  max-width: 100% !important;
 }

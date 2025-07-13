@@ -13,22 +13,35 @@ if(!fs.existsSync(outputPath)) {
     fs.mkdirSync(outputPath, { recursive: true });
 }
 
-const executeCpp = async (filePath, inputFilePath) => {
+const executeCpp = async (filePath, inputFilePath, timeout) => {
     const jobId = path.basename(filePath).split(".")[0];
     const outPath = path.join(outputPath, `${jobId}.exe`);
 
     const inputRedirect = inputFilePath ? `< "${inputFilePath}"` : "";
     return new Promise((resolve, reject) => {
-        exec(`g++ "${filePath}" -o "${outPath}" && cd "${outputPath}" && "${outPath}"${inputRedirect}`, (error, stdout, stderr) => {
+        const startTime = process.hrtime.bigint(); 
+        exec(`g++ "${filePath}" -o "${outPath}" && cd "${outputPath}" && "${outPath}"${inputRedirect}`,
+            {timeout: timeout},
+            (error, stdout, stderr) => {
+            const endTime = process.hrtime.bigint();
+            const executionTime = Number((endTime - startTime) / BigInt(1e6)); // Convert to milliseconds
+            const memoryUsed = process.memoryUsage().heapUsed / 1024;
             if (error) {
-                reject({error, stderr});
+                if (error.killed) {
+                    reject({error: "Execution timed out",
+                            executionTime, memoryUsed: Math.floor(memoryUsed)});
+                    return;
+                }
+                reject({error, stderr, executionTime, memoryUsed: Math.floor(memoryUsed)});
                 return;
             }
             if (stderr) {
-                reject({stderr});
+                reject({stderr,executionTime, memoryUsed: Math.floor(memoryUsed)});
                 return;
             }
-            resolve(stdout);
+            resolve({output: stdout,
+                executionTime, memoryUsed: Math.floor(memoryUsed)
+            });
         });
     });
 };

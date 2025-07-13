@@ -16,6 +16,8 @@ import AdminRoute from './RoutesHandling/AdminRoute';
 import ConfirmBoxLayout from './Layout/ConfirmProblemLayout';
 import AdminProblemLayout from './Layout/adminProblemslayout';
 import ProblemSpaceLayout from './Layout/ProblemSpace';
+import Problemsubmission from './Layout/ProblemSubmission';
+
 
 
 
@@ -50,7 +52,11 @@ function App() {
             <Route path="problems" >
               <Route index element={<ProtectedRoute><ProblempageLayout /></ProtectedRoute>} />
 
-              <Route path="Problemdescription/:id" element={<ProtectedRoute><ProblemSpaceLayout /></ProtectedRoute>} />
+              <Route path="Problemdescription/:id" >
+                <Route index element={<ProtectedRoute><ProblemSpaceLayout/></ProtectedRoute>} />
+                <Route path="Problemsubmission" element={<ProtectedRoute><Problemsubmission /></ProtectedRoute>} />
+              </Route>
+
 
             </Route>
 

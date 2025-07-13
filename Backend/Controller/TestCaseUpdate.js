@@ -3,7 +3,7 @@ import TestCaseStruct from "../Models/Test_cases.js";
 
 export const TestCaseUpdateCode = async (req, res) => {
     try {
-        const { test_case_input, test_case_output, problemId } = req.body;
+        const { test_case_input, test_case_output, problemId, timeout } = req.body;
         if (!(test_case_input && test_case_output && problemId)) {
             return res.status(400).send("Please provide all required fields.");
         }
@@ -11,7 +11,7 @@ export const TestCaseUpdateCode = async (req, res) => {
 
         const updatedTestCase = await TestCaseStruct.findOneAndUpdate(
             { problemId: pid },
-            { test_case_input, test_case_output },
+            { test_case_input, test_case_output, timeout: timeout || 2000 }, // default to 2 seconds if not provided
             { new: true }
         );
 

@@ -4,7 +4,7 @@ import TestCaseStruct from "../Models/Test_cases.js";
 
 export const TestCaseCreationCode = async (req, res) => {
     try {
-        const { problemId, test_case_input, test_case_output } = req.body;
+        const { problemId, test_case_input, test_case_output, timeout } = req.body;
         if (!(problemId && test_case_input && test_case_output)) {
             return res.status(400).send("Please provide all required fields.");
         }
@@ -22,6 +22,7 @@ export const TestCaseCreationCode = async (req, res) => {
                 problemId : pid,
                 test_case_input,
                 test_case_output,
+                timeout: timeout || 2000, // default to 2 seconds if not provided
             });
             res.status(201).json({ message: "Test case created successfully", testCase: newTestCase });
         } catch (err) {

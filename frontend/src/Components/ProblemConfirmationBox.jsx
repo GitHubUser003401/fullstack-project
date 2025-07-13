@@ -4,11 +4,13 @@ import { createTestCases } from '../Service/TestCasesApi';
 import { updateTestCases } from '../Service/TestCasesupdateApi';
 import { useState } from 'react';
 import { useRef } from 'react';
+import { useDispatch } from 'react-redux';
 
 
 
 function ConfirmProblemBox({ className }) {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const location = useLocation();
     let message = location.state?.message;
     const problem = location.state?.problem;
@@ -26,7 +28,8 @@ function ConfirmProblemBox({ className }) {
                 hasSent.current = true; // Mark as sent
                 const testCasewithID = { ...testCases, problemId: problem._id };
                 try {
-                    if (testCases.problemId) {
+                    const isEditMode = location.pathname.includes('editproblem') || testCases.problemId;
+                    if (isEditMode) {
                         await updateTestCases(testCases);
                         setStatus("Test cases updated successfully!");
                     } else {
@@ -41,12 +44,21 @@ function ConfirmProblemBox({ className }) {
                             dispatch({ type: 'auth/logout' });
                             console.error("Unauthorized access:", error.response.data);
                             navigate('/login', { state: { message: error.response.data.message } });
+                        } else if (error.response.status === 400 && error.response.data.includes("already exist")) {
+                            try {
+                                await updateTestCases(testCasewithID);
+                                setStatus("Test cases updated successfully!");
+                                return;
+                            } catch (updateError) {
+                                setStatus("Failed to update test cases. Please try again by Editing Problem. :" + (updateError.response.data || updateError.response.data?.message));
+                                console.error("Error updating test cases:", updateError);
+                            }
                         } else {
-                            setStatus("Failed to create test cases. Please try again by Editing Problem. :" + error.response.data);
+                            setStatus("Failed to create test cases. Please try again by Editing Problem. :" + (error.response.data || error.response.data?.message));
                             console.error("Error creating test cases:", error);
                         }
                     } else {
-                        setStatus("Failed to create test cases. Please try again by Editing Problem.");
+                        setStatus("Failed to create test cases. Please try again by Editing Problem. :" + error.message);
                         console.error("Error creating test cases:", error);
                         alert("Failed to create test cases. Please try again by Editing Problem..");
                     }

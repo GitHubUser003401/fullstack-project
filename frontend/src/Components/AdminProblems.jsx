@@ -5,6 +5,7 @@ import { fetchProblem } from "../Service/ProblemfetchApi";
 import { deleteProblem } from "../Service/ProblemDeleteApi";
 import Spinner from "./Spinner";
 import { deleteTestCases } from "../Service/TestCaseDelete";
+import { fetchTestCases } from "../Service/TestCasefetch";
 
 
 function AdminProblems({className}) {
@@ -49,11 +50,11 @@ function AdminProblems({className}) {
 
     return (
         <div className={className + "animated-entry min-h-screen"}>
-            <h1 className="font-newsreader mt-4 text-neutral-800 bg-gradient-to-tr w-1/3 from-[#ba4b4b] from-[0%] via-[#550101] via-[20%] to-[#e84a0b] to-[100%] text-2xl">
+            <h1 className="font-newsreader mt-4 text-neutral-800 bg-gradient-to-tr w-1/3 from-[#ba4b4b] from-[0%] via-[#550101] via-[20%] to-[#e84a0b] to-[100%] text-2xl rounded-br-xl rounded-tr-4xl">
                 Admin Problem Set Section
             </h1>
             <div className="overflow-x-auto">
-                <table className="min-w-full border-collapse border mt-4 border-gray-500 bg-black table-fixed">
+                <table className="min-w-full border-collapse border border-gray-500 bg-black table-fixed">
                     <thead>
                         <tr className="bg-yellow-900 text-white font-tomorrow">
                             <th className="border border-gray-500 py-2 px-6 w-1/5">Title</th>
@@ -88,12 +89,22 @@ function AdminProblems({className}) {
                                                 setDeletingId(problem._id);
                                                 dispatch({ type: 'auth/setloading' });
                                                 try {
-                                                    await Promise.all([
-                                                        deleteProblem(problem._id),
-                                                        deleteTestCases(problem._id)
-                                                    ])
-                                                    problems = problems.filter(p => p._id !== problem._id);
-                                                    dispatch({ type: 'problem/setProblems', payload: problems });
+                                                    let hasTestCases = false;
+                                                    try {
+                                                        const testCases = await fetchTestCases(problem._id);
+                                                        if (testCases) {
+                                                            hasTestCases = true;
+                                                        }
+                                                    } catch (error) {
+                                                        hasTestCases = false;
+                                                    }
+                                                    const deletePromises = [deleteProblem(problem._id)];
+                                                    if (hasTestCases) {
+                                                        deletePromises.push(deleteTestCases(problem._id));
+                                                    }
+                                                    await Promise.all(deletePromises);
+                                                    const updatedProblems = problems.filter(p => p._id !== problem._id);
+                                                    dispatch({ type: 'problem/setProblems', payload: updatedProblems });
                                                     navigate('/dashboard/adminspace/Adminproblems/problemconfirmation', { state: { message: "Problem and its test cases deleted", problem: problem } });
                                                 } catch (error) {
                                                     if (error.response) {
@@ -101,10 +112,12 @@ function AdminProblems({className}) {
                                                             dispatch({ type: 'auth/logout' });
                                                             navigate('/login', { state: { message: error.response.data.message } });
                                                         } else {
-                                                            navigate('/login', { state: { message: error.response.data.message } });
+                                                            alert("Failed to delete problem. Please try again.");
+                                                            console.error("Error deleting problem:", error.response.data);
                                                         }
                                                     } else {
-                                                        navigate('/login', { state: { message: error.message || "Network error." } });
+                                                        alert("Failed to delete problem. Please try again.");
+                                                        console.error("Error deleting problem:", error);
                                                     }   
                                                 } finally {
                                                     dispatch({ type: 'auth/clearLoading' });
