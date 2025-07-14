@@ -6,6 +6,8 @@ import { deleteProblem } from "../Service/ProblemDeleteApi";
 import Spinner from "./Spinner";
 import { deleteTestCases } from "../Service/TestCaseDelete";
 import { fetchTestCases } from "../Service/TestCasefetch";
+import { fetchAllSubmissions } from "../Service/FetchAllSubmissionsApi";
+import { deleteSubmission } from "../Service/DeleteSubmissionCode";
 
 
 function AdminProblems({className}) {
@@ -90,6 +92,7 @@ function AdminProblems({className}) {
                                                 dispatch({ type: 'auth/setloading' });
                                                 try {
                                                     let hasTestCases = false;
+                                                    let hasSubmissions = false;
                                                     try {
                                                         const testCases = await fetchTestCases(problem._id);
                                                         if (testCases) {
@@ -98,14 +101,25 @@ function AdminProblems({className}) {
                                                     } catch (error) {
                                                         hasTestCases = false;
                                                     }
+                                                    try {
+                                                        const submissions = await fetchAllSubmissions(problem._id);
+                                                        if (submissions.submissions) {
+                                                            hasSubmissions = true;
+                                                        }
+                                                    } catch (error) {
+                                                        hasSubmissions = false;
+                                                    }
                                                     const deletePromises = [deleteProblem(problem._id)];
                                                     if (hasTestCases) {
                                                         deletePromises.push(deleteTestCases(problem._id));
                                                     }
-                                                    await Promise.all(deletePromises);
+                                                    if (hasSubmissions) {
+                                                        deletePromises.push(deleteSubmission(problem._id));
+                                                    }
+                                                    const [Problemresponse, TestCasesresponse, Submissionsresponse] = await Promise.all(deletePromises);
                                                     const updatedProblems = problems.filter(p => p._id !== problem._id);
                                                     dispatch({ type: 'problem/setProblems', payload: updatedProblems });
-                                                    navigate('/dashboard/adminspace/Adminproblems/problemconfirmation', { state: { message: "Problem and its test cases deleted", problem: problem } });
+                                                    navigate('/dashboard/adminspace/Adminproblems/problemconfirmation', { state: { message: Problemresponse.message, problem: problem, response1: TestCasesresponse?.message || TestCasesresponse, response2: Submissionsresponse?.message || Submissionsresponse } });
                                                 } catch (error) {
                                                     if (error.response) {
                                                         if (error.response.status === 401 || error.response.status === 403) {
@@ -131,7 +145,7 @@ function AdminProblems({className}) {
                                 
                             </tr>
                         ))}
-                        {problems.length === 0 && (
+                        {adminProblems.length === 0 && (
                             <tr>
                                 <td colSpan={4} className="py-4 font-gruppo text-3xl text-center text-red-500">
                                     No problems available at the moment.

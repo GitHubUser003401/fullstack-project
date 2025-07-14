@@ -89,6 +89,32 @@
     background-size: 400% 400%;
     animation: pulse_animation 2s ease-in-out; 
 }
+@keyframes pulse_animation2 {
+    0% {
+        background-size: 500% 500%;
+        background-position: 50% 50%;
+    }
+    50% {
+        background-size: 100% 100%;
+        background-position: 50% 50%;
+    }
+    100% {
+        background-size: 500% 500%;
+        background-position: 50% 50%;
+    }
+}
+.animate-pulsing:hover {
+    background: radial-gradient(circle at center,  #ffe0b2 0%,      /* very light orange */
+  #ffb074 15%,     /* lighter orange */
+  #ff8a65 30%,     /* light orange */
+  #ff7043 55%,     /* orange */
+  #ff1744 70%,     /* red */
+  #b71b1b 100%     /* dark red */   /* very dark */
+  );
+    animation: pulse_animation2 2s ease-in-out infinite;
+}
+
+
 @keyframes entry_animation {
     from {
         opacity : 0;
@@ -139,7 +165,7 @@ body {
   to { opacity: 1; }
 }
 .animate-fade-in {
-  animation: fade-in 3s;
+  animation: fade-in 1s;
 }
 @keyframes fade-out {
   from { opacity: 1; }
@@ -167,4 +193,9 @@ body {
 .cm-scroller {
   min-width: 0 !important;
   max-width: 100% !important;
+}
+
+.page-background-bg {
+    background: linear-gradient(135deg, #c3b193 0%, #a7654f 80%);
+    backdrop-filter: blur(20px);
 }

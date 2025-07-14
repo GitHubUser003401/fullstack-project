@@ -22,16 +22,18 @@ function ProblemBox({ className }) {
                 const id = currentProblem._id || problem._id;
                 console.log("Fetching submissions for problem ID:", id);
                 if (id) {
-                const response = await fetchSubmissions(id);
-                dispatch({
-                    type: 'submission/setSubmissions', payload: {
-                        submissions: response.submissions,
-                        bestSubmission: response.bestSubmission,
-                        lastSubmission: response.lastSubmission
-                    }
-                })
-                setSubmissionData(response);
-            }} catch (error) {
+                    const response = await fetchSubmissions(id);
+                    dispatch({
+                        type: 'submission/setSubmissions', payload: {
+                            submissions: response.submissions,
+                            bestSubmission: response.bestSubmission,
+                            lastSubmission: response.lastSubmission
+                        }
+                    })
+                    setSubmissionError("");
+                    setSubmissionData(response);
+                }
+            } catch (error) {
                 if (error.response) {
                     if (error.response.status === 401 || error.response.status === 403) {
                         // Handle unauthorized access
@@ -43,6 +45,8 @@ function ProblemBox({ className }) {
                     } else if (error.response.status === 404) {
                         // Handle not found error
                         setSubmissionError("No submissions available.");
+                        setSubmissionData({});
+                        dispatch({ type: 'submission/clearSubmissions' });
                         console.error("Problem not found:", error.response.data);
                     } else {
                         // Handle other errors
@@ -93,20 +97,20 @@ function ProblemBox({ className }) {
                         </button>
 
                     </div>
-                    <div className="flow-shadow p-2 rounded-xl bg-gradient-to-br from-[#e6b93e] via-[#bebcb0] to-[#e6b93e] h-fit">
+                    <div className="animate-fade-in flow-shadow p-2 rounded-xl bg-gradient-to-br from-[#e6b93e] via-[#bebcb0] to-[#e6b93e] h-fit">
                         {activeTab === "output" && (
                             <>
-                                <div className="w-full p-4 h-fit break-words">
+                                <div className="animate-fade-in w-full p-4 h-fit break-words">
                                     <h2 className="text-xl font-semibold font-newsreader">Problem Description:</h2>
                                     <p className="break-words mt-2 whitespace-pre-wrap">
                                         {currentProblem ? currentProblem.description : problem ? problem.description : "No description available."}
                                     </p>
                                 </div>
-                                <div className="w-full p-4 h-fit break-words">
+                                <div className=" animate-fade-in w-full p-4 h-fit break-words">
                                     <h2 className="text-xl mt-20 font-newsreader ">
                                         Constraints:
                                     </h2>
-                                    <ul className="list-disc text-red-800 pl-5">
+                                    <ul className="animate-fade-in list-disc text-red-800 pl-5">
                                         {currentProblem && currentProblem.constraints.map((constraint, idx) => (
                                             <li key={idx} className="text-lg font-newsreader break-words whitespace-pre-wrap">
                                                 {constraint}
@@ -117,7 +121,7 @@ function ProblemBox({ className }) {
                                         )}
                                     </ul>
                                 </div>
-                                <div className=" overflow-x-auto mt-20">
+                                <div className="animate-fade-in overflow-x-auto mt-20">
                                     <table className=" border-collapse border border-slate-800 table-fixed min-w-full mt-10 mb-12 bg-black">
                                         <thead>
                                             <tr className="bg-slate-600 text-blue-500 font-newsreader tracking-tight" >
@@ -144,9 +148,20 @@ function ProblemBox({ className }) {
                             </>)
                         }
                         {activeTab === "verdict" && (
-                            <div className="w-full p-4 h-fit break-words">
-                                <h2 className="text-xl font-semibold font-newsreader">Submissions:</h2>
-                                <p className="mt-2">This section will display the submission history and verdicts.</p>
+                            <div className=" animate-fade-in w-full p-4 h-fit break-words">
+                                <div className = "w-full flex items-center justify-between px-6 py-3 ">
+                                <button className = "bg-gradient-to-r from-[#ffb074] to-[#ff7043] antialiased font-normal text-emerald-700 text-lg font-baskervville p-2 w-40 shadow-lg rounded-lg truncate animate-pulsing hover:font-bold transition delay-50 duration-700 ease-in-out hover:scale-110 hover:shadow-xl hover:-translate-y-1 active:scale-100"
+                                onClick={() => navigate(`/dashboard/problems/Problemdescription/${currentProblem._id}/Submissions`)} >
+                                    My Submissions
+                                </button>
+                                <button className = "bg-gradient-to-r from-[#ffb074] to-[#ff7043] antialiased font-normal text-emerald-700 text-lg font-baskervville p-2 w-40 shadow-lg rounded-lg truncate animate-pulsing hover:font-bold transition delay-50 duration-700 ease-in-out hover:scale-110 hover:shadow-xl hover:-translate-y-1 active:scale-100"
+                                onClick={() => navigate(`/dashboard/problems/Problemdescription/${currentProblem._id}/Submissions`, { state: { showAll: true } })} >
+                                    All Submissions
+
+                                </button>
+                                </div>
+                                <h2 className="text-xl mt-5 font-semibold font-newsreader">Submissions:</h2>
+                                <p className="mt-2 mb-[20px]">This section will display the submission history and verdicts of last 5 Submissions.</p>
                                 {submissionError && (
                                     <p className="text-red-600 mt-2">{submissionError}</p>
                                 )}
@@ -160,10 +175,12 @@ function ProblemBox({ className }) {
                                                 ? submissionData.submissions
                                                 : submissions).slice(-5).reverse().map((submission, idx) => (
                                                     <li key={submission._id || idx} className="text-lg p-4 bordering bg-gradient-to-br from-[#4671ff] via-[#11eff7] to-[#ffffff]  font-newsreader break-words whitespace-pre-wrap">
-                                                        <span className="ml-2">Verdict: <span className="font-semibold">{submission.verdict}</span></span> |
+                                                        <span className="ml-2">Verdict: <span className={`font-semibold
+                                                        ${submission.verdict === "Accepted" ? "text-green-600" : submission.verdict === "Wrong Answer" ? "text-red-600" : "text-yellow-600"}`}
+                                                        >{submission.verdict}</span></span> |
                                                         <span className="ml-2">Lang: {submission.language}</span> |
                                                         <span className="ml-2">Time: {submission.executionTime} ms</span> |
-                                                        <span className="ml-2">Passed: {submission.testCasesPassed}/{submission.totalTestCases}</span>
+                                                        <span className="ml-2">Passed: {submission.testCasesPassed}/{submission.totalTestCases}</span> |
                                                         <span className="ml-2">Date: {new Date(submission.timestamp).toLocaleString()}</span>
                                                     </li>))}
                                         </ul>

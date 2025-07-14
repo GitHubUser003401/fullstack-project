@@ -31,6 +31,7 @@ const handleSubmit = async (e) => {
       dispatch({ type: 'auth/login', payload: response.user })
       navigate('/dashboard');
     } catch (errorMessage) {
+      console.log(errorMessage);
       setError(
         typeof errorMessage === "string" ? errorMessage : errorMessage?.message
       );

@@ -17,6 +17,7 @@ import ConfirmBoxLayout from './Layout/ConfirmProblemLayout';
 import AdminProblemLayout from './Layout/adminProblemslayout';
 import ProblemSpaceLayout from './Layout/ProblemSpace';
 import Problemsubmission from './Layout/ProblemSubmission';
+import SubmissionsLayout from './Layout/SubmissionsLayout';
 
 
 
@@ -55,6 +56,7 @@ function App() {
               <Route path="Problemdescription/:id" >
                 <Route index element={<ProtectedRoute><ProblemSpaceLayout/></ProtectedRoute>} />
                 <Route path="Problemsubmission" element={<ProtectedRoute><Problemsubmission /></ProtectedRoute>} />
+                <Route path="Submissions" element={<ProtectedRoute><SubmissionsLayout /></ProtectedRoute>} />
               </Route>
 
 

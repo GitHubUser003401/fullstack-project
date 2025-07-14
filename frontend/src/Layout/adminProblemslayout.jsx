@@ -8,7 +8,7 @@ function AdminProblemLayout () {
           
         <Navbar className="relative z-10" />
         <div className="relative z-10 flex items-center w-full h-screen">
-                      <img src="/pexels-thisisengineering-3861958.jpg" className="absolute -z-10 object-cover w-full h-full" />
+                      <img src="/pexels-thisisengineering-3861958.jpg" className="brightness-80 absolute -z-10 object-cover w-full h-full" />
                       <h1 className="text-7xl font-gruppo w-full text-center text-red-800 font-extrabold animated-entry">
                         Admin Problem Sets
                       </h1>

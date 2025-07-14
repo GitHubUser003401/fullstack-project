@@ -32,7 +32,7 @@ export const submitCode = async (req, res) => {
                     language,
                     code,
                     input: testCases.test_case_input[i],
-                    timeout: testCases.timeout || 2000 // Use the timeout from test cases or default to 2 seconds
+                    timeout: testCases.timeout || 20000 // Use the timeout from test cases or default to 2 seconds
                 }, {
                     withCredentials: true, // This sends cookies automatically
                     headers: {

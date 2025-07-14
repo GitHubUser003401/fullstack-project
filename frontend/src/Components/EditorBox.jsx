@@ -7,6 +7,7 @@ import { cpp } from '@codemirror/lang-cpp';
 import { dracula } from '@uiw/codemirror-theme-dracula';
 import { submitCode } from "../Service/SubmissionApi";
 import { set } from "mongoose";
+import Spinner from "./Spinner";
 
 function EditorBox() {
     const navigate = useNavigate();
@@ -18,8 +19,8 @@ function EditorBox() {
     const [code, setCode] = useState(`#include <iostream>
 using namespace std;
 int main() {
-    cout << "Hello, World!" << endl;
-    return 0;
+cout << "Hello, World!" << endl;
+return 0;
 }`)
     const [output, setOutput] = useState("");
     const [input, setInput] = useState("");
@@ -59,6 +60,7 @@ int main() {
         try {
             const response = await submitCode(currentProblem._id, code, 'cpp');
             if (response.verdict === "Accepted") {
+                dispatch({ type: 'submission/clearSubmissions' });
                 navigate(`/dashboard/problems/Problemdescription/${currentProblem._id}/Problemsubmission`, { state: { message: "Submission successful!", verdict: response } });
             } else {
                 setVerdict(response);
@@ -134,6 +136,9 @@ int main() {
                             disabled={loading}>
                             {loading ? "Running..." : "Run Code"}
                         </button>
+                        <div className="w-fit h-fit">
+                            {loading && <Spinner />}
+                        </div>
                     </>
                 )}
 
@@ -144,6 +149,10 @@ int main() {
                             disabled={loading}>
                             {loading ? "Submitting..." : "Submit"}
                         </button>
+                        <div className="w-fit h-fit mb-[20px]">
+                            {loading && <Spinner />}
+                        </div>
+                        
                         <div className="w-[600px] h-fit bg-amber-100 mb-10 p-5 font-tomorrow rounded-br-xl rounded-tr-4xl">
                             <h2 className="text-md font-semibold">Verdict: <span className="text-red-500">
                                 {verdict ? verdict.verdict : "No verdict yet"}

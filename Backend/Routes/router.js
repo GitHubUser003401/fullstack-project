@@ -13,6 +13,8 @@ import { fetchTestCasesByProblemId } from '../Controller/Fetchtestcases.js';
 import { DeleteTestCaseCode } from '../Controller/Deletetestcase.js';
 import { submitCode } from '../Controller/Submission.js';
 import { fetchSubmissionCode } from '../Controller/FetchSubmissions.js';
+import { deletesubmissionCode } from '../Controller/DeleteSubmissions.js';
+import { fetchAllSubmissions } from '../Controller/FetchallSubmissions.js';
 
 const router = express.Router();
 
@@ -34,7 +36,9 @@ router.delete('/deleteproblem/:id', protectRoute, deleteProblemCode);
 router.delete('/deletetestcases/:id', protectRoute, DeleteTestCaseCode);
 
 router.post('/submission', protectRoute, submitCode);
-router.get('/submissions/:problemId', protectRoute, fetchSubmissionCode); 
+router.get('/submissions/:problemId', protectRoute, fetchSubmissionCode);
+router.get('/allsubmissions/:problemId', protectRoute, fetchAllSubmissions);
+router.delete('/deletesubmissions/:id', protectRoute, deletesubmissionCode)
 
 
 
