@@ -48,13 +48,13 @@ function ProblemSet({ className }) {
             </h1>
             <div className = "overflow-x-auto">
                 <table className = "min-w-full mb-[20px] border-collapse border border-gray-500 bg-black table-fixed">
-                    <thead className = "bg-gray-600 text-white font-newsreader">
+                    <thead className = "bg-gray-600 text-white font-baskervville">
                         <tr>
-                            <th className = "border border-gray-500 py-2 px-6 w-1/5">Title</th>
-                            <th className = "border border-gray-500 py-2 px-6 w-1/5">Difficulty</th>
-                            <th className = "border border-gray-500 py-2 px-6 w-1/5">Tag</th>
-                            <th className = "border border-gray-500 py-2 px-6 w-1/5">Created By</th>
-                            <th className = "border border-gray-500 py-2 px-6 w-1/5">Created At</th>
+                            <th className = "border border-gray-500 py-2 px-6 w-4/10">Title</th>
+                            <th className = "border border-gray-500 py-2 px-6 w-1/10">Difficulty</th>
+                            <th className = "border border-gray-500 py-2 px-6 w-1/10">Tag</th>
+                            <th className = "border border-gray-500 py-2 px-6 w-2/10">Created By</th>
+                            <th className = "border border-gray-500 py-2 px-6 w-2/10">Created At</th>
                         </tr>
                     </thead>
                     <tbody className = "">

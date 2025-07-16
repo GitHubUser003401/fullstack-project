@@ -75,14 +75,14 @@ function SubmissionsTable({ className }) {
                     <tbody className="">
                         {currentSubmissions.map((submission, idx) => (
                             <tr key={submission._id || idx} className="hover:bg-cyan-800 font-baskervville transition duration-300">
-                                <td className="border border-gray-500 py-2 px-6 text-center text-amber-500">{submission.userId || user._id}</td>
+                                <td className="border border-gray-500 py-2 px-6 text-center text-amber-500">{submission.username || user.username}</td>
                                 <td className="border border-gray-500 py-2 px-6 text-center">
-                                    <span className={`font-bold ${submission.verdict === "Accepted" ? "text-green-500" : "text-red-500"}`}>
+                                    <span className={`font-bold ${submission.verdict === "Accepted" ? "text-green-600" : submission.verdict === "Wrong Answer" ? "text-red-600" : "text-yellow-600"}`}>
                                         {submission.verdict}
                                     </span>
                                 </td>
                                 <td className="border border-gray-500 py-2 px-6 text-center text-amber-500">
-                                    {new Date(submission.timestamp).toLocaleString()}
+                                    {new Date(submission.timestamp).toLocaleString().toLowerCase()}
                                 </td>
                                 <td className="border border-gray-500 py-2 px-6 text-center text-amber-500">
                                     {submission.executionTime} ms

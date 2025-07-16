@@ -3,7 +3,7 @@ import generateFile from "../Utils/generateFile.js";
 import generateInputFile from "../Utils/generateinputfile.js";
 
 export const compileCode = async (req, res) => {
-    const { language = 'cpp', code, input, timeout = 10000 } = req.body;
+    const { language = 'cpp', code, input, timeout = 100000 } = req.body;
     if (code === undefined || code.trim() === "") {
         return res.status(400).json({ success: false, error: "Code is required" });
     }

@@ -3,17 +3,17 @@ const COMPILER_URL = import.meta.env.VITE_REACT_APP_URL_COMPILER;
 
 axios.defaults.withCredentials = true; // Include cookies in the request
 
-export const compileCode = async (language, code, input) => {
+
+export const ReviewCode = async (code, description) => {
     try {
-        const response = await axios.post(`${COMPILER_URL}/compile`, {
-            language,
+        const response = await axios.post(`${COMPILER_URL}/ai-review`, {
             code,
-            input
+            description
         }, {
             withCredentials: true // Include cookies in the request
-        });
+            });
         return response.data;
     } catch (error) {
-        throw error
+        throw error;
     }
-};
+}

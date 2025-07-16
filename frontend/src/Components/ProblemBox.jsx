@@ -125,8 +125,8 @@ function ProblemBox({ className }) {
                                     <table className=" border-collapse border border-slate-800 table-fixed min-w-full mt-10 mb-12 bg-black">
                                         <thead>
                                             <tr className="bg-slate-600 text-blue-500 font-newsreader tracking-tight" >
-                                                <th className="border border-amber-100 text-lg w-1/2 ">Sample Input</th>
-                                                <th className="border border-amber-100 text-lg w-1/2">Sample Output</th>
+                                                <th className="border font-baskervville border-amber-100 text-lg w-1/2 ">Sample Input</th>
+                                                <th className="border font-baskervville border-amber-100 text-lg w-1/2">Sample Output</th>
                                             </tr>
                                         </thead>
                                         <tbody className="">

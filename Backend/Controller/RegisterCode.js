@@ -7,7 +7,7 @@ export const registerCode = async (req, res) => {
         const { firstname, lastname, email, password, Phone_Number, Age, Role } = req.body;
         let username = `${firstname} ${lastname}`;
         //Validation part
-        if (!(firstname && email && password && Phone_Number && Age && Role)) {
+        if (!(firstname.trim() && email && password && Phone_Number && Age && Role)) {
             return res.status(400).send("Please enter all the information")
         }
         // Add Validation part

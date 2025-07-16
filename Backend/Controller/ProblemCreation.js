@@ -4,7 +4,7 @@ import ProblemStruct from "../Models/problem.js";
 export const createProblemCode = async (req, res) => {
     try {
         const { title, description, SampleInput, SampleOutput, constraints, tags, difficulty, createdBy} = req.body;
-        if (!(title && description && difficulty)) {
+        if (!(title.trim() && description.trim() && difficulty.trim())) {
             return res.status(400).send("Please provide all required fields.");
         }
         try {
