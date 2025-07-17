@@ -15,11 +15,14 @@ import { submitCode } from '../Controller/Submission.js';
 import { fetchSubmissionCode } from '../Controller/FetchSubmissions.js';
 import { deletesubmissionCode } from '../Controller/DeleteSubmissions.js';
 import { fetchAllSubmissions } from '../Controller/FetchallSubmissions.js';
+import { verifyEmail } from '../Utils/VerificationEmail.js';
+import { CreateAdminCode } from '../Controller/CreateAdmin.js';
 
 const router = express.Router();
 
 router.post('/register', registerCode)
 router.post('/login', loginCode)
+router.get('/verify-email', verifyEmail);
 
 router.get('/logout', logout)
 
@@ -39,6 +42,8 @@ router.post('/submission', protectRoute, submitCode);
 router.get('/submissions/:problemId', protectRoute, fetchSubmissionCode);
 router.get('/allsubmissions/:problemId', protectRoute, fetchAllSubmissions);
 router.delete('/deletesubmissions/:id', protectRoute, deletesubmissionCode)
+
+router.post('/createadmin', protectRoute, CreateAdminCode);
 
 
 

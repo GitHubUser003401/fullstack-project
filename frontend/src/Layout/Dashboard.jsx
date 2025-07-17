@@ -13,7 +13,7 @@ function Dashboard() {
       <Navbar className="relative z-10" />
       
 
-      <div className="relative z-10 w-full h-screen">
+      <div className="relative z-10 w-full h-screen overflow-hidden">
         <video
           className="absolute -z-10 shadow-xl shadow-cyan-400 object-cover w-full h-full"
           src="/3129671-uhd_3840_2160_30fps.mp4"

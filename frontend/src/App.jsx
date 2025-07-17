@@ -18,12 +18,7 @@ import AdminProblemLayout from './Layout/adminProblemslayout';
 import ProblemSpaceLayout from './Layout/ProblemSpace';
 import Problemsubmission from './Layout/ProblemSubmission';
 import SubmissionsLayout from './Layout/SubmissionsLayout';
-
-
-
-
-
-
+import VerifyBox from './Components/verifyBox';
 
 function App() {
   function ScrollToTop() {
@@ -47,6 +42,7 @@ function App() {
             <Route path="login" element={<LoginBox className="relative z-10" />} />
             <Route path="register" element={<RegisterBox className="animated-entry relative z-10 " />} />
             <Route path="confirmation" element={<ConfirmBox className="animated-entry relative z-10" />} />
+            <Route path="verify" element={<VerifyBox className="animated-entry relative z-10" />} />
           </Route>
           <Route path='/dashboard' >
             <Route index element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
@@ -54,14 +50,12 @@ function App() {
               <Route index element={<ProtectedRoute><ProblempageLayout /></ProtectedRoute>} />
 
               <Route path="Problemdescription/:id" >
-                <Route index element={<ProtectedRoute><ProblemSpaceLayout/></ProtectedRoute>} />
+                <Route index element={<ProtectedRoute><ProblemSpaceLayout /></ProtectedRoute>} />
                 <Route path="Problemsubmission" element={<ProtectedRoute><Problemsubmission /></ProtectedRoute>} />
                 <Route path="Submissions" element={<ProtectedRoute><SubmissionsLayout /></ProtectedRoute>} />
               </Route>
 
-
             </Route>
-
 
             <Route path="adminspace" >
               <Route index element={<ProtectedRoute><AdminRoute><Adminpagelayout /></AdminRoute></ProtectedRoute>} />
@@ -74,6 +68,10 @@ function App() {
                 <Route path="editproblem/:id" element={<ProtectedRoute><AdminRoute><CreateSpaceLayout /></AdminRoute></ProtectedRoute>} />
                 <Route path="problemconfirmation" element={<ProtectedRoute><AdminRoute><ConfirmBoxLayout /></AdminRoute></ProtectedRoute>} />
               </Route>
+            </Route>
+            <Route path="profile">
+              <Route index element={<ProtectedRoute></ProtectedRoute>} />
+
             </Route>
 
           </Route>

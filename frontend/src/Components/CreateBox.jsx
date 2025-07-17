@@ -243,7 +243,7 @@ function ProblemForm({ className }) {
         <div className={className + "w-full min-h-screen flex justify-center "}>
             <form onSubmit={handleSubmit} className="mt-[50px] w-3/4 mb-[50px] min-h-screen bg-gradient-to-br space-y-9 from-[#e6b93e] from-[0%] via-[#d3d1c6] via-[65%] to-[#e6b93e] to-[100%] bordering flex flex-col items-center">
                 <h1 className="text-4xl font-newsreader font-light text-purple-800 shadow-xl mt-4">
-                    Create a Problem Set.
+                    Create your own Problem Set.
                 </h1>
                 <input type="text" placeholder="Title of the Problem" value={Problems.title} onChange={e => setProblems({ ...Problems, title: e.target.value })} className="focus:outline-none focus:ring-2 placeholder-black bg-gray-300 rounded-full truncate w-2/3 h-8 transition delay-50 duration-500 hover:scale-105 hover:translate-y-1" />
                 <textarea placeholder="Description of the Problem" value={Problems.description} onChange={e => setProblems({ ...Problems, description: e.target.value })} className="focus:outline-none focus:ring-2 placeholder-black bg-gray-300 truncate w-2/3 h-96 transition delay-50 duration-500 text-wrap hover:scale-105 hover:translate-y-1" ></textarea>

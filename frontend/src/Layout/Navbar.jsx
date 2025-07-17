@@ -27,8 +27,8 @@ function Navbar({ className }) {
                 <div className={className}>
                     <div className="w-full h-14 bg-gradient-to-br from-[#222426] via-[#646363] to-[#1a1a1a] flex items-center gap-20 ">
                         <div>
-                            <h1 className="font-imperialscript animated-entry text-5xl bg-gradient-to-br from-[#4671ff] via-[#11eff7] to-[#ffffff] bg-clip-text text-transparent ">
-                                Codelite
+                            <h1 className="font-imperialscript tracking-wider animated-entry text-5xl bg-gradient-to-br from-[#4671ff] via-[#11eff7] to-[#ffffff] bg-clip-text text-transparent ">
+                                DevForge
                             </h1>
                         </div>
                         <div className="flex items-center gap-8">

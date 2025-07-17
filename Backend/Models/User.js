@@ -46,6 +46,13 @@ const userSchema = new mongoose.Schema({
         required: true,
         enum: ["Admin", "Student"],
     },
+    verified: {
+        type: Boolean,
+        default: false,
+    },
+    verificationToken: {
+        type: String,
+    }
 });
 
 const User = mongoose.model("user", userSchema);

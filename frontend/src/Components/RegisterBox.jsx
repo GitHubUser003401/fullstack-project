@@ -56,7 +56,7 @@ function RegisterBox({ className }) {
         <div className={className + "animated-entry"}>
             <div className="flex flex-col h-screen justify-between items-center opacity-90">
                 <div className="w-2/3 h-28 mt-[10px] bordering shadow-xl shadow-orange-600 animated-gradient grid grid-rows-2 place-items-center text-wrap overflow-hidden p-2">
-                    <h1 className="row-start-1 font-imperialscript text-6xl text-purple-950 transition delay-50 duration-1000 hover:scale-110 animated-entry">Register to <span className="bg-gradient-to-r from-[#050505] via-[#af0000] to-[#5f5f5f] bg-clip-text text-transparent">Codelite</span></h1>
+                    <h1 className="row-start-1 font-imperialscript text-6xl text-purple-950 transition delay-50 duration-1000 hover:scale-110 animated-entry">Register to <span className="bg-gradient-to-r from-[#050505] via-[#af0000] to-[#5f5f5f] bg-clip-text text-transparent">DevForge</span></h1>
                     <h2 className="row-start-2 italic text-lg text-amber-800 drop-shadow-lg font-tomorrow uppercase animated-entry">Enter your details</h2>
                 </div>
                 <div className = "flex flex-row w-2/3 h-3/4 mb-[10px]">

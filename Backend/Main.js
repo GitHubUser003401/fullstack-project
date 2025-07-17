@@ -4,6 +4,7 @@ import DBconnection from "./Database/db.js";
 import cors from 'cors';
 import router from './Routes/router.js';
 import cookieParser from 'cookie-parser';
+import { DefaultAdmins } from './Utils/DefaultAdmins.js';
 
 
 app.use(cors({
@@ -16,7 +17,9 @@ app.use(cors({
 
 app.use(cookieParser()); 
 
-DBconnection();
+DBconnection().then(() => {
+    DefaultAdmins();
+});
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

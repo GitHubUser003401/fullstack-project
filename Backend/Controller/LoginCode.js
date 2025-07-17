@@ -18,6 +18,10 @@ export const loginCode = async (req, res) => {
         if (!isPasswordValid) {
             return res.status(400).send("Invalid Password. Please try again.");
         }
+        if (!user.verified) {
+            return res.status(400).send("Please verify your email address before logging in.");
+        }
+        
         const token = jwt.sign({ id: user._id, email: user.email }, process.env.SECRET_KEY, {
             expiresIn: "24h"
         });

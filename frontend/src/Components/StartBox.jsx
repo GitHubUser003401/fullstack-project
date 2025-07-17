@@ -6,7 +6,7 @@ function StartBox({className}) {
     <div className={className}>
       <div className="flex flex-col h-screen justify-between items-center opacity-90">
         <div className="w-2/3 h-36 mt-[30px] shadow-xl shadow-orange-600 bordering grid grid-rows-2 animated-gradient place-items-center text-clip overflow-hidden">
-          <h1 className="mt-[20px] row-start-1 font-imperialscript text-6xl text-purple-950 transition delay-50 duration-1000 hover:scale-110 animated-entry">Welcome to <span className="bg-gradient-to-r from-[#050505] via-[#af0000] to-[#5f5f5f] bg-clip-text text-transparent ">Codelite</span></h1>
+          <h1 className="mt-[20px] row-start-1 font-imperialscript text-6xl text-purple-950 transition delay-50 duration-1000 hover:scale-110 animated-entry">Welcome to <span className="bg-gradient-to-r from-[#050505] via-[#af0000] to-[#5f5f5f] bg-clip-text text-transparent ">DevForge</span></h1>
           <h2 className="italic text-lg row-start-2 text-amber-800 drop-shadow-lg font-tomorrow uppercase animated-entry">Choose an option to continue</h2>
         </div>
 
