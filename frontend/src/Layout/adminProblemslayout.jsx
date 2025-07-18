@@ -6,7 +6,7 @@ function AdminProblemLayout () {
     return (
         <div className="relative w-full flex flex-col min-h-screen overflow-hidden shiny-bg bg-gradient-to-bl from-[#222426] via-[#777676] to-[#1a1a1a]  ">
           
-        <Navbar className="relative z-10" />
+        <Navbar className="relative z-20" />
         <div className="relative z-10 flex items-center w-full h-screen">
                       <img src="/pexels-thisisengineering-3861958.jpg" className="brightness-80 absolute -z-10 object-cover w-full h-full" />
                       <h1 className="text-7xl font-gruppo w-full text-center text-red-800 font-extrabold animated-entry">

@@ -17,13 +17,21 @@ import { deletesubmissionCode } from '../Controller/DeleteSubmissions.js';
 import { fetchAllSubmissions } from '../Controller/FetchallSubmissions.js';
 import { verifyEmail } from '../Utils/VerificationEmail.js';
 import { CreateAdminCode } from '../Controller/CreateAdmin.js';
+import { UpdateUser } from '../Controller/UpdateUser.js';
+import { deleteUserCode } from '../Controller/UserDelete.js';
+import { ForgotPassword } from '../Controller/ForgotPassword.js';
+import { CreatePassword } from '../Utils/ResetPassword.js';
 
 const router = express.Router();
 
 router.post('/register', registerCode)
 router.post('/login', loginCode)
 router.get('/verify-email', verifyEmail);
+router.post('/forgotpassword', ForgotPassword);
+router.post('/resetpassword', CreatePassword) // Assuming ForgotPassword is imported from the appropriate controller
 
+router.put('/updateuser', protectRoute, UpdateUser);
+router.delete('/deleteuser', protectRoute, deleteUserCode); // Assuming deleteUserCode is imported from UserDelete.js
 router.get('/logout', logout)
 
 router.get('/fetchproblem', protectRoute, fetchproblemCode);

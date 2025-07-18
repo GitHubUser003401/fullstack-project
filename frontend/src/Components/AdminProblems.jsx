@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { fetchProblem } from "../Service/ProblemfetchApi";
 import { deleteProblem } from "../Service/ProblemDeleteApi";
 import Spinner from "./Spinner";
@@ -13,6 +13,7 @@ import { deleteSubmission } from "../Service/DeleteSubmissionCode";
 function AdminProblems({className}) {
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const location = useLocation();
     let problems = useSelector((state) => state.problem.problems);
     const user = useSelector((state) => state.auth.user);
     const loading = useSelector((state) => state.auth.loading);
@@ -123,6 +124,7 @@ function AdminProblems({className}) {
                                                 } catch (error) {
                                                     if (error.response) {
                                                         if (error.response.status === 401 || error.response.status === 403) {
+                                                            location.state = { message: error.response.data.message }
                                                             dispatch({ type: 'auth/logout' });
                                                             navigate('/login', { state: { message: error.response.data.message } });
                                                         } else {

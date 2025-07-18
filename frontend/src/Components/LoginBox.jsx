@@ -47,12 +47,17 @@ const handleSubmit = async (e) => {
   return (
     <div className={className + " animated-entry"}>
       <div className="flex flex-col h-screen items-center justify-between opacity-90">
-        <div className="w-2/3 h-30 mt-[10px] bordering shadow-2xl shadow-orange-600 animated-gradient grid grid-rows-2 place-items-center text-wrap overflow-hidden p-2">
+        <div className="w-2/3 min-h-30 mt-[10px] bordering shadow-2xl shadow-orange-600 animated-gradient grid grid-rows-2 place-items-center text-wrap overflow-hidden p-2">
           <h1 className=" row-start-1 font-imperialscript text-6xl text-purple-950 transition delay-50 duration-1000 hover:scale-110 animated-entry">Login to <span className="bg-gradient-to-r from-[#050505] via-[#af0000] to-[#5f5f5f] bg-clip-text text-transparent">DevForge</span></h1>
           <h2 className="row-start-2 italic text-lg text-amber-800 font-tomorrow uppercase animated-entry">Enter your credentials</h2>
+          {error && (
+            <h2 className="text-red-600 font-bold font-baskervville text-xl animated-entry">
+              Forgot your password? <span className="text-blue-600 hover:underline cursor-pointer" onClick={() => navigate('/forgotpassword')}>Reset it</span>
+              </h2>
+          )}
         </div>
         
-        <div className = "w-2/5 mb-[50px] h-fit bordering shadow-2xl shadow-orange-600 animated-gradient place-items-center text-wrap overflow-hidden">
+        <div className = "w-2/5 mb-[30px] h-fit bordering shadow-2xl shadow-orange-600 animated-gradient place-items-center text-wrap overflow-hidden">
         <form onSubmit={handleSubmit} className = "w-full items-center flex flex-col ">
           <div className = "flex flex-col">
           <label className='font-newsreader'>Email</label> 

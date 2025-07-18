@@ -21,6 +21,9 @@ const authSlice = createSlice({
         },
         clearLoading: (state) => {
             state.loading = false;
+        },
+        updateUser: (state, action) => {
+            state.user = { ...state.user, ...action.payload };
         }
     }
 }

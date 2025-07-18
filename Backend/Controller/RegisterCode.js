@@ -71,6 +71,9 @@ export const registerCode = async (req, res) => {
         if (password.length < 6) {
             return res.status(400).send("Password should have more than 6 characters");
         }
+        if (password.length > 32) {
+            return res.status(400).send("Password should have less than 32 characters");
+        }
         const existingUser = await User.findOne({ email: email.toLowerCase() })
         if (existingUser) {
             return res.status(400).send("User already exists with the same email. Please try with a different email.");
@@ -83,7 +86,9 @@ export const registerCode = async (req, res) => {
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
-        const verificationToken = crypto.randomBytes(32).toString('hex'); // Generate a random token
+        const randomPart = crypto.randomBytes(32).toString('hex'); // Generate a random token
+        const timePart = Date.now().toString(36); // Add a timestamp to ensure uniqueness
+        const verificationToken = `${randomPart}.${timePart}`; // Combine both parts for the token
         const verificationLink = `${process.env.CLIENT_URL}/verify?token=${verificationToken}`;
         try {
             const transporter = await createTransporter();
@@ -122,6 +127,7 @@ export const registerCode = async (req, res) => {
                 });
                 const userObj = user.toObject();
                 delete userObj.password;
+                delete userObj.verificationToken; // Remove sensitive data before sending response
 
                 res.status(200).json({ message: "User registered successfully! Please Verify Email to Log-in.", user: userObj });
 

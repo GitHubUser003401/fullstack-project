@@ -19,6 +19,9 @@ import ProblemSpaceLayout from './Layout/ProblemSpace';
 import Problemsubmission from './Layout/ProblemSubmission';
 import SubmissionsLayout from './Layout/SubmissionsLayout';
 import VerifyBox from './Components/verifyBox';
+import ProfileLayout from './Layout/ProfileLayout';
+import ForgotPasswordBox from './Components/ForgotPassword';
+import ResetBox from './Components/ResetBox';
 
 function App() {
   function ScrollToTop() {
@@ -43,6 +46,8 @@ function App() {
             <Route path="register" element={<RegisterBox className="animated-entry relative z-10 " />} />
             <Route path="confirmation" element={<ConfirmBox className="animated-entry relative z-10" />} />
             <Route path="verify" element={<VerifyBox className="animated-entry relative z-10" />} />
+            <Route path="forgotpassword" element={<ForgotPasswordBox className="animated-entry relative z-10 " />} />
+            <Route path="forgot" element={<ResetBox className="animated-entry relative z-10" /> } />
           </Route>
           <Route path='/dashboard' >
             <Route index element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
@@ -70,7 +75,7 @@ function App() {
               </Route>
             </Route>
             <Route path="profile">
-              <Route index element={<ProtectedRoute></ProtectedRoute>} />
+              <Route index element={<ProtectedRoute><ProfileLayout /></ProtectedRoute>} />
 
             </Route>
 

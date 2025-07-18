@@ -49,12 +49,26 @@ function Navbar({ className }) {
                             <h1 className="text-xl font-bold font-gruppo hover:underline">
                                 Signed in as: {user.username}
                             </h1>
-                            <a href="/dashboard/profile">
+                            <div className = "relative group">
+                            <a>
                                 <img src="/pexels-alex-montes-892479-1820563.jpg"
-                                    className="custom-shadow w-12 h-12 rounded-full animated-entry transition delay-100 duration-500 hover:scale-115 "
+                                    className="custom-shadow w-12 h-12 rounded-full animated-entry transition delay-100 duration-500 group-hover:scale-115 cursor-pointer"
                                     alt="Profile"
                                 />
                             </a>
+                            <div className ="absolute right-0 rounded-xl min-w-44 bg-gray-800 shadow-lg opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto transition-opacity duration-300 z-50">
+                                <ul className ="py-2">
+                                    <li className="px-4 py-2 text-white ">
+                                        <h1>Hello, {user.username} </h1>
+                                    </li>
+                                    <li>
+                                        <a href="/dashboard/profile" className="block px-4 py-2 text-white hover:bg-gray-700">
+                                            Profile
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            </div>
                         </div>
                     </div>
                 </div>

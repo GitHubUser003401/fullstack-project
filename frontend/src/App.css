@@ -211,3 +211,11 @@ body {
     animation: flipY 5s ease-in-out infinite;
     transform-style: preserve-3d;
 }
+
+.profile-background {
+    background: linear-gradient(135deg, #2f3236 0%, #363131 100%);
+    scroll-behavior: smooth;
+}
+html {
+    background-color: #312e2e;
+}

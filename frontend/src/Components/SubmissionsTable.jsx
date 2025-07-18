@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { fetchAllSubmissions } from "../Service/FetchAllSubmissionsApi";
 import { useLocation, useNavigate } from "react-router-dom";
 
 function SubmissionsTable({ className }) {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const location = useLocation();
     const submissions = useSelector((state) => state.submission.submissions);
     const problem = useSelector((state) => state.problem.currentProblem);
@@ -30,6 +31,7 @@ function SubmissionsTable({ className }) {
                         if (error.response.status === 401 || error.response.status === 403) {
                             // Handle unauthorized access
                             console.error("Unauthorized access:", error.response.data);
+                            dispatch({ type: 'auth/logout' });
                             navigate('/login', { state: { message: error.response.data.message } });
                         } else {
                             setMessage(error.response.data || "An error occurred while fetching submissions.");

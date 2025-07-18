@@ -5,7 +5,7 @@ export const updateProblemCode = async (req, res) => {
         const { id } = req.params;
         const { title, description, SampleInput, SampleOutput, constraints, tags, difficulty } = req.body;
 
-        if (!(title && description && difficulty)) {
+        if (!(title.trim() && description.trim() && difficulty.trim())) {
             return res.status(400).send("Please provide all required fields.");
         }
 

@@ -59,15 +59,15 @@ function ProblemSet({ className }) {
                     </thead>
                     <tbody className = "">
                         {currentProblems.map((problem, idx) => (
-                            <tr key={problem._id || idx} className="hover:bg-cyan-800 transition duration-300"
+                            <tr key={problem._id || idx} className="hover:bg-cyan-800 odd:bg-gray-800 even:bg-gray-700 transition duration-300"
                             onClick={() => navigate(`/dashboard/problems/Problemdescription/${problem._id}`, { state: { problem: problem } })}>
-                                <td className=" border border-gray-500 py-2 px-6 h-20 text-orange-600 text-center">{problem.title}</td>
-                                <td className=" border border-gray-500 py-2 px-6 h-20 text-orange-600 text-center">{problem.difficulty}</td>
-                                <td className=" border border-gray-500 py-2 px-6 h-20 text-orange-600 text-center">
+                                <td className=" border border-gray-500 py-2 px-6 h-16 text-orange-600 text-center">{problem.title}</td>
+                                <td className=" border border-gray-500 py-2 px-6 h-16 text-orange-600 text-center">{problem.difficulty}</td>
+                                <td className=" border border-gray-500 py-2 px-6 h-16 text-orange-600 text-center">
                                     {problem.tags && problem.tags.join(', ')}
                                 </td>
-                                <td className=" border border-gray-500 py-2 px-6 h-20 text-orange-600 text-center">{problem.createdBy}</td>
-                                <td className=" border border-gray-500 py-2 px-6 h-20 text-orange-600 text-center">
+                                <td className=" border border-gray-500 py-2 px-6 h-16 text-orange-600 text-center">{problem.createdBy}</td>
+                                <td className=" border border-gray-500 py-2 px-6 h-16 text-orange-600 text-center">
                                     {problem.createdAt && new Date(problem.createdAt).toLocaleDateString()}
                                 </td>
                             </tr>
