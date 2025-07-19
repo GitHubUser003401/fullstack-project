@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchAllSubmissions } from "../Service/FetchAllSubmissionsApi";
 import { useLocation, useNavigate } from "react-router-dom";
 
-function SubmissionsTable({ className }) {
+function SubmissionsTable({ className, setDialogOpen, setDialogMessage }) {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const location = useLocation();
@@ -76,7 +76,11 @@ function SubmissionsTable({ className }) {
                     </thead>
                     <tbody className="">
                         {currentSubmissions.map((submission, idx) => (
-                            <tr key={submission._id || idx} className="hover:bg-cyan-800 font-baskervville transition duration-300">
+                            <tr key={submission._id || idx} className="hover:bg-cyan-800 odd:bg-[#000000] even:bg-[#1e1e2f] font-baskervville transition duration-300"
+                                onClick={() => {
+                                    setDialogOpen(true);
+                                    setDialogMessage(submission.code || "No code available for this submission.");
+                                }}>
                                 <td className="border border-gray-500 py-2 px-6 text-center text-amber-500">{submission.username || user.username}</td>
                                 <td className="border border-gray-500 py-2 px-6 text-center">
                                     <span className={`font-bold ${submission.verdict === "Accepted" ? "text-green-600" : submission.verdict === "Wrong Answer" ? "text-red-600" : "text-yellow-600"}`}>

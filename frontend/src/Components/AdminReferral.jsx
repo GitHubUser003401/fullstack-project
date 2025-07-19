@@ -57,7 +57,7 @@ function AdminReferralBox({ className, setDialogOpen, setDialogMessage, setOnDia
                 As an admin, you can nominate other users to join the admin team. Please use this responsibility wisely and refer only those individuals whom you trust and who demonstrate expertise and commitment to our platform’s values.
                 <br />
                 <br />
-                <span className="text-lg font-tomorrow italic">Note: Referrals should be made with care, as admin privileges are critical to maintaining the quality and security of our community. After the referral, User must register again as an admin.</span>
+                <span className="text-lg font-tomorrow italic">Note: Referrals should be made with care, as admin privileges are critical to maintaining the quality and security of our community. After the referral, User must login again as an admin.</span>
             </p>
             <div className="flex flex-col w-full h-fit items-center mt-12">
                 <label className='font-newsreader mb-2 text-xl'>Email: </label>

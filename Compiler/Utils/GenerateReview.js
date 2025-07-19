@@ -12,7 +12,8 @@ export const generateAIReview = async (code, description) => {
     Here is the code:
     ${code}
     Given the problem description:
-    ${description}`,
+    ${description}
+    At the End, don't give answers of given problems to the Users. Give them a short hint.`,
   });
   return response.text;
 }

@@ -5,6 +5,8 @@ const problemSlice = createSlice({
     initialState: {
         problems: [],
         currentProblem: null,
+        tag: "",
+        difficulty: "",
     },
     reducers: {
         setProblems(state, action) {
@@ -19,6 +21,12 @@ const problemSlice = createSlice({
         clearCurrentProblem(state) {
             state.currentProblem = null;
         },
+        setTags(state, action) {
+            state.tag = action.payload;
+        },
+        setDifficulties(state, action) {
+            state.difficulty = action.payload;
+        }
     }
 })
 

@@ -4,6 +4,8 @@ import { compileCode } from "../Service/CompilationApi";
 import { useDispatch, useSelector } from "react-redux";
 import CodeMirror from '@uiw/react-codemirror';
 import { cpp } from '@codemirror/lang-cpp';
+import { java } from '@codemirror/lang-java';
+import { python } from '@codemirror/lang-python';
 import { dracula } from '@uiw/codemirror-theme-dracula';
 import { submitCode } from "../Service/SubmissionApi";
 import Spinner from "./Spinner";
@@ -16,24 +18,49 @@ function EditorBox() {
     const location = useLocation();
     const currentProblem = useSelector((state) => state.problem.currentProblem);
     const loading = useSelector((state) => state.auth.loading);
-
-    const [code, setCode] = useState(`#include <iostream>
+    const [language, setLanguage] = useState('cpp');
+    const languageTemplates = {
+        cpp: `#include <iostream>
 using namespace std;
 int main() {
-cout << "Hello, World!" << endl;
-return 0;
-}`)
+    cout << "Hello, World!" << endl;
+    return 0;
+}`,
+        java: `public class Main {
+    public static void main(String[] args) {
+        System.out.println("Hello, World!");
+    }
+}`,
+        python: `# Python code
+print("Hello, World!")
+`
+    };
+    const languageExtensions = {
+        cpp: cpp(),
+        java: java(),
+        python: python()
+    };
+
+    const [code, setCode] = useState(languageTemplates.cpp);
     const [output, setOutput] = useState("");
     const [input, setInput] = useState("");
     const [activeTab, setActiveTab] = useState("output");
     const [verdict, setVerdict] = useState("");
     const [Review, setReview] = useState("");
+    const handleLanguageChange = (newLanguage) => {
+        setLanguage(newLanguage);
+        setCode(languageTemplates[newLanguage]);
+        setOutput("");
+        setVerdict("");
+        setReview("");
+    };
+
 
     const handleRun = async () => {
         if (loading) return;
         dispatch({ type: 'auth/setloading' });
         try {
-            const response = await compileCode('cpp', code, input);
+            const response = await compileCode(language, code, input);
             setOutput(response.output);
         } catch (error) {
             if (error.response) {
@@ -60,7 +87,7 @@ return 0;
         if (loading) return;
         dispatch({ type: 'auth/setloading' });
         try {
-            const response = await submitCode(currentProblem._id, code, 'cpp');
+            const response = await submitCode(currentProblem._id, code, language);
             if (response.verdict === "Accepted") {
                 dispatch({ type: 'submission/clearSubmissions' });
                 navigate(`/dashboard/problems/Problemdescription/${currentProblem._id}/Problemsubmission`, { state: { message: "Submission successful!", verdict: response } });
@@ -118,6 +145,8 @@ return 0;
 
     return (
         <div className="">
+            
+
             <div className="w-full min-h-12 pl-4 pt-2 flex items-end gap-4">
                 <button className={`truncate p-2 rounded-l-md h-fit font-newsreader rounded-br-xl rounded-tr-4xl transition-all duration-500
                 ${activeTab === 'output' ? 'bg-gradient-to-br min-w-1/3 text-xl from-[#ffb347] via-[#ddd28f] to-[#6a82fb] tracking-wider text-red-600' : 'bg-cyan-500 min-w-1/4 hover:bg-blue-500 text-white hover:text-yellow-500'}`}
@@ -137,11 +166,23 @@ return 0;
             </div>
 
             <div className="flow-shadow flex flex-col items-center min-h-screen w-full rounded-xl bg-gradient-to-br from-[#e6b93e] via-[#bebcb0] to-[#e6b93e]">
+                <div className="w-full min-h-12 pl-4 pt-2 flex items-end gap-4 mb-4">
+                <label className="text-white font-semibold font-unna">Language:</label>
+                <select 
+                    value={language} 
+                    onChange={(e) => handleLanguageChange(e.target.value)}
+                    className="bg-gray-700 text-white px-3 py-1 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                    <option value="cpp">C++</option>
+                    <option value="java">Java</option>
+                    <option value="python">Python</option>
+                </select>
+            </div>
                 <CodeMirror
                     value={code}
                     theme={dracula}
                     onChange={(value) => setCode(value)}
-                    extensions={[cpp()]}
+                    extensions={[languageExtensions[language]]}
                     padding={10}
                     className="border border-gray-300 rounded-xl mt-4 "
                     style={{

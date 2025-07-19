@@ -10,7 +10,7 @@ import { fetchAllSubmissions } from "../Service/FetchAllSubmissionsApi";
 import { deleteSubmission } from "../Service/DeleteSubmissionCode";
 
 
-function AdminProblems({className}) {
+function AdminProblems({ className }) {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const location = useLocation();
@@ -18,6 +18,8 @@ function AdminProblems({className}) {
     const user = useSelector((state) => state.auth.user);
     const loading = useSelector((state) => state.auth.loading);
     const [deletingId, setDeletingId] = useState(null);
+    const [Page, setPage] = useState(1);
+    const perPage = 10; // Number of problems per page
 
     const userId = user._id;
     const username = user.username;
@@ -50,6 +52,11 @@ function AdminProblems({className}) {
         const [createdById, createdByUsername] = problem.createdBy.split('|');
         return createdById === userId && createdByUsername === username;
     });
+    const startIndex = (Page - 1) * perPage;
+    const endIndex = startIndex + perPage;
+    const currentProblems = adminProblems.slice(startIndex, endIndex);
+    const totalPages = Math.ceil((adminProblems.length / perPage) || 1);
+
 
     return (
         <div className={className + "animated-entry min-h-screen"}>
@@ -67,7 +74,7 @@ function AdminProblems({className}) {
                         </tr>
                     </thead>
                     <tbody>
-                        {adminProblems.map((problem, idx) => (
+                        {currentProblems.map((problem, idx) => (
                             <tr key={problem._id || idx} className="hover:bg-cyan-800 transition duration-300">
                                 <td className="border border-gray-500 py-2 px-6 text-orange-600 text-center">{problem.title}</td>
                                 <td className="border border-gray-500 py-2 px-6 text-orange-600 text-center">{problem.difficulty}</td>
@@ -76,16 +83,16 @@ function AdminProblems({className}) {
                                 </td>
                                 <td className="border border-gray-500 py-2 px-6 text-center flex gap-5">
                                     <button className="antialiased font-normal italic text-indigo-700 font-serif text-lg w-1/3 h-12 bg-gradient-to-r from-[#e0e0e0] via-[#bdbdbd] to-[#757575] shadow-lg row-start-6 rounded-lg truncate animated-pulse hover:font-bold hover:text-indigo-900 transition delay-50 duration-700 ease-in-out hover:scale-110 hover:shadow-2xl hover:-translate-y-1 active:scale-100"
-                                        onClick={() => navigate(`/dashboard/adminspace/Adminproblems/editproblem/${problem._id}`, { state: { problem : problem } })}
+                                        onClick={() => navigate(`/dashboard/adminspace/Adminproblems/editproblem/${problem._id}`, { state: { problem: problem } })}
                                     >
                                         Edit
                                     </button>
                                     <button className="antialiased font-normal italic text-indigo-700 font-serif text-lg w-1/3 h-12 bg-gradient-to-r from-[#e0e0e0] via-[#bdbdbd] to-[#757575] shadow-lg row-start-6 rounded-lg truncate animated-pulse hover:font-bold hover:text-indigo-900 transition delay-50 duration-700 ease-in-out hover:scale-110 hover:shadow-2xl hover:-translate-y-1 active:scale-100"
-                                        onClick={() => navigate(`/dashboard/adminspace/Adminproblems/problemconfirmation`, { state: { message: "Your Current Problem" , problem: problem } })}>
+                                        onClick={() => navigate(`/dashboard/adminspace/Adminproblems/problemconfirmation`, { state: { message: "Your Current Problem", problem: problem } })}>
                                         View
                                     </button>
                                     <button className="antialiased font-normal italic text-indigo-700 font-serif text-lg w-1/3 h-12 bg-gradient-to-r from-[#e0e0e0] via-[#bdbdbd] to-[#757575] shadow-lg row-start-6 rounded-lg truncate animated-pulse hover:font-bold hover:text-indigo-900 transition delay-50 duration-700 ease-in-out hover:scale-110 hover:shadow-2xl hover:-translate-y-1 active:scale-100"
-                                        onClick = {async () => {
+                                        onClick={async () => {
                                             if (loading) return;
                                             const confirmed = window.confirm("Are you sure you want to delete this problem?");
                                             if (confirmed) {
@@ -134,20 +141,21 @@ function AdminProblems({className}) {
                                                     } else {
                                                         alert("Failed to delete problem. Please try again.");
                                                         console.error("Error deleting problem:", error);
-                                                    }   
+                                                    }
                                                 } finally {
                                                     dispatch({ type: 'auth/clearLoading' });
                                                 }
-                                        }}}
+                                            }
+                                        }}
                                         disabled={loading}
-                                        >
+                                    >
                                         {(loading && deletingId === problem._id) ? <><Spinner /> Deleting...</> : "Delete"}
                                     </button>
                                 </td>
-                                
+
                             </tr>
                         ))}
-                        {adminProblems.length === 0 && (
+                        {currentProblems.length === 0 && (
                             <tr>
                                 <td colSpan={4} className="py-4 font-gruppo text-3xl text-center text-red-500">
                                     No problems available at the moment.
@@ -156,6 +164,21 @@ function AdminProblems({className}) {
                         )}
                     </tbody>
                 </table>
+            </div>
+            <div className="flex justify-center mt-4 gap-2 mb-16">
+                <button
+                    className="px-4 py-2 bg-gray-700 text-white rounded disabled:opacity-50"
+                    onClick={() => setPage(Page - 1)}
+                    disabled={Page === 1} >
+                    Previous
+                </button>
+                <span className="px-4 py-2">{Page} / {totalPages}</span>
+                <button
+                    className="px-4 py-2 bg-gray-700 text-white rounded disabled:opacity-50"
+                    onClick={() => setPage(Page + 1)}
+                    disabled={Page === totalPages} >
+                    Next
+                </button>
             </div>
         </div>
     )

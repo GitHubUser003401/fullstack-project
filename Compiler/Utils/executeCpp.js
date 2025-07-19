@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { exec } from 'child_process';
 import { fileURLToPath } from 'url';
+import cron from 'node-cron';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -12,6 +13,26 @@ const outputPath = path.join(__dirname, "outputs");
 if(!fs.existsSync(outputPath)) {
     fs.mkdirSync(outputPath, { recursive: true });
 }
+
+cron.schedule('*/20 * * * *', () => {
+    const now = Date.now();
+    const oneHour = 60 * 60 * 1000;
+
+    fs.readdir(outputPath, (err, files) => {
+        if (err) return;
+        files.forEach(file => {
+            const filePath = path.join(outputPath, file);
+            fs.stat(filePath, (err, stats) => {
+                if (err) return;
+                if (now - stats.mtimeMs > oneHour) {
+                    fs.unlink(filePath, (err) => {
+                        if (!err) console.log(`Deleted old file: ${file}`);
+                    });
+                }
+            });
+        });
+    });
+});
 
 const executeCpp = async (filePath, inputFilePath, timeout) => {
     const jobId = path.basename(filePath).split(".")[0];
