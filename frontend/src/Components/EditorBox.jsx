@@ -31,14 +31,15 @@ int main() {
         System.out.println("Hello, World!");
     }
 }`,
-        python: `# Python code
+        py: `# Python code
+        # Test Cases can also be given in one line separated by space. Handle that edge case too.
 print("Hello, World!")
 `
     };
     const languageExtensions = {
         cpp: cpp(),
         java: java(),
-        python: python()
+        py: python()
     };
 
     const [code, setCode] = useState(languageTemplates.cpp);
@@ -175,7 +176,7 @@ print("Hello, World!")
                 >
                     <option value="cpp">C++</option>
                     <option value="java">Java</option>
-                    <option value="python">Python</option>
+                    <option value="py">Python</option>
                 </select>
             </div>
                 <CodeMirror

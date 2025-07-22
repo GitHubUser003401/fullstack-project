@@ -1,4 +1,6 @@
 import executeCpp from "../Utils/executeCpp.js";
+import executeJava from "../Utils/executeJava.js";
+import executePython from "../Utils/executePython.js";
 import generateFile from "../Utils/generateFile.js";
 import generateInputFile from "../Utils/generateinputfile.js";
 
@@ -8,19 +10,36 @@ export const compileCode = async (req, res) => {
         return res.status(400).json({ success: false, error: "Code is required" });
     }
 
-    if (!['cpp', 'c', 'java', 'python'].includes(language)) {
+    if (!['cpp', 'c', 'java', 'py'].includes(language)) {
         return res.status(400).json({ success: false, error: "Unsupported language" });
     }
 
     if (language === 'cpp' && code.includes("cin") && (!input || input.trim() === "")) {
         return res.status(400).json({ success: false, error: "Input required but not provided." });
     }
+    if (language === 'java' && code.includes("Scanner") && (!input || input.trim() === "")) {
+        return res.status(400).json({ success: false, error: "Input required but not provided." });
+    }
+    if (language === 'py' && code.includes("input") && (!input || input.trim() === "")) {
+        return res.status(400).json({ success: false, error: "Input required but not provided." });
+    }
 
     try {
-        const filepath = generateFile(language, code);
-        const inputFile = generateInputFile(input);
-        const output = await executeCpp(filepath, inputFile, timeout);
-        res.json({ output: output.output, executionTime: output.executionTime, memoryUsed: output.memoryUsed });
+        if (language === 'cpp') {
+            const filepath = generateFile(language, code);
+            const inputFile = generateInputFile(input);
+            const output = await executeCpp(filepath, inputFile, timeout);
+            return res.json({ output: output.output, executionTime: output.executionTime, memoryUsed: output.memoryUsed });
+        } else if (language === 'java') {
+            const inputFile = generateInputFile(input);
+            const output = await executeJava(code, inputFile, timeout);
+            return res.json({ output: output.output, executionTime: output.executionTime, memoryUsed: output.memoryUsed });
+        } else if (language === 'py') {
+            const filepath = generateFile(language, code);
+            const inputFile = generateInputFile(input);
+            const output = await executePython(filepath, inputFile, timeout);
+            return res.json({ output: output.output, executionTime: output.executionTime, memoryUsed: output.memoryUsed });
+        }
     } catch (error) {
         res.status(500).json({ success: false, error: error.stderr || error.error || "An error occured", executionTime: error.executionTime || null, memoryUsed: error.memoryUsed || null });
     }
