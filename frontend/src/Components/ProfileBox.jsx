@@ -128,7 +128,7 @@ function ProfileBox({ className, setDialogOpen, setDialogMessage, setOnDialogCon
                         </h1>
                         {deletemessage && <p className="text-red-500 text-center font-gruppo font-bold">{typeof deletemessage === "string" ? deletemessage : deletemessage?.message || "An Error Occured"}</p>}
                         <div className="absolute z-20 bottom-0 left-0 w-[50px] h-[50px]">
-                            <button className="w-20 h-20 bg-gradient-to-r from-fuchsia-500 to-indigo-500 to-60%  rounded-full mt-4 m-[-20px] font-tomorrow tracking-wider hover:scale-115 transition-all duration-500"
+                            <button className="cursor-pointer w-20 h-20 bg-gradient-to-r from-fuchsia-500 to-indigo-500 to-60%  rounded-full mt-4 m-[-20px] font-tomorrow tracking-wider hover:scale-115 transition-all duration-500"
                                 onClick={handleDeleteUser}
                                 disabled={loading}>
                                 {loading ? "Deleting..." : "Delete Account"}
@@ -170,7 +170,7 @@ function ProfileBox({ className, setDialogOpen, setDialogMessage, setOnDialogCon
                         </div>
                     </div>
                     <div className="w-full flex flex-col items-center">
-                        <button className="w-40 h-10 bg-gradient-to-r from-fuchsia-500 to-indigo-500 to-60% rounded-full mt-4 font-tomorrow tracking-wider hover:scale-115 transition-all duration-500"
+                        <button className="cursor-pointer w-40 h-10 bg-gradient-to-r from-fuchsia-500 to-indigo-500 to-60% rounded-full mt-4 font-tomorrow tracking-wider hover:scale-115 transition-all duration-500"
                             onClick={HandleEditorSubmit}
                             disabled={loading}
                         >

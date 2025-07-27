@@ -36,12 +36,12 @@ cron.schedule('*/20 * * * *', () => {
 
 const executeCpp = async (filePath, inputFilePath, timeout) => {
     const jobId = path.basename(filePath).split(".")[0];
-    const outPath = path.join(outputPath, `${jobId}.exe`);
+    const outPath = path.join(outputPath, `${jobId}.out`);
 
     const inputRedirect = inputFilePath ? `< "${inputFilePath}"` : "";
     return new Promise((resolve, reject) => {
         const startTime = process.hrtime.bigint(); 
-        exec(`g++ "${filePath}" -o "${outPath}" && cd "${outputPath}" && "${outPath}"${inputRedirect}`,
+        exec(`g++ "${filePath}" -o "${outPath}" && cd "${outputPath}" && ./"${outPath}" ${inputRedirect}`,
             {timeout: timeout},
             (error, stdout, stderr) => {
             const endTime = process.hrtime.bigint();

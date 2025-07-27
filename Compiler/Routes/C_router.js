@@ -1,14 +1,14 @@
 import express from "express";
-import { compileCode } from "../Controllers/Compile.js";
+import { compileCode, validateCompileRequest } from "../Controllers/Compile.js";
 import { protectRoute } from "../Utils/AuthVerify.js";
-import { reviewCode } from "../Controllers/Review.js";
+import { limiter, reviewCode } from "../Controllers/Review.js";
 
 
 
 const router = express.Router();
 
 
-router.post("/compile",protectRoute, compileCode);
-router.post("/ai-review", protectRoute, reviewCode);
+router.post("/compile", protectRoute, validateCompileRequest, compileCode);
+router.post("/ai-review", protectRoute, limiter, reviewCode);
 
 export default router;

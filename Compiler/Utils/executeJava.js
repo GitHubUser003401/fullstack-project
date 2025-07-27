@@ -24,7 +24,7 @@ cron.schedule('*/20 * * * *', () => {
             fs.stat(folderPath, (err, stats) => {
                 if (err) return;
                 if (now - stats.mtimeMs > oneHour) {
-                    fs.rmdir(folderPath, { recursive: true }, (err) => {
+                    fs.rm(folderPath, { recursive: true }, (err) => {
                         if (!err) console.log(`Deleted old job directory: ${folder}`);
                     });
                 }
@@ -44,7 +44,7 @@ const executeJava = async (code, inputFilePath, timeout) => {
     const inputRedirect = inputFilePath ? `< "${inputFilePath}"` : "";
     return new Promise((resolve, reject) => {
         const startTime = process.hrtime.bigint();
-        exec(`javac "${javaFile}" && cd "${jobDir}" && java Main ${inputRedirect}`,
+        exec(`cd "${jobDir}" && javac Main.java && java Main ${inputRedirect}`,
              {timeout: timeout},
             (error, stdout, stderr) => {
             const endTime = process.hrtime.bigint();

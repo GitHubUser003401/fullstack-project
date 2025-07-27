@@ -52,7 +52,7 @@ const handleSubmit = async (e) => {
           <h2 className="row-start-2 italic text-lg text-amber-800 font-tomorrow uppercase animated-entry">Enter your credentials</h2>
           {error && (
             <h2 className="text-red-600 font-bold font-baskervville text-xl animated-entry">
-              Forgot your password? <span className="text-blue-600 hover:underline cursor-pointer" onClick={() => navigate('/forgotpassword')}>Reset it</span>
+              Forgot your password? / Or new user? <span className="text-blue-600 hover:underline cursor-pointer" onClick={() => navigate('/forgotpassword')}>Reset</span> | <span className="text-blue-600 hover:underline cursor-pointer" onClick={() => navigate('/register')}>Register</span>
               </h2>
           )}
         </div>
@@ -67,7 +67,7 @@ const handleSubmit = async (e) => {
           <input type="password" placeholder='Password' className="mb-[10px] focus:outline-none focus:ring-2 placeholder-black bg-gray-300 rounded-full truncate w-52 h-8 transition delay-50 duration-500 hover:scale-105 hover:translate-y-1" value={loginData.password} onChange={e => setloginData({ ...loginData, password: e.target.value })} required />
           </div>
 
-          <button className="antialiased font-normal italic text-indigo-700 font-serif text-lg w-36 h-12 bg-gradient-to-r from-[#e0e0e0] via-[#bdbdbd] to-[#757575] shadow-lg rounded-lg truncate animated-pulse hover:font-bold hover:text-indigo-900 transition delay-50 duration-700 ease-in-out hover:scale-110 hover:shadow-2xl hover:-translate-y-1 active:scale-100"
+          <button className="antialiased cursor-pointer font-normal italic text-indigo-700 font-serif text-lg w-36 h-12 bg-gradient-to-r from-[#e0e0e0] via-[#bdbdbd] to-[#757575] shadow-lg rounded-lg truncate animated-pulse hover:font-bold hover:text-indigo-900 transition delay-50 duration-700 ease-in-out hover:scale-110 hover:shadow-2xl hover:-translate-y-1 active:scale-100"
             type = "submit"
             disabled={loading}>
               {loading ? "Logging In ..." : "Login"}

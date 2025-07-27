@@ -6,6 +6,7 @@ const ai = new GoogleGenAI({apiKey: process.env.GOOGLE_GEMINI_API});
 
 
 export const generateAIReview = async (code, description) => {
+  try {
     const response = await ai.models.generateContent({
     model: "gemini-2.0-flash",
     contents: `Analyze Below Code and provide short and crisp feedback.
@@ -16,4 +17,8 @@ export const generateAIReview = async (code, description) => {
     At the End, don't give answers of given problems to the Users. Give them a short hint.`,
   });
   return response.text;
+} catch (error) {
+    console.error("Error generating AI review:", error);
+    throw new Error("Failed to generate AI review");
+  }
 }

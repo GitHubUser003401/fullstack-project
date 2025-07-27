@@ -248,7 +248,7 @@ function ProblemForm({ className }) {
                 <input type="text" placeholder="Title of the Problem" value={Problems.title} onChange={e => setProblems({ ...Problems, title: e.target.value })} className="focus:outline-none focus:ring-2 placeholder-black bg-gray-300 rounded-full truncate w-2/3 h-8 transition delay-50 duration-500 hover:scale-105 hover:translate-y-1" />
                 <textarea placeholder="Description of the Problem" value={Problems.description} onChange={e => setProblems({ ...Problems, description: e.target.value })} className="focus:outline-none focus:ring-2 placeholder-black bg-gray-300 truncate w-2/3 h-96 transition delay-50 duration-500 text-wrap hover:scale-105 hover:translate-y-1" ></textarea>
 
-                <textarea placeholder="Type Sample Input (Shift+Enter for new line, Enter to add)" className="focus:outline-none focus:ring-2 placeholder-black bg-gray-300 truncate text-wrap w-2/3 h-16 transition delay-50 duration-500 hover:scale-105 hover:translate-y-1"
+                <textarea placeholder="Type Sample Input (Shift+Enter for new line, Enter to add) Optional" className="focus:outline-none focus:ring-2 placeholder-black bg-gray-300 truncate text-wrap w-2/3 h-16 transition delay-50 duration-500 hover:scale-105 hover:translate-y-1"
                     value={newsampleInput}
                     onChange={e => setNewSampleInput(e.target.value)}
                     onKeyDown={handleSampleInputKeyDown}
@@ -265,7 +265,7 @@ function ProblemForm({ className }) {
                         </span>
                     ))}
                 </div>
-                <textarea placeholder="Type Sample Output (Shift+Enter for new line, Enter to add)" className="focus:outline-none focus:ring-2 placeholder-black bg-gray-300  truncate w-2/3 h-16 text-wrap transition delay-50 duration-500 hover:scale-105 hover:translate-y-1"
+                <textarea placeholder="Type Sample Output (Shift+Enter for new line, Enter to add) Optional" className="focus:outline-none focus:ring-2 placeholder-black bg-gray-300  truncate w-2/3 h-16 text-wrap transition delay-50 duration-500 hover:scale-105 hover:translate-y-1"
                     value={newsampleOutput}
                     onChange={e => setNewSampleOutput(e.target.value)}
                     onKeyDown={handleSampleOutputKeyDown}
@@ -283,7 +283,7 @@ function ProblemForm({ className }) {
                         </span>
                     ))}
                 </div>
-                <textarea placeholder="Type Constraints and Enter (one-line)" className="focus:outline-none focus:ring-2 placeholder-black bg-gray-300 truncate w-2/3 h-16 text-wrap transition delay-50 duration-500 hover:scale-105 hover:translate-y-1"
+                <textarea placeholder="Type Constraints and Enter (one-line) Optional" className="focus:outline-none focus:ring-2 placeholder-black bg-gray-300 truncate w-2/3 h-16 text-wrap transition delay-50 duration-500 hover:scale-105 hover:translate-y-1"
                     value={constraintsInput}
                     onChange={e => setConstraintsInput(e.target.value)}
                     onKeyDown={handleConstraintsKeyDown}
@@ -301,7 +301,7 @@ function ProblemForm({ className }) {
                     ))}
                 </div>
 
-                <input type="text" placeholder="Type a tag and Enter (one-line)" className="focus:outline-none focus:ring-2 placeholder-black bg-gray-300 rounded-full truncate w-2/3 h-8 transition delay-50 duration-500 hover:scale-105 hover:translate-y-1"
+                <input type="text" placeholder="Type a tag and Enter (one-line) Optional" className="focus:outline-none focus:ring-2 placeholder-black bg-gray-300 rounded-full truncate w-2/3 h-8 transition delay-50 duration-500 hover:scale-105 hover:translate-y-1"
                     value={tagInput}
                     onChange={e => setTagInput(e.target.value)}
                     onKeyDown={handleTagKeyDown}
@@ -324,7 +324,7 @@ function ProblemForm({ className }) {
                     <option value="Hard">Hard</option>
                 </select>
 
-                <textarea placeholder="Test-Cases Input (Shift+Enter for new line, Enter to add)" className="focus:outline-none focus:ring-2 placeholder-black bg-gray-300 truncate text-wrap w-2/3 h-16 transition delay-50 duration-500 hover:scale-105 hover:translate-y-1"
+                <textarea placeholder="Test-Cases Input (Shift+Enter for new line, Enter to add) " className="focus:outline-none focus:ring-2 placeholder-black bg-gray-300 truncate text-wrap w-2/3 h-16 transition delay-50 duration-500 hover:scale-105 hover:translate-y-1"
                     value={testcaseinput}
                     onChange={e => setTestCaseInput(e.target.value)}
                     onKeyDown={handletestCaseInputKeyDown}>
@@ -370,7 +370,7 @@ function ProblemForm({ className }) {
 
 
 
-                <button type="submit" className="antialiased font-normal italic text-indigo-700 font-serif text-lg w-1/3 h-12 bg-gradient-to-r from-[#e0e0e0] via-[#bdbdbd] to-[#757575] shadow-lg  rounded-lg truncate animated-pulse hover:font-bold hover:text-indigo-900 transition delay-50 duration-700 ease-in-out hover:scale-110 hover:shadow-2xl hover:-translate-y-1 active:scale-100"
+                <button type="submit" className="cursor-pointer antialiased font-normal italic text-indigo-700 font-serif text-lg w-1/3 h-12 bg-gradient-to-r from-[#e0e0e0] via-[#bdbdbd] to-[#757575] shadow-lg  rounded-lg truncate animated-pulse hover:font-bold hover:text-indigo-900 transition delay-50 duration-700 ease-in-out hover:scale-110 hover:shadow-2xl hover:-translate-y-1 active:scale-100"
                     disabled={loading}>
                     {loading ? "Submitting ..." : "Submit Problem"}
                 </button>

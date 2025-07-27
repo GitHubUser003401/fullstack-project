@@ -8,8 +8,8 @@ export const TestCaseUpdateCode = async (req, res) => {
             return res.status(400).send("Please provide all required fields.");
         }
         const pid = new mongoose.Types.ObjectId(problemId);
-
-        const updatedTestCase = await TestCaseStruct.findOneAndUpdate(
+        try {
+            const updatedTestCase = await TestCaseStruct.findOneAndUpdate(
             { problemId: pid },
             { test_case_input, test_case_output, timeout: timeout || 2000 }, // default to 2 seconds if not provided
             { new: true }
@@ -20,6 +20,16 @@ export const TestCaseUpdateCode = async (req, res) => {
         }
 
         res.status(200).json({ message: "Test cases updated successfully", testCases: updatedTestCase });
+        } catch (error) {
+            if (error.name === 'ValidationError') {
+                return res.status(400).send("Validation error: " + error.message);
+            }
+            console.error("Error validating test case data:", error);
+            return res.status(500).send("Internal Server Error");
+            
+        }
+
+        
     } catch (error) {
         console.error("Error updating test cases:", error);
         if (error.name === 'CastError') {

@@ -29,7 +29,10 @@ export const UpdateUser = async (req, res) => {
                 Phone_Number,
                 Age,
                 Role
-            }, { new: true });
+            }, {
+                new: true,
+                runValidators: true  // ✅ This enables schema validation
+            });
 
             if (!UpdateUser) {
                 return res.status(404).send("User not found");

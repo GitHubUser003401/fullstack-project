@@ -63,17 +63,17 @@ function RegisterBox({ className }) {
                 <div className = "w-3/5 h-full bordering pb-12 pt-12 shadow-2xl shadow-orange-600 animated-gradient place-items-center text-wrap overflow-hidden">
                 <form onSubmit={handleSubmit} className='flex flex-col justify-between items-center'>
                     <div className = "grid grid-cols-2 grid-rows-6 items-center gap-3.5">
-                    <label className = "row-start-1  font-newsreader text-xl bg-gradient-to-r from-[#050505] via-[#af0000] to-[#5f5f5f] bg-clip-text text-transparent ">UserName:</label>   
+                    <label className = "row-start-1  font-newsreader text-xl bg-gradient-to-r from-[#050505] via-[#af0000] to-[#5f5f5f] bg-clip-text text-transparent ">UserName: <span className='text-sm font-baskervville tracking-tighter'>FirstName LastName</span></label>   
                     <input type="text" placeholder='Enter Your Username' className={`${box}`} value={formData.username} onChange={e => setFormData({ ...formData, username: e.target.value })} required />
-                    <label className='row-start-2  font-newsreader text-xl bg-gradient-to-r from-[#050505] via-[#af0000] to-[#5f5f5f] bg-clip-text text-transparent'>Password:</label>
+                    <label className='row-start-2  font-newsreader text-xl bg-gradient-to-r from-[#050505] via-[#af0000] to-[#5f5f5f] bg-clip-text text-transparent'>Password: <span className='text-sm font-baskervville tracking-tighter'>Min. 8|Max. 32</span></label>
                     <input type="password" placeholder='Password' className={`${box}`} value={formData.password} onChange={e => setFormData({ ...formData, password: e.target.value })} required />
-                    <label className = 'row-start-3  font-newsreader text-xl bg-gradient-to-r from-[#050505] via-[#af0000] to-[#5f5f5f] bg-clip-text text-transparent'>Email:</label>
+                    <label className = 'row-start-3  font-newsreader text-xl bg-gradient-to-r from-[#050505] via-[#af0000] to-[#5f5f5f] bg-clip-text text-transparent'>Email: <span className='text-sm font-baskervville tracking-tighter'>example@domain.com</span></label>
                     <input type="email" placeholder='Email Address' className={`${box}`} value={formData.email} onChange={e => setFormData({ ...formData, email: e.target.value })} required />
-                    <label className='row-start-4  font-newsreader text-xl bg-gradient-to-r from-[#050505] via-[#af0000] to-[#5f5f5f] bg-clip-text text-transparent'>Contact Number:</label>
+                    <label className='row-start-4  font-newsreader text-xl bg-gradient-to-r from-[#050505] via-[#af0000] to-[#5f5f5f] bg-clip-text text-transparent'>Contact Number: <span className='text-sm font-baskervville tracking-tighter'>10 digits</span></label>
                     <input type="number" placeholder='Contact_Number' className={`${box}`} value={formData.Phone_Number} onChange={e => setFormData({ ...formData, Phone_Number: e.target.value })} required />
-                    <label className='row-start-5  font-newsreader text-xl bg-gradient-to-r from-[#050505] via-[#af0000] to-[#5f5f5f] bg-clip-text text-transparent'>Age:</label>
+                    <label className='row-start-5  font-newsreader text-xl bg-gradient-to-r from-[#050505] via-[#af0000] to-[#5f5f5f] bg-clip-text text-transparent'>Age: <span className='text-sm font-baskervville tracking-tighter'>Min. 12|Max. 100</span></label>
                     <input type="number" placeholder='Age' className={`${box}`} value={formData.Age} onChange={e => setFormData({ ...formData, Age: e.target.value })} required />
-                    <label className='row-start-6  font-newsreader text-xl bg-gradient-to-r from-[#050505] via-[#af0000] to-[#5f5f5f] bg-clip-text text-transparent'>Role:</label>
+                    <label className='row-start-6  font-newsreader text-xl bg-gradient-to-r from-[#050505] via-[#af0000] to-[#5f5f5f] bg-clip-text text-transparent'>Role: </label>
                     <select className={`${box}`} value={formData.Role} onChange={e => setFormData({ ...formData, Role: e.target.value })} required>
                         <option value= "" disabled >Select Role</option>
                         <option value="Admin">Admin</option>
@@ -81,7 +81,7 @@ function RegisterBox({ className }) {
                     </select>
                     </div>
                     <div className = "w-full h-24 flex items-center justify-center mt-4 ">
-                    <button className="justify-center-safe antialiased font-normal italic text-indigo-700 font-serif text-lg w-1/3 h-12 bg-gradient-to-r from-[#e0e0e0] via-[#bdbdbd] to-[#757575] shadow-lg rounded-lg truncate animated-pulse hover:font-bold hover:text-indigo-900 transition delay-50 duration-700 ease-in-out hover:scale-110 hover:shadow-2xl hover:-translate-y-1 active:scale-100"
+                    <button className="cursor-pointer justify-center-safe antialiased font-normal italic text-indigo-700 font-serif text-lg w-1/3 h-12 bg-gradient-to-r from-[#e0e0e0] via-[#bdbdbd] to-[#757575] shadow-lg rounded-lg truncate animated-pulse hover:font-bold hover:text-indigo-900 transition delay-50 duration-700 ease-in-out hover:scale-110 hover:shadow-2xl hover:-translate-y-1 active:scale-100"
                         type = "submit"
                         disabled={loading}
                         >

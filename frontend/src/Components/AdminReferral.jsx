@@ -50,17 +50,17 @@ function AdminReferralBox({ className, setDialogOpen, setDialogMessage, setOnDia
     return (
         <div className={className + " w-[1000px] mt-11 mb-11 bg-radial-[at_25%_50%] from-sky-300 via-blue-500 to-indigo-700 to-80% p-4 min-h-[400px] flow-shadow bordering"}>
             <img className="float-right w-[200px] h-[200px] flip-3d-y" src="/professional.png" />
-            <h1 className="text-4xl font-newsreader tracking-tighter text-center underline decoration-indigo-600 underline-offset-4 pt-4">Admin Referral</h1>
-            <p className="text-xl font-newsreader mt-5 ">
+            <h1 className="text-4xl font-newsreader tracking-tighter text-center underline decoration-indigo-600 underline-offset-4 pt-4 bg-gradient-to-r from-[#ff0808] from-0% via-[#bdbdbd] via-40% to-[#00a3d5] bg-clip-text text-transparent">Admin Referral</h1>
+            <p className="text-xl font-newsreader mt-5 text-amber-800">
                 If you are an admin, you can refer other users to become admins. Please ensure that the email you provide is valid and that the user is aware of their referral.
                 <br />
                 As an admin, you can nominate other users to join the admin team. Please use this responsibility wisely and refer only those individuals whom you trust and who demonstrate expertise and commitment to our platform’s values.
                 <br />
                 <br />
-                <span className="text-lg font-tomorrow italic">Note: Referrals should be made with care, as admin privileges are critical to maintaining the quality and security of our community. After the referral, User must login again as an admin.</span>
+                <span className="text-lg font-tomorrow italic text-red-700">Note: Referrals should be made with care, as admin privileges are critical to maintaining the quality and security of our community. After the referral, User must login again as an admin.</span>
             </p>
             <div className="flex flex-col w-full h-fit items-center mt-12">
-                <label className='font-newsreader mb-2 text-xl'>Email: </label>
+                <label className='font-newsreader mb-2 text-xl text-amber-700'>Email: </label>
                 <input type="email" placeholder='Email' className="p-1 focus:outline-none focus:ring-2 placeholder-black bg-gray-300 rounded-full truncate w-[300px] h-8 transition delay-50 duration-500 hover:scale-105 hover:translate-y-1" value={email} onChange={e => setEmail(e.target.value)} />
 
                 <button className="antialiased font-normal italic text-indigo-700 font-serif text-lg w-60 h-12 bg-gradient-to-r from-[#e0e0e0] via-[#bdbdbd] to-[#757575] shadow-lg rounded-lg truncate animated-pulse hover:font-bold hover:text-indigo-900 transition delay-50 duration-700 ease-in-out hover:scale-110 hover:shadow-2xl hover:-translate-y-1 active:scale-100 mt-6"
@@ -75,7 +75,6 @@ function AdminReferralBox({ className, setDialogOpen, setDialogMessage, setOnDia
             </div>
         </div>
     )
-
 }
 
 export default AdminReferralBox;

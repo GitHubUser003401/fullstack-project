@@ -82,16 +82,16 @@ function AdminProblems({ className }) {
                                     {problem.createdAt && new Date(problem.createdAt).toLocaleDateString()}
                                 </td>
                                 <td className="border border-gray-500 py-2 px-6 text-center flex gap-5">
-                                    <button className="antialiased font-normal italic text-indigo-700 font-serif text-lg w-1/3 h-12 bg-gradient-to-r from-[#e0e0e0] via-[#bdbdbd] to-[#757575] shadow-lg row-start-6 rounded-lg truncate animated-pulse hover:font-bold hover:text-indigo-900 transition delay-50 duration-700 ease-in-out hover:scale-110 hover:shadow-2xl hover:-translate-y-1 active:scale-100"
+                                    <button className="cursor-pointer antialiased font-normal italic text-indigo-700 font-serif text-lg w-1/3 h-12 bg-gradient-to-r from-[#e0e0e0] via-[#bdbdbd] to-[#757575] shadow-lg row-start-6 rounded-lg truncate animated-pulse hover:font-bold hover:text-indigo-900 transition delay-50 duration-700 ease-in-out hover:scale-110 hover:shadow-2xl hover:-translate-y-1 active:scale-100"
                                         onClick={() => navigate(`/dashboard/adminspace/Adminproblems/editproblem/${problem._id}`, { state: { problem: problem } })}
                                     >
                                         Edit
                                     </button>
-                                    <button className="antialiased font-normal italic text-indigo-700 font-serif text-lg w-1/3 h-12 bg-gradient-to-r from-[#e0e0e0] via-[#bdbdbd] to-[#757575] shadow-lg row-start-6 rounded-lg truncate animated-pulse hover:font-bold hover:text-indigo-900 transition delay-50 duration-700 ease-in-out hover:scale-110 hover:shadow-2xl hover:-translate-y-1 active:scale-100"
+                                    <button className="cursor-pointer antialiased font-normal italic text-indigo-700 font-serif text-lg w-1/3 h-12 bg-gradient-to-r from-[#e0e0e0] via-[#bdbdbd] to-[#757575] shadow-lg row-start-6 rounded-lg truncate animated-pulse hover:font-bold hover:text-indigo-900 transition delay-50 duration-700 ease-in-out hover:scale-110 hover:shadow-2xl hover:-translate-y-1 active:scale-100"
                                         onClick={() => navigate(`/dashboard/adminspace/Adminproblems/problemconfirmation`, { state: { message: "Your Current Problem", problem: problem } })}>
                                         View
                                     </button>
-                                    <button className="antialiased font-normal italic text-indigo-700 font-serif text-lg w-1/3 h-12 bg-gradient-to-r from-[#e0e0e0] via-[#bdbdbd] to-[#757575] shadow-lg row-start-6 rounded-lg truncate animated-pulse hover:font-bold hover:text-indigo-900 transition delay-50 duration-700 ease-in-out hover:scale-110 hover:shadow-2xl hover:-translate-y-1 active:scale-100"
+                                    <button className="cursor-pointer antialiased font-normal italic text-indigo-700 font-serif text-lg w-1/3 h-12 bg-gradient-to-r from-[#e0e0e0] via-[#bdbdbd] to-[#757575] shadow-lg row-start-6 rounded-lg truncate animated-pulse hover:font-bold hover:text-indigo-900 transition delay-50 duration-700 ease-in-out hover:scale-110 hover:shadow-2xl hover:-translate-y-1 active:scale-100"
                                         onClick={async () => {
                                             if (loading) return;
                                             const confirmed = window.confirm("Are you sure you want to delete this problem?");
@@ -167,14 +167,14 @@ function AdminProblems({ className }) {
             </div>
             <div className="flex justify-center mt-4 gap-2 mb-16">
                 <button
-                    className="px-4 py-2 bg-gray-700 text-white rounded disabled:opacity-50"
+                    className="cursor-pointer px-4 py-2 bg-gray-700 text-white rounded disabled:opacity-50"
                     onClick={() => setPage(Page - 1)}
                     disabled={Page === 1} >
                     Previous
                 </button>
                 <span className="px-4 py-2">{Page} / {totalPages}</span>
                 <button
-                    className="px-4 py-2 bg-gray-700 text-white rounded disabled:opacity-50"
+                    className="cursor-pointer px-4 py-2 bg-gray-700 text-white rounded disabled:opacity-50"
                     onClick={() => setPage(Page + 1)}
                     disabled={Page === totalPages} >
                     Next

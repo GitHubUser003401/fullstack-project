@@ -9,6 +9,7 @@ function SubmissionsTable({ className, setDialogOpen, setDialogMessage }) {
     const location = useLocation();
     const submissions = useSelector((state) => state.submission.submissions);
     const problem = useSelector((state) => state.problem.currentProblem);
+    const bestSubmission = useSelector((state) => state.submission.bestSubmission);
     // If the problem is not provided, use the submissions from the Redux store
     // If the problem is provided, fetch submissions for that problem
     // If neither is provided, show an empty table with a message
@@ -76,7 +77,8 @@ function SubmissionsTable({ className, setDialogOpen, setDialogMessage }) {
                     </thead>
                     <tbody className="">
                         {currentSubmissions.map((submission, idx) => (
-                            <tr key={submission._id || idx} className="hover:bg-cyan-800 odd:bg-[#000000] even:bg-[#1e1e2f] font-baskervville transition duration-300"
+                            <tr key={submission._id || idx} className={"hover:bg-cyan-800 cursor-pointer font-baskervville transition duration-300 " + ((submission._id === bestSubmission && !ShowAll) ? " bg-green-800" : " odd:bg-[#000000] even:bg-[#1e1e2f]")}
+
                                 onClick={() => {
                                     setDialogOpen(true);
                                     setDialogMessage(submission.code || "No code available for this submission.");
@@ -117,25 +119,34 @@ function SubmissionsTable({ className, setDialogOpen, setDialogMessage }) {
             </div>
 
 
-            <div className="flex justify-center mt-2 gap-2 mb-16">
+            <div className="flex justify-center mt-2 gap-2 mb-8">
                 <button
-                    className="px-4 py-2 bg-gray-700 text-white rounded disabled:opacity-50"
+                    className="cursor-pointer px-4 py-2 bg-gray-700 text-white rounded disabled:opacity-50"
                     onClick={() => setPage(Page - 1)}
                     disabled={Page === 1} >
                     Previous
                 </button>
                 <span className="px-4 py-2">{Page} / {totalPages}</span>
                 <button
-                    className="px-4 py-2 bg-gray-700 text-white rounded disabled:opacity-50"
+                    className="cursor-pointer px-4 py-2 bg-gray-700 text-white rounded disabled:opacity-50"
                     onClick={() => setPage(Page + 1)}
                     disabled={Page === totalPages} >
                     Next
                 </button>
             </div>
+            {!ShowAll && (<div className="w-full text-center font-gruppo tracking-tight font-bold mb-6">
+                Best Submission - <div style={{
+                    width: "8px",
+                    height: "8px",
+                    backgroundColor: "green",
+                    display: "inline-block"
+                }} />
+            </div>)}
+            
 
             <div className="mt-8 mb-16">
                 <button
-                    className="antialiased font-normal italic text-indigo-700 font-serif text-lg w-52 h-20 bg-gradient-to-r from-[#e0e0e0] via-[#bdbdbd] to-[#757575] shadow-lg rounded-lg truncate animated-pulse hover:font-bold hover:text-indigo-900 transition delay-50 duration-700 ease-in-out hover:scale-110 hover:shadow-2xl hover:-translate-y-1 active:scale-100"
+                    className="cursor-pointer antialiased font-normal italic text-indigo-700 font-serif text-lg w-52 h-20 bg-gradient-to-r from-[#e0e0e0] via-[#bdbdbd] to-[#757575] shadow-lg rounded-lg truncate animated-pulse hover:font-bold hover:text-indigo-900 transition delay-50 duration-700 ease-in-out hover:scale-110 hover:shadow-2xl hover:-translate-y-1 active:scale-100"
                     onClick={() => navigate(-1)}
                 >
                     Back to Problem

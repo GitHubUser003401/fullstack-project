@@ -19,7 +19,7 @@ function ProblemBox({ className }) {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const id = currentProblem._id || problem._id;
+                const id = (currentProblem && currentProblem._id) || (problem && problem._id);
                 console.log("Fetching submissions for problem ID:", id);
                 if (id) {
                     const response = await fetchSubmissions(id);
@@ -85,12 +85,12 @@ function ProblemBox({ className }) {
             <div className='mt-[15px] flex w-full min-h-screen'>
                 <div className=" w-2/5 m-4">
                     <div className="w-full min-h-12 pl-4 pt-2 flex items-end gap-4">
-                        <button className={`truncate p-2 rounded-l-md h-fit font-newsreader rounded-br-xl rounded-tr-4xl transition-all duration-500
+                        <button className={`cursor-pointer truncate p-2 rounded-l-md h-fit font-newsreader rounded-br-xl rounded-tr-4xl transition-all duration-500
                             ${activeTab === 'output' ? 'bg-gradient-to-br text-xl min-w-1/3 from-[#ffb347] via-[#ddd28f] to-[#6a82fb] tracking-wider text-red-600' : 'bg-cyan-500 hover:bg-blue-500 min-w-1/4 text-white hover:text-yellow-500'}`}
                             onClick={() => setActiveTab('output')}>
                             ProblemID
                         </button>
-                        <button className={`truncate w-1/4 p-2 rounded-l-md h-fit font-newsreader rounded-br-xl rounded-tr-4xl transition-all duration-500
+                        <button className={`cursor-pointer truncate w-1/4 p-2 rounded-l-md h-fit font-newsreader rounded-br-xl rounded-tr-4xl transition-all duration-500
                             ${activeTab === 'verdict' ? 'bg-gradient-to-br text-xl min-w-1/3 from-[#ffb347] via-[#ddd28f] to-[#6a82fb] tracking-wider text-red-600' : 'bg-cyan-500 min-w-1/4 hover:bg-blue-500 text-white hover:text-yellow-500'}`}
                             onClick={() => setActiveTab('verdict')}>
                             Submissions
@@ -150,11 +150,11 @@ function ProblemBox({ className }) {
                         {activeTab === "verdict" && (
                             <div className=" animate-fade-in w-full p-4 h-fit break-words">
                                 <div className = "w-full flex items-center justify-between px-6 py-3 ">
-                                <button className = "bg-gradient-to-r from-[#ffb074] to-[#ff7043] antialiased font-normal text-emerald-700 text-lg font-baskervville p-2 w-40 shadow-lg rounded-lg truncate animate-pulsing hover:font-bold transition delay-50 duration-700 ease-in-out hover:scale-110 hover:shadow-xl hover:-translate-y-1 active:scale-100"
+                                <button className = "cursor-pointer bg-gradient-to-r from-[#ffb074] to-[#ff7043] antialiased font-normal text-emerald-700 text-lg font-baskervville p-2 w-40 shadow-lg rounded-lg truncate animate-pulsing hover:font-bold transition delay-50 duration-700 ease-in-out hover:scale-110 hover:shadow-xl hover:-translate-y-1 active:scale-100"
                                 onClick={() => navigate(`/dashboard/problems/Problemdescription/${currentProblem._id}/Submissions`)} >
                                     My Submissions
                                 </button>
-                                <button className = "bg-gradient-to-r from-[#ffb074] to-[#ff7043] antialiased font-normal text-emerald-700 text-lg font-baskervville p-2 w-40 shadow-lg rounded-lg truncate animate-pulsing hover:font-bold transition delay-50 duration-700 ease-in-out hover:scale-110 hover:shadow-xl hover:-translate-y-1 active:scale-100"
+                                <button className = "cursor-pointer bg-gradient-to-r from-[#ffb074] to-[#ff7043] antialiased font-normal text-emerald-700 text-lg font-baskervville p-2 w-40 shadow-lg rounded-lg truncate animate-pulsing hover:font-bold transition delay-50 duration-700 ease-in-out hover:scale-110 hover:shadow-xl hover:-translate-y-1 active:scale-100"
                                 onClick={() => navigate(`/dashboard/problems/Problemdescription/${currentProblem._id}/Submissions`, { state: { showAll: true } })} >
                                     All Submissions
 

@@ -41,7 +41,7 @@ function ForgotPasswordBox({ className }) {
                 <div className=" w-full flex flex-col items-center">
                     <label className='font-newsreader'>Email</label>
                     <input type="email" placeholder='Email' className="p-2 focus:outline-none focus:ring-2 placeholder-black bg-gray-300 rounded-full truncate w-64 h-8 transition delay-50 duration-500 hover:scale-105 hover:translate-y-1" value={Email} onChange={e => setEmail(e.target.value)} required />
-                    <button className="mt-[100px] bg-gradient-to-r from-red-500 font-gruppo to-red-700 text-blue-400 font-bold py-2 px-4 rounded-full hover:scale-115 transition duration-400"
+                    <button className="cursor-pointer mt-[100px] bg-gradient-to-r from-red-500 font-gruppo to-red-700 text-blue-400 font-bold py-2 px-4 rounded-full hover:scale-115 transition duration-400"
                     onClick={handleResetPassword}
                     disabled={loading}>
                         {loading ? "Sending..." : "Send Reset Link"}

@@ -18,7 +18,7 @@ function HomeBox({ className }) {
                     <p className=" w-2/3  text-center font-newsreader font-extralight text-3xl text-[#844e1c] transition delay-50 duration-1000 ease-in-out hover:scale-110 hover:text-[#ed4545]">
                         Head to Problem Section to get started right away!
                     </p>
-                    <button className="w-44 h-12 mr-[50px] bg-gradient-to-r from-[#e0e0e0] via-[#bdbdbd] to-[#757575] rounded-lg truncate animated-pulse hover:font-bold hover:text-indigo-900 transition delay-50 duration-700 ease-in-out hover:scale-110 hover:shadow-2xl hover:-translate-y-1 active:scale-100"
+                    <button className="cursor-pointer w-44 h-12 mr-[50px] bg-gradient-to-r from-[#e0e0e0] via-[#bdbdbd] to-[#757575] rounded-lg truncate animated-pulse hover:font-bold hover:text-indigo-900 transition delay-50 duration-700 ease-in-out hover:scale-110 hover:shadow-2xl hover:-translate-y-1 active:scale-100"
                         onClick={() => navigate('/dashboard/problems')}>
                         Go to Problems
                     </button>

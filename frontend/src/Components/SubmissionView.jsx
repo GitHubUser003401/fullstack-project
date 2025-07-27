@@ -15,7 +15,7 @@ function SubmissionView({ open, message, onClose}) {
                 </div>
                 <div className="flex justify-end gap-6">
                     <button
-                        className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition duration-300 hover:scale-105 hover:-translate-y-1"
+                        className="cursor-pointer px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition duration-300 hover:scale-105 hover:-translate-y-1"
                         onClick={onClose}
                     >
                         Close

@@ -7,8 +7,6 @@ import dotenv from 'dotenv';
 import AdminUser from '../Models/admin.js';
 dotenv.config();
 
-
-
 function isAllowedEmailDomain(email) {
     const allowedDomains = ['gmail.com', 'yahoo.com', 'rediffmail.com'];
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

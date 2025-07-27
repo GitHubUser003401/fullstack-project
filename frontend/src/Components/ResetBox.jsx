@@ -43,7 +43,7 @@ function ResetBox({ className }) {
                 <div className=" w-full flex flex-col items-center">
                     <label className='font-newsreader'>Password</label>
                     <input type="password" placeholder='Password' className="p-2 focus:outline-none focus:ring-2 placeholder-black bg-gray-300 rounded-full truncate w-64 h-8 transition delay-50 duration-500 hover:scale-105 hover:translate-y-1" value={password} onChange={e => setPassword(e.target.value)} required />
-                    <button className="mt-[100px] bg-gradient-to-r from-red-500 font-gruppo to-red-700 text-blue-400 font-bold py-2 px-4 rounded-full hover:scale-115 transition duration-400"
+                    <button className="cursor-pointer mt-[100px] bg-gradient-to-r from-red-500 font-gruppo to-red-700 text-blue-400 font-bold py-2 px-4 rounded-full hover:scale-115 transition duration-400"
                         onClick={PasswordConfirmation}
                         disabled={loading}>
                         {loading ? "Resetting..." : "Reset Password"}

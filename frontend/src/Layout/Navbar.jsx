@@ -1,16 +1,18 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { logoutUser } from "../Service/LoginApi";
 
 
 function Navbar({ className }) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const location = useLocation();
     const user = useSelector((state) => state.auth.user);
 
     const handleLogout = async () => {
         try {
             const response = await logoutUser()
+            location.state = { message: response.message };
             dispatch({ type: 'problem/clearCurrentProblem' });
             dispatch({type: 'auth/logout'});
         } catch (error) {
@@ -32,17 +34,23 @@ function Navbar({ className }) {
                             </h1>
                         </div>
                         <div className="flex items-center gap-8">
-                            <button className="w-28 text-xl font-bold font-gruppo h-9 animated-entry hover:underline"
+                            <button className="cursor-pointer w-24 text-xl font-bold font-gruppo h-9 animated-entry hover:underline"
+                                onClick={() => navigate('/login')}>
+                                Sign-In
+                            </button>
+                            <button className="cursor-pointer w-28 text-xl font-bold font-gruppo h-9 animated-entry hover:underline"
                                 onClick={() => navigate('/dashboard')}>
                                 Dashboard
                             </button>
-                            <button className="w-28 text-xl font-bold font-gruppo h-9 animated-entry hover:underline"
+                            {user && user.Role === 'Admin' && (
+                                <button className="cursor-pointer w-32 text-xl font-bold font-gruppo h-9 animated-entry hover:underline"
+                                    onClick={() => navigate('/dashboard/adminspace')}>
+                                    Admin Space
+                                </button>
+                            )}
+                            <button className="cursor-pointer w-24 text-xl font-bold font-gruppo h-9 animated-entry hover:underline"
                                 onClick = {handleLogout}>
                                 Log-Out
-                            </button>
-                            <button className="w-32 text-xl font-bold font-gruppo h-9 animated-entry hover:underline"
-                                onClick={() => navigate('/dashboard/adminspace')}>
-                                Admin Space
                             </button>
                         </div>
                         <div className="flex items-center gap-6 ml-auto animated-entry mr-[10px]">

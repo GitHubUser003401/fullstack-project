@@ -33,11 +33,10 @@ cron.schedule('*/20 * * * *', () => {
         });
     });
 });
-const executePython = async (filePath, inputFilePath, timeout) => {
-    const inputRedirect = inputFilePath ? `< "${inputFilePath}"` : "";
+const executePython = async (filePath, timeout) => {
     return new Promise((resolve, reject) => {
         const startTime = process.hrtime.bigint();
-        exec(`python "${filePath}" ${inputRedirect}`,
+        exec(`python3 "${filePath}"`,
             { timeout: timeout },
             (error, stdout, stderr) => {
                 const endTime = process.hrtime.bigint();

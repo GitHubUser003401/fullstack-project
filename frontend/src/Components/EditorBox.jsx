@@ -11,6 +11,7 @@ import { submitCode } from "../Service/SubmissionApi";
 import Spinner from "./Spinner";
 import { ReviewCode } from "../Service/AiReviewAPI";
 import ReactMarkdown from 'react-markdown';
+import { autocompletion } from "@codemirror/autocomplete";
 
 function EditorBox() {
     const navigate = useNavigate();
@@ -32,14 +33,13 @@ int main() {
     }
 }`,
         py: `# Python code
-        # Test Cases can also be given in one line separated by space. Handle that edge case too.
 print("Hello, World!")
 `
     };
     const languageExtensions = {
-        cpp: cpp(),
-        java: java(),
-        py: python()
+        cpp: [cpp(), autocompletion()],
+        java: [java(), autocompletion()],
+        py: [python(), autocompletion()]
     };
 
     const [code, setCode] = useState(languageTemplates.cpp);
@@ -48,6 +48,8 @@ print("Hello, World!")
     const [activeTab, setActiveTab] = useState("output");
     const [verdict, setVerdict] = useState("");
     const [Review, setReview] = useState("");
+
+
     const handleLanguageChange = (newLanguage) => {
         setLanguage(newLanguage);
         setCode(languageTemplates[newLanguage]);
@@ -104,7 +106,7 @@ print("Hello, World!")
                     console.error("Unauthorized access:", error.response.data);
                     navigate('/login');
                 } else {
-                    setVerdict(typeof error.response.data === 'object' ? error.response.data?.message || error.response.data?.error : error.response.data);
+                    setVerdict(typeof error.response.data === 'object' ? error.response.data?.message || error.response.data : error.response.data);
                     console.error("Submission error:", error.response.data);
                 }
             } else {
@@ -118,6 +120,7 @@ print("Hello, World!")
 
     const handleReview = async () => {
         if (loading) return;
+
         dispatch({ type: 'auth/setloading' });
         try {
             const response = await ReviewCode(code, currentProblem.description);
@@ -146,20 +149,20 @@ print("Hello, World!")
 
     return (
         <div className="">
-            
+
 
             <div className="w-full min-h-12 pl-4 pt-2 flex items-end gap-4">
-                <button className={`truncate p-2 rounded-l-md h-fit font-newsreader rounded-br-xl rounded-tr-4xl transition-all duration-500
+                <button className={`cursor-pointer truncate p-2 rounded-l-md h-fit font-newsreader rounded-br-xl rounded-tr-4xl transition-all duration-500
                 ${activeTab === 'output' ? 'bg-gradient-to-br min-w-1/3 text-xl from-[#ffb347] via-[#ddd28f] to-[#6a82fb] tracking-wider text-red-600' : 'bg-cyan-500 min-w-1/4 hover:bg-blue-500 text-white hover:text-yellow-500'}`}
                     onClick={() => setActiveTab('output')}>
                     Output
                 </button>
-                <button className={`truncate p-2 rounded-l-md h-fit font-newsreader rounded-br-xl rounded-tr-4xl transition-all duration-500
+                <button className={`cursor-pointer truncate p-2 rounded-l-md h-fit font-newsreader rounded-br-xl rounded-tr-4xl transition-all duration-500
                 ${activeTab === 'verdict' ? 'bg-gradient-to-br min-w-1/3 text-xl from-[#ffb347] via-[#ddd28f] to-[#6a82fb] tracking-wider text-red-600' : 'bg-cyan-500 min-w-1/4 hover:bg-blue-500 text-white hover:text-yellow-500'}`}
                     onClick={() => setActiveTab('verdict')}>
                     Verdict
                 </button>
-                <button className={`truncate p-2 rounded-l-md h-fit font-newsreader rounded-br-xl rounded-tr-4xl transition-all duration-500
+                <button className={`cursor-pointer truncate p-2 rounded-l-md h-fit font-newsreader rounded-br-xl rounded-tr-4xl transition-all duration-500
                 ${activeTab === 'CodeReview' ? 'bg-gradient-to-br min-w-1/3 text-xl from-[#ffb347] via-[#ddd28f] to-[#6a82fb] tracking-wider text-red-600' : 'bg-cyan-500 min-w-1/4 hover:bg-blue-500 text-white hover:text-yellow-500'}`}
                     onClick={() => setActiveTab('CodeReview')}>
                     Code Review
@@ -168,22 +171,22 @@ print("Hello, World!")
 
             <div className="flow-shadow flex flex-col items-center min-h-screen w-full rounded-xl bg-gradient-to-br from-[#e6b93e] via-[#bebcb0] to-[#e6b93e]">
                 <div className="w-full min-h-12 pl-4 pt-2 flex items-end gap-4 mb-4">
-                <label className="text-white font-semibold font-unna">Language:</label>
-                <select 
-                    value={language} 
-                    onChange={(e) => handleLanguageChange(e.target.value)}
-                    className="bg-gray-700 text-white px-3 py-1 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                >
-                    <option value="cpp">C++</option>
-                    <option value="java">Java</option>
-                    <option value="py">Python</option>
-                </select>
-            </div>
+                    <label className="text-white font-semibold font-unna">Language:</label>
+                    <select
+                        value={language}
+                        onChange={(e) => handleLanguageChange(e.target.value)}
+                        className="cursor-pointer bg-gray-700 text-white px-3 py-1 hover:bg-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    >
+                        <option value="cpp">C++</option>
+                        <option value="java">Java</option>
+                        <option value="py">Python</option>
+                    </select>
+                </div>
                 <CodeMirror
                     value={code}
                     theme={dracula}
                     onChange={(value) => setCode(value)}
-                    extensions={[languageExtensions[language]]}
+                    extensions={languageExtensions[language]}
                     padding={10}
                     className="border border-gray-300 rounded-xl mt-4 "
                     style={{
@@ -208,7 +211,7 @@ print("Hello, World!")
                                 {output}
                             </pre>
                         </div>
-                        <button className="mb-[20px] antialiased mt-[30px] font-normal italic text-indigo-700 font-serif text-lg w-1/3 h-12 bg-gradient-to-r from-[#e0e0e0] via-[#bdbdbd] to-[#c27171] shadow-lg  rounded-lg truncate animated-pulse hover:font-bold hover:text-indigo-900 transition delay-50 duration-700 ease-in-out hover:scale-110 hover:shadow-2xl hover:-translate-y-1 active:scale-100"
+                        <button className="cursor-pointer mb-[20px] antialiased mt-[30px] font-normal italic text-indigo-700 font-serif text-lg w-1/3 h-12 bg-gradient-to-r from-[#e0e0e0] via-[#bdbdbd] to-[#c27171] shadow-lg  rounded-lg truncate animated-pulse hover:font-bold hover:text-indigo-900 transition delay-50 duration-700 ease-in-out hover:scale-110 hover:shadow-2xl hover:-translate-y-1 active:scale-100"
                             onClick={handleRun}
                             disabled={loading}>
                             {loading ? "Running..." : "Run Code"}
@@ -221,7 +224,7 @@ print("Hello, World!")
 
                 {activeTab === "verdict" && (
                     <>
-                        <button className="mb-[20px] antialiased mt-[30px] font-normal italic text-green-700 font-serif text-lg w-1/3 h-12 bg-gradient-to-r from-[#e0e0e0] via-[#bdbdbd] to-[#a8ff78] shadow-lg  rounded-lg truncate animated-pulse hover:font-bold hover:text-green-900 transition delay-50 duration-700 ease-in-out hover:scale-110 hover:shadow-2xl hover:-translate-y-1 active:scale-100"
+                        <button className="cursor-pointer mb-[20px] antialiased mt-[30px] font-normal italic text-green-700 font-serif text-lg w-1/3 h-12 bg-gradient-to-r from-[#e0e0e0] via-[#bdbdbd] to-[#a8ff78] shadow-lg  rounded-lg truncate animated-pulse hover:font-bold hover:text-green-900 transition delay-50 duration-700 ease-in-out hover:scale-110 hover:shadow-2xl hover:-translate-y-1 active:scale-100"
                             onClick={handleSubmit}
                             disabled={loading}>
                             {loading ? "Submitting..." : "Submit"}
@@ -237,37 +240,37 @@ print("Hello, World!")
                             </h2>
                             <h2 className="text-md font-semibold mt-2"> Message:
                             </h2>
-                            <p className="overflow-x-auto text-md p-4 rounded-md mt-2 bg-[#2c2f3c] text-amber-100">
+                            <div className="overflow-x-auto text-md p-4 rounded-md mt-2 bg-[#2c2f3c] text-amber-100">
                                 <pre style={{ whiteSpace: 'pre-wrap', margin: 0, fontFamily: 'Tomorrow' }}>
+                                    {typeof verdict === 'object' ? verdict.error : verdict}
                                     {verdict.output}
                                     {verdict.testCasesPassed ? `\nTest Cases Passed: ${verdict.testCasesPassed}` : ""}
                                     {verdict.totalTestCases ? `\nTotal Test Cases: ${verdict.totalTestCases}` : ""}
                                     {verdict.executionTime ? `\nExecution Time: ${verdict.executionTime} ms` : ""}
                                 </pre>
-                            </p>
+                            </div>
                         </div>
                     </>
                 )}
                 {activeTab === "CodeReview" && (
                     <>
-                        <button className="mb-[20px] antialiased mt-[30px] font-normal italic text-fuchsia-600 font-serif text-lg w-1/3 h-12 bg-gradient-to-r from-[#e0e0e0] via-[#bdbdbd] to-[#8153c6] shadow-lg  rounded-lg truncate animated-pulse hover:font-bold hover:text-fuchsia-800 transition delay-50 duration-700 ease-in-out hover:scale-110 hover:shadow-2xl hover:-translate-y-1 active:scale-100"
+                        <button className="cursor-pointer mb-[20px] antialiased mt-[30px] font-normal italic text-fuchsia-600 font-serif text-lg w-1/3 h-12 bg-gradient-to-r from-[#e0e0e0] via-[#bdbdbd] to-[#8153c6] shadow-lg  rounded-lg truncate animated-pulse hover:font-bold hover:text-fuchsia-800 transition delay-50 duration-700 ease-in-out hover:scale-110 hover:shadow-2xl hover:-translate-y-1 active:scale-100"
                             onClick={handleReview}
                             disabled={loading}>
-                            {loading ? "Reviewing" : "Review Code"}
+                            {loading ? "Reviewing.." : "Review Code"}
                         </button>
                         <div className="w-fit h-fit mb-[20px]">
                             {loading && <Spinner />}
                         </div>
                         <div className="w-[600px] h-fit bg-fuchsia-200 mb-10 p-5 font-tomorrow rounded-br-xl rounded-tr-4xl">
                             <h2 className="text-md text-fuchsia-900 font-semibold">Code Review:</h2>
-                            <p className="overflow-x-auto text-md p-4 rounded-md mt-2 bg-[#2c2f3c] text-fuchsia-500">
+                            <div className="overflow-x-auto text-md p-4 rounded-md mt-2 bg-[#2c2f3c] text-fuchsia-500">
                                 <pre style={{ whiteSpace: 'pre-wrap', margin: 0, fontFamily: 'Tomorrow' }}>
                                     <ReactMarkdown>
                                         {Review ? Review : "No review yet"}
                                     </ReactMarkdown>
-
                                 </pre>
-                            </p>
+                            </div>
 
                         </div>
 

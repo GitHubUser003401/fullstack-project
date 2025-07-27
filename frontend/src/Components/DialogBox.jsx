@@ -6,13 +6,13 @@ function DialogBox({open , message, onConfirm, onExit}) {
             <div className="mb-4 text-2xl text-center text-red-700 font-baskervville">{message}</div>
             <div className="flex justify-end gap-6">
                 <button
-                    className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition duration-300 hover:scale-105 hover:-translate-y-1"
+                    className="px-4 py-2 cursor-pointer bg-blue-600 text-white rounded hover:bg-blue-700 transition duration-300 hover:scale-105 hover:-translate-y-1"
                     onClick={onConfirm}
                 >
                     Confirm
                 </button>
                 <button
-                    className="px-4 py-2 bg-gray-300 text-gray-800 rounded hover:bg-gray-400 transition duration-300 hover:scale-105 hover:-translate-y-1"
+                    className="px-4 py-2 cursor-pointer bg-gray-300 text-gray-800 rounded hover:bg-gray-400 transition duration-300 hover:scale-105 hover:-translate-y-1"
                     onClick={onExit}
                 >
                     Exit

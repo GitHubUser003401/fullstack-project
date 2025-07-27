@@ -15,10 +15,6 @@ function ProblemSet({ className }) {
     const [difficulty, setDifficulty] = useState("");
 
     useEffect(() => {
-
-    }, [])
-
-    useEffect(() => {
         const fetchData = async () => {
             try {
                 const response = await fetchProblem();
@@ -45,10 +41,10 @@ function ProblemSet({ className }) {
 
     const startIndex = (Page - 1) * perPage;
     const endIndex = startIndex + perPage;
-    const filteredProblems = problems.filter(problem => problem.tags && problem.tags.some(t => t.toLowerCase().includes(tags.toLowerCase())) &&
+    const filteredProblems = problems.filter(problem => (problem.tags && problem.tags.length > 0 ? problem.tags.some(t => t.toLowerCase().includes(tags.toLowerCase())) : true) &&
         (difficulties ? problem.difficulty === difficulties : true));
     const currentProblems = filteredProblems.slice(startIndex, endIndex);
-    const totalPages = Math.ceil((problems.length / perPage) || 1);
+    const totalPages = Math.ceil((filteredProblems.length / perPage) || 1);
 
 
     return (
@@ -72,7 +68,7 @@ function ProblemSet({ className }) {
                         <option value="Hard">Hard</option>
                         <option value="">All</option>
                     </select>
-                    <button type="submit" className="ml-4 px-4 py-2 bg-gray-700 text-white rounded hover:bg-fuchsia-700 font-newsreader transition duration-300">
+                    <button type="submit" className="cursor-pointer ml-4 px-4 py-2 bg-gray-700 text-white rounded hover:bg-fuchsia-700 font-newsreader transition duration-300">
                         Search
                     </button>
                 </form>
@@ -93,7 +89,7 @@ function ProblemSet({ className }) {
                     </thead>
                     <tbody className="">
                         {currentProblems.map((problem, idx) => (
-                            <tr key={problem._id || idx} className="hover:bg-cyan-800 odd:bg-[#000000] even:bg-[#1e1e2f] font-unna text-md transition duration-300"
+                            <tr key={problem._id || idx} className="hover:bg-cyan-800 cursor-pointer odd:bg-[#000000] even:bg-[#1e1e2f] font-unna text-md transition duration-300"
                                 onClick={() => navigate(`/dashboard/problems/Problemdescription/${problem._id}`, { state: { problem: problem } })}>
                                 <td className=" border border-gray-500 py-2 px-6 h-16 text-orange-600 text-center">{problem.title}</td>
                                 <td className=" border border-gray-500 py-2 px-6 h-16 text-orange-600 text-center">{problem.difficulty && (problem.difficulty === "Easy" ? <span className="text-green-500">{problem.difficulty}</span> : problem.difficulty === "Medium" ? <span className="text-yellow-500">{problem.difficulty}</span> : <span className="text-red-600">{problem.difficulty}</span>)}</td>
@@ -118,14 +114,14 @@ function ProblemSet({ className }) {
             </div>
             <div className="flex justify-center mt-2 gap-2 mb-16">
                 <button
-                    className="px-4 py-2 bg-gray-700 text-white rounded disabled:opacity-50"
+                    className="px-4 py-2 bg-gray-700 cursor-pointer text-white rounded disabled:opacity-50"
                     onClick={() => setPage(Page - 1)}
                     disabled={Page === 1} >
                     Previous
                 </button>
                 <span className="px-4 py-2">{Page} / {totalPages}</span>
                 <button
-                    className="px-4 py-2 bg-gray-700 text-white rounded disabled:opacity-50"
+                    className="px-4 py-2 bg-gray-700 cursor-pointer text-white rounded disabled:opacity-50"
                     onClick={() => setPage(Page + 1)}
                     disabled={Page === totalPages} >
                     Next
