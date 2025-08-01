@@ -9,7 +9,7 @@ import { DefaultAdmins } from './Utils/DefaultAdmins.js';
 
 app.use(cors({
     origin: [
-        process.env.CLIENT_URL,
+        process.env.BACKEND_CLIENT_URL,
         process.env.COMPILER_URL // Compiler URL
     ],
     credentials: true,
@@ -25,6 +25,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use('/', router);
 
-app.listen(process.env.PORT, () => {
-    console.log(`Server is running on ${process.env.PORT}!`);
+app.listen(process.env.BACKEND_PORT, () => {
+    console.log(`Server is running on ${process.env.BACKEND_PORT}!`);
 });
