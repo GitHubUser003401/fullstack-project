@@ -8,4 +8,4 @@
 
 **AI Review** - Gemini 2.0 Flash integration  
 **Email Authentication** - Google OAuth2 Credentials, JWT Authentication + Cookies  
-**Project Demo Video** - *(Insert link here if available)*
+**Project Demo Video** - 
